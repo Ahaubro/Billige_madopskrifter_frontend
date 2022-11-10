@@ -50,7 +50,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
             }}></TextInput>
       </View>
 
-      <View style={{paddingTop: 5, paddingBottom: 5}}>
+      <View style={{paddingTop: 5, paddingBottom: 20}}>
             <Text style={style.label}>Kodeord:</Text>
             <TextInput style={style.input} onChangeText={(p) => {
                 loginAtr.password = p
@@ -79,12 +79,15 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
 const style = StyleSheet.create({
     label: {
         fontSize: 16,
-        fontWeight: '600'
+        fontWeight: '600',
+        paddingVertical: 5
     },
     input:{
-        borderRadius: 5,
-        border: '1px solid black',
-        height: 40
+        borderRadius: 8,
+        borderWidth: 1,
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        borderColor: 'rgb(242,242,242)',
     }
 })
 

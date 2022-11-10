@@ -26,14 +26,10 @@ export const sessionSlice = createSlice({
       state.id = action.payload.id
       state.token = action.payload.token
       state.isLoading = false
-      // window.localStorage.setItem('userId', action.payload.id.toString())
-      // window.localStorage.setItem('token', action.payload.token)
     },
     endSession: (state: SessionState) => {
       state.id = initialState.id
       state.token = initialState.token
-      // window.localStorage.removeItem('userId')
-      // window.localStorage.removeItem('token')
     },
     setSessionLoading: (
       state: SessionState,

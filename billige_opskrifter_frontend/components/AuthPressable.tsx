@@ -28,7 +28,7 @@ const style = StyleSheet.create({
     paddingVertical: 15,
    },
    text:{
-    fontWeight: '600',
+    fontWeight: '700',
     color: 'white'
    }
 })
