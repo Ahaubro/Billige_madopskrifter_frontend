@@ -46,13 +46,17 @@ const Navigation: React.FC<NavigationProps> = () => {
         })}
       >
 
-          
-        {/* <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} /> */}
+        {session.token && session.token != 'abcdefg' &&
+          <>
+            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Settings" component={SettingsScreen} />
+          </>
+        }
           
         
-
-        <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }}/>
+        {session.token == 'abcdefg' &&
+          <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }}/>
+        }
 
 
       </Tab.Navigator>

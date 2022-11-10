@@ -1,10 +1,9 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { API_URL } from '../../constants'
 import { RootState } from '../store'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: API_URL,
+  baseUrl: "https://localhost:7102/user",
   prepareHeaders: (headers, api) => {
     const state = api.getState() as RootState
     const token = state.session.token
@@ -15,20 +14,23 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-// Define a service using a base URL and expected endpoints
-export const exampleApi = createApi({
-  reducerPath: 'exampleApi',
+
+export const UserAPI = createApi({
+  reducerPath: 'UserAPI',
   baseQuery,
   endpoints: builder => ({
     login: builder.mutation<
       {
         id: string
-        jwt: string
+        fullName: string
+        token: string
+        statusText: string
+
       },
-      { username: string; password: string }
+      { email: string; password: string }
     >({
       query: body => ({
-        url: '/login',
+        url: '/authenticate',
         method: 'POST',
         body,
       }),
@@ -36,4 +38,4 @@ export const exampleApi = createApi({
   }),
 })
 
-export const { useLoginMutation } = exampleApi
+export const { useLoginMutation } = UserAPI

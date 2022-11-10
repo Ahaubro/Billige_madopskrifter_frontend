@@ -5,10 +5,16 @@ import Entypo from '@expo/vector-icons/Entypo'
 import { StatusBar } from 'expo-status-bar'
 import { FONTS } from '../../utils/fontUtils'
 import i18n from 'i18n-js'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
 
 interface HomeScreenProps {}
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
+
+  const session = useSelector((state: RootState) => state.session)
+  
+
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Inter Black</Text>
