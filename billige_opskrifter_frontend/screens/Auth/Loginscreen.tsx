@@ -7,6 +7,8 @@ import { RootState } from '../../redux/store'
 import { AuthNavigationParameters } from '../../Types/Navigation_types'
 import ViewContainer from "../../components/ViewContainer"
 import Header from "../../components/Header"
+import BackArrowContainer from "../../components/BackArrowContainer"
+import { Ionicons } from '@expo/vector-icons';
 
 
 type LoginScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Login'>
@@ -23,8 +25,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
 
   return (
     <ViewContainer>
-      <Header text='Login'/>
 
+        <BackArrowContainer>
+            <Pressable onPress={ () => {
+                navigation.pop();
+            }}>
+                <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
+            </Pressable>
+        </BackArrowContainer>
+
+      <Header text='Login'/>
+            
       
     </ViewContainer>
   )
