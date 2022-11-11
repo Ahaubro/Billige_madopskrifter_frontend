@@ -52,7 +52,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
 
       <View style={{paddingTop: 5, paddingBottom: 20}}>
             <Text style={style.label}>Kodeord:</Text>
-            <TextInput style={style.input} onChangeText={(p) => {
+            <TextInput secureTextEntry={true} style={style.input} onChangeText={(p) => {
                 loginAtr.password = p
             }}></TextInput>
       </View>
@@ -67,6 +67,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
                     if (res.token != null){
                         dispatch(startSession({ token: res.token, id: res.id }))
                     }
+                }).catch(err => {
+                    console.log(err)
                 })
             }          
         }}

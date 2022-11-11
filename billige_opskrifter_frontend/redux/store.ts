@@ -3,14 +3,17 @@ import { UserAPI } from './services/UserAPI'
 import sessionReducer from './slices/sessionSlice'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { rtkQueryErrorLogger } from './rtkQueryErrorLogger'
+import { RecipeAPI } from './services/RecipeAPI'
 
 const store = configureStore({
   reducer: {
     session: sessionReducer,
     [UserAPI.reducerPath]: UserAPI.reducer,
+    [RecipeAPI.reducerPath]: RecipeAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([UserAPI.middleware, rtkQueryErrorLogger]),
+    getDefaultMiddleware().concat([UserAPI.middleware, RecipeAPI.middleware, rtkQueryErrorLogger]),
+    
 })
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
 // see `setupListeners` docs - takes an optional callback as the 2nd arg for customization

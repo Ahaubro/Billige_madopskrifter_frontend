@@ -3,7 +3,7 @@ import { API_URL } from '../../constants'
 import { RootState } from '../store'
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://localhost:7102/user",
+  baseUrl: API_URL,
   prepareHeaders: (headers, api) => {
     const state = api.getState() as RootState
     const token = state.session.token
@@ -22,11 +22,11 @@ export const UserAPI = createApi({
 
     //Login 
     login: builder.mutation<
-      { id: string, fullName: string, token: string, statusText: string },
+      { id: number, fullName: string, token: string, statusText: string },
       { email: string, password: string }
     >({
       query: body => ({
-        url: '/authenticate',
+        url: 'user/authenticate',
         method: 'POST',
         body,
       }),
@@ -38,13 +38,12 @@ export const UserAPI = createApi({
       { fullName: string, email: string, password: string }
     >({
       query: body => ({
-        url: '/',
+        url: '/user',
         method: 'POST',
         body
       })
     }),
   }),
-
 
 })
 
