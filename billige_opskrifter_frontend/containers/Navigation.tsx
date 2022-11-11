@@ -3,7 +3,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/Home/HomeScreen'
 import SettingsScreen from '../screens/Settings/SettingsScreen'
-import MyPageScreen from "../screens/MyPage/MyPageScreen"
+import MyPageNavigator from "./CustomNavigators/MyPageNavigtor"
 import Ionicons from '@expo/vector-icons/Ionicons'
 import AuthNavigator from "./AuthNavigator"
 import { useSelector } from 'react-redux'
@@ -41,7 +41,7 @@ const Navigation: React.FC<NavigationProps> = () => {
               iconName = focused ? 'ios-list' : 'ios-list-outline'
             } else if (route.name === 'AuthNavigator') {
               iconName = focused ? 'key-sharp' : 'key-outline'
-            }else if (route.name === 'MyPage') {
+            }else if (route.name === 'MyPageNavigator') {
               iconName = focused ? 'person-outline' : 'person-outline'
             }
 
@@ -53,7 +53,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         {session.token && session.token != 'abcdefg' &&
           <>
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name='MyPage' component={MyPageScreen}/>
+            <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{title:"Min side"}}/>
             <Tab.Screen name="Settings" component={SettingsScreen} />
           </>
         }

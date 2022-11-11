@@ -4,18 +4,25 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
 import Header from "../../components/Header"
-import { useCreateMutation, useGetRecipesByUserIdQuery } from '../../redux/services/RecipeAPI'
+import { useGetRecipesByUserIdQuery } from '../../redux/services/RecipeAPI'
 import { Recipe } from "../../redux/services/RecipeAPI"
+import { MyPageNavigationParameters } from '../../Types/Navigation_types'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RouteProp } from '@react-navigation/native'
+import AuthPressable from '../../components/AuthPressable'
 
-interface MyPageScreenProps { }
 
-const MyPageScreen: React.FC<MyPageScreenProps> = () => {
+type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
+type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
+
+type MyPageScreenProps = {
+    navigation: MyPageScreenNavigationProps
+    route: MyPageScreenRouteProps
+}
+
+const MyPageScreen: React.FC<MyPageScreenProps> = ( {navigation, route} ) => {
 
   const session = useSelector((state: RootState) => state.session)
-
-  const [create] = useCreateMutation();
-  const [createAtr, setCreateAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
-    ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
 
   const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, {refetchOnMountOrArgChange: false});
   let userRecipeList: Recipe[] = []
@@ -57,13 +64,16 @@ const MyPageScreen: React.FC<MyPageScreenProps> = () => {
         </>
       }
 
-      <TouchableOpacity onPress={ () => {
-        
-      }}>
+      <View style={{paddingVertical: 10}}></View>
 
-      </TouchableOpacity>
-
-
+      <AuthPressable 
+        text='Ny opskrift'
+        color='#86DB9D'
+        onPress={ () => {
+          navigation.navigate("CreateRecipe", {userId: session.id})
+        }}
+      />
+      
 
     </ViewContainer>
   )
@@ -73,7 +83,7 @@ const style = StyleSheet.create({
   authoredRecipes: {
     backgroundColor: "rgb(242,242,242)",
     width: Dimensions.get("window").width
-  }
+  },
 })
 
 export default MyPageScreen

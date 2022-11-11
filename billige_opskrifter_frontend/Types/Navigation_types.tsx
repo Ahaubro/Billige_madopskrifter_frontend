@@ -3,3 +3,10 @@ export type AuthNavigationParameters = {
     Welcome: undefined,
     Register: undefined
 }
+
+export type MyPageNavigationParameters = {
+    CreateRecipe: {
+        userId: number
+    },
+    MyPage: undefined
+}
