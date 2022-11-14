@@ -8,5 +8,6 @@ export type MyPageNavigationParameters = {
     CreateRecipe: {
         userId: number
     },
-    MyPage: undefined
+    MyPage: undefined,
+    Settings: undefined
 }

@@ -10,37 +10,48 @@ import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
+import { Ionicons } from '@expo/vector-icons';
 
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
 
 type MyPageScreenProps = {
-    navigation: MyPageScreenNavigationProps
-    route: MyPageScreenRouteProps
+  navigation: MyPageScreenNavigationProps
+  route: MyPageScreenRouteProps
 }
 
-const MyPageScreen: React.FC<MyPageScreenProps> = ( {navigation, route} ) => {
+const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
   const session = useSelector((state: RootState) => state.session)
 
-  const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, {refetchOnMountOrArgChange: false});
+  const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: false });
   let userRecipeList: Recipe[] = []
 
   useEffect(() => {
     if (fetchedRecipesByUserId.data) {
       userRecipeList = fetchedRecipesByUserId.data?.recipes
       console.log(fetchedRecipesByUserId.data?.recipes)
-      console.log(fetchedRecipesByUserId.data.recipes)
     }
   }, [fetchedRecipesByUserId.data])
 
   return (
     <ViewContainer>
 
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Settings")
+          }}
+        >
+          <Ionicons name="settings-outline" size={28} color="black" />
+        </TouchableOpacity>
+      </View>
+
       <Header
         text='Min side'
       />
+
 
       {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
         <>
@@ -55,7 +66,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ( {navigation, route} ) => {
                     <Text>{item.prepTime}</Text>
                     <Text>{item.numberOfPersons}</Text>
                     <Text>{item.estimatedPrice}</Text>
-                    <Text>{item.name}</Text>
                   </View>
                 </>
               )
@@ -64,16 +74,16 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ( {navigation, route} ) => {
         </>
       }
 
-      <View style={{paddingVertical: 10}}></View>
+      <View style={{ paddingVertical: 10 }}></View>
 
-      <AuthPressable 
+      <AuthPressable
         text='Ny opskrift'
         color='#86DB9D'
-        onPress={ () => {
-          navigation.navigate("CreateRecipe", {userId: session.id})
+        onPress={() => {
+          navigation.navigate("CreateRecipe", { userId: session.id })
         }}
       />
-      
+
 
     </ViewContainer>
   )

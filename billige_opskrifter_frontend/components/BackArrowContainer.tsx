@@ -18,7 +18,7 @@ const style = StyleSheet.create({
     container:{
         flex: 1,
         justifyContent: 'flex-start',
-        marginTop: 30
+        paddingTop: 30
     }
 })
 

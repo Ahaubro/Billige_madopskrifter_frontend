@@ -30,7 +30,7 @@ const Navigation: React.FC<NavigationProps> = () => {
   return (
     <NavigationContainer theme={customTheme}>
       <Tab.Navigator
-        screenOptions={ ({ route }) => ({
+        screenOptions={({ route }) => ({
           headerShown: false,
           tabBarIcon: ({ focused, color, size }) => {
             let iconName
@@ -41,7 +41,7 @@ const Navigation: React.FC<NavigationProps> = () => {
               iconName = focused ? 'ios-list' : 'ios-list-outline'
             } else if (route.name === 'AuthNavigator') {
               iconName = focused ? 'key-sharp' : 'key-outline'
-            }else if (route.name === 'MyPageNavigator') {
+            } else if (route.name === 'MyPageNavigator') {
               iconName = focused ? 'person-outline' : 'person-outline'
             }
 
@@ -53,14 +53,16 @@ const Navigation: React.FC<NavigationProps> = () => {
         {session.token && session.token != 'abcdefg' &&
           <>
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{title:"Min side"}}/>
-            <Tab.Screen name="Settings" component={SettingsScreen} />
+            <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{ title: "Min side" }} />
           </>
         }
-          
-        
+
         {session.token == 'abcdefg' &&
-          <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }}/>
+          <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }} />
+        }
+
+        {!session.token &&
+          <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }} />
         }
 
 
