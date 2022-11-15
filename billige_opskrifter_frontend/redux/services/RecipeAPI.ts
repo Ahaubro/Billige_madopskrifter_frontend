@@ -41,7 +41,8 @@ export const RecipeAPI = createApi({
                 url: 'api/recipe/',
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ["Recipe"]
         }),
 
         //Get all recipes
@@ -56,6 +57,7 @@ export const RecipeAPI = createApi({
             providesTags: ["Recipe"]
         }),
 
+        //Edit funktion der for nu opdatere beskrivelsen til en opskrift
         edit: builder.mutation<
         { statusText: string },
         { description: string, id: number }
@@ -65,6 +67,7 @@ export const RecipeAPI = createApi({
                 method: 'PATCH',
                 body
             }),
+            invalidatesTags: ["Recipe"]
         }),
     }),
 

@@ -83,19 +83,20 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 }}
             >
             </TextInput>
+            
+            <View style={{paddingTop: 10}}></View>
 
             <AuthPressable 
                 text='Tilføj ingredienser'
                 color='#86DB9D'
                 onPress={ () => {
-                    console.log(createAtr)
                     let name: string = createAtr.name
-                    if(createAtr){
+                    if(createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "" ){
                         create(createAtr).unwrap().then( res => {
                             console.log(res)
                             navigation.navigate("AddIngredient", {name})
                         })
-                    } else { console.log("Nope") }
+                    } else { console.log("Udfyld felterne") }
                 }}
             />
 

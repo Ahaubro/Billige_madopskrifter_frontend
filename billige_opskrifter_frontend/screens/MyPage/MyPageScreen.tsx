@@ -26,6 +26,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   const session = useSelector((state: RootState) => state.session)
 
   const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
+
   let userRecipeList: Recipe[] = []
 
   useEffect(() => {
@@ -65,8 +66,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                       <View style={style.authoredRecipes}>
                         <Text>{item.name}</Text>
                         <Text>{item.type}</Text>
-                        <Text>{item.prepTime}</Text>
-                        <Text>{item.numberOfPersons}</Text>
                         <Text>{item.estimatedPrice}</Text>
                       </View>
                     </View>
