@@ -25,7 +25,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
   const session = useSelector((state: RootState) => state.session)
 
-  const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: false });
+  const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   let userRecipeList: Recipe[] = []
 
   useEffect(() => {
@@ -52,38 +52,43 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         text='Min side'
       />
 
+      <View style={{paddingTop: 500}}>
 
-      {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
-        <>
-          <Text>Authored recipes:</Text>
-          <View style={{ flex: 1, maxHeight: 300 }}>
-            <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
-              return (
-                <>
-                  <View style={style.authoredRecipes}>
-                    <Text>{item.name}</Text>
-                    <Text>{item.type}</Text>
-                    <Text>{item.prepTime}</Text>
-                    <Text>{item.numberOfPersons}</Text>
-                    <Text>{item.estimatedPrice}</Text>
-                  </View>
-                </>
-              )
-            }} />
-          </View>
-        </>
-      }
+        {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
+          <>
+            <Text style={{fontSize: 14, fontWeight: '700'}}>Authored recipes:</Text>
+            <View style={style.recipeCards}>
+              <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
+                return (
+                  <>
+                    <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
+                      <View style={style.authoredRecipes}>
+                        <Text>{item.name}</Text>
+                        <Text>{item.type}</Text>
+                        <Text>{item.prepTime}</Text>
+                        <Text>{item.numberOfPersons}</Text>
+                        <Text>{item.estimatedPrice}</Text>
+                      </View>
+                    </View>
+                  </>
+                )
+              }} />
+            </View>
+          </>
+        }
 
-      <View style={{ paddingVertical: 10 }}></View>
+        <View style={{ paddingVertical: 10 }}></View>
 
-      <AuthPressable
-        text='Ny opskrift'
-        color='#86DB9D'
-        onPress={() => {
-          navigation.navigate("CreateRecipe", { userId: session.id })
-        }}
-      />
+        <AuthPressable
+          text='Ny opskrift'
+          color='#86DB9D'
+          onPress={() => {
+            navigation.navigate("CreateRecipe", { userId: session.id })
+          }}
+        />
 
+
+      </View>
 
     </ViewContainer>
   )
@@ -91,9 +96,14 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 const style = StyleSheet.create({
   authoredRecipes: {
-    backgroundColor: "rgb(242,242,242)",
-    width: Dimensions.get("window").width
+    backgroundColor: "rgb(247,247,255)",
+    width: Dimensions.get("window").width / 100 * 94,
+    borderRadius: 15,
+    paddingVertical: 8
   },
+  recipeCards: {
+    maxHeight: 400,
+  }
 })
 
 export default MyPageScreen

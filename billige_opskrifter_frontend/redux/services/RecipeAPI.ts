@@ -29,6 +29,7 @@ export type Recipe = {
 export const RecipeAPI = createApi({
     reducerPath: 'RecipeAPI',
     baseQuery,
+    tagTypes: ["Recipe"],
     endpoints: builder => ({
 
         //Create
@@ -37,7 +38,7 @@ export const RecipeAPI = createApi({
             { name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }
         >({
             query: body => ({
-                url: 'api/recipe',
+                url: 'api/recipe/',
                 method: 'POST',
                 body
             })
@@ -46,9 +47,28 @@ export const RecipeAPI = createApi({
         //Get all recipes
         getRecipesByUserId: builder.query<{ recipes: Recipe[] }, number>({
             query: userId => `api/recipe/byUserid/${userId}`,
+            providesTags: ["Recipe"]
         }),
 
+        //Get recipes by name and userId
+        getRecipesByNameAndUserId: builder.query<{ id: number, name: string }, { userId: number, name: string }>({
+            query: ({ userId, name }) => `api/recipe/getByNameAndUserId/${userId}/${name}`,
+            providesTags: ["Recipe"]
+        }),
+
+        edit: builder.mutation<
+        { statusText: string },
+        { description: string, id: number }
+        >({
+            query: body => ({
+                url: `api/recipe/${body.id}`,
+                method: 'PATCH',
+                body
+            }),
+        }),
     }),
+
 })
 
-export const { useCreateMutation, useGetRecipesByUserIdQuery } = RecipeAPI
+
+export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation } = RecipeAPI

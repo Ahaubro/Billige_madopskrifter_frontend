@@ -9,5 +9,11 @@ export type MyPageNavigationParameters = {
         userId: number
     },
     MyPage: undefined,
-    Settings: undefined
+    Settings: undefined,
+    AddIngredient: {
+        name: string
+    },
+    AddRecipeDescription: {
+        recipeId: number
+    }
 }
