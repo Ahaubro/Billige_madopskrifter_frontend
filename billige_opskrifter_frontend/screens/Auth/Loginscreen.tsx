@@ -59,7 +59,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
 
       <AuthPressable 
         text='Login'
-        color='#7EDEF8'
+        color='#86C3F7'
         onPress={ () => {
             console.log({...loginAtr})
             if(loginAtr.email && loginAtr.password){

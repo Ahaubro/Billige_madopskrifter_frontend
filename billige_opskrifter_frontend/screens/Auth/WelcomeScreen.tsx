@@ -31,7 +31,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation, route}) => {
 
       <AuthPressable 
         text='Login'
-        color='#7EDEF8'
+        color='#86C3F7'
         onPress={() => {
             navigation.navigate('Login')
         }}
@@ -41,7 +41,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({navigation, route}) => {
 
       <AuthPressable 
         text='Opret'
-        color='#7EDEF8'
+        color='#86C3F7'
         onPress={() => {
             navigation.navigate('Register')
         }}

@@ -2,12 +2,12 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from '../screens/Home/HomeScreen'
-import SettingsScreen from '../screens/Settings/SettingsScreen'
 import MyPageNavigator from "./CustomNavigators/MyPageNavigtor"
 import Ionicons from '@expo/vector-icons/Ionicons'
 import AuthNavigator from "./AuthNavigator"
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
+import RecipeNavigator from './CustomNavigators/RecipeNavigator'
 
 
 interface NavigationProps { }
@@ -43,6 +43,8 @@ const Navigation: React.FC<NavigationProps> = () => {
               iconName = focused ? 'key-sharp' : 'key-outline'
             } else if (route.name === 'MyPageNavigator') {
               iconName = focused ? 'person-outline' : 'person-outline'
+            } else if (route.name === 'RecipeNavigator') {
+              iconName = focused ? 'ios-fast-food-outline' : 'ios-fast-food-outline'
             }
 
             return <Ionicons name={iconName as any} size={size} color={color} />
@@ -53,6 +55,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         {session.token && session.token != 'abcdefg' &&
           <>
             <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
             <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{ title: "Min side" }} />
           </>
         }

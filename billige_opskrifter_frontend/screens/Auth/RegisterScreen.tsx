@@ -74,7 +74,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
 
             <AuthPressable
                 text='Opret nu'
-                color='#7EDEF8'
+                color='#86C3F7'
                 onPress={() => {
                     if(registerAtr.fullName && registerAtr.email && registerAtr.password){
                         if(pw1 == pw2){

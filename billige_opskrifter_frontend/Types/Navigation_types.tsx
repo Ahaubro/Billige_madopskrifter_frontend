@@ -31,3 +31,8 @@ export type MyPageNavigationParameters = {
         userId: number
     }
 }
+
+export type RecipeNavigationParameters = {
+    ChooseRecipe: undefined
+}
+

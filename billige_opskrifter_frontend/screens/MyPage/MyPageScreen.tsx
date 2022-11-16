@@ -53,14 +53,14 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         text='Min side'
       />
 
-      <View style={{ paddingTop: 500 }}>
+      <View style={{ paddingTop: 200 }}>
 
         {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
           <>
             <Text style={{ fontSize: 14, fontWeight: '700' }}>Authored recipes:</Text>
 
 
-            <View style={style.recipeCards}>
+            <View>
               <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
                 return (
                   <>
@@ -80,9 +80,9 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                     >
                       <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
                         <View style={style.authoredRecipes}>
-                          <Text>{item.name}</Text>
-                          <Text>{item.type}</Text>
-                          <Text>{item.estimatedPrice}</Text>
+                          <Text>Navn: {item.name}</Text>
+                          <Text>Type: {item.type}</Text>
+                          <Text>Ca. pris: {item.estimatedPrice}</Text>
                           <Text>{item.description}</Text>
                         </View>
                       </View>
@@ -117,11 +117,12 @@ const style = StyleSheet.create({
     backgroundColor: "rgb(247,247,255)",
     width: Dimensions.get("window").width / 100 * 94,
     borderRadius: 15,
-    paddingVertical: 8
+    paddingVertical: 8,
+    minHeight: 200,
+    maxHeight: 200,
+    overflowY: 'scroll',
+    padding: 10
   },
-  recipeCards: {
-    maxHeight: 400,
-  }
 })
 
 export default MyPageScreen
