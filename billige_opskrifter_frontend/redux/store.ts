@@ -5,6 +5,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { rtkQueryErrorLogger } from './rtkQueryErrorLogger'
 import { RecipeAPI } from './services/RecipeAPI'
 import { IngredientAPI } from "./services/IngredientAPI"
+import { ReviewAPI } from './services/ReviewAPI'
 
 const store = configureStore({
   reducer: {
@@ -12,9 +13,10 @@ const store = configureStore({
     [UserAPI.reducerPath]: UserAPI.reducer,
     [RecipeAPI.reducerPath]: RecipeAPI.reducer,
     [IngredientAPI.reducerPath]: IngredientAPI.reducer,
+    [ReviewAPI.reducerPath]: ReviewAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([UserAPI.middleware, RecipeAPI.middleware, IngredientAPI.middleware, rtkQueryErrorLogger]),
+    getDefaultMiddleware().concat([UserAPI.middleware, RecipeAPI.middleware, IngredientAPI.middleware, ReviewAPI.middleware, rtkQueryErrorLogger]),
     
 })
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

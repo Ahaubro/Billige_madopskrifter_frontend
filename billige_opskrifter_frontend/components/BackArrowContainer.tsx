@@ -16,7 +16,6 @@ const BackArrowContainer: React.FC<BackArrowContainerProps> = (BackArrowContaine
 
 const style = StyleSheet.create({
     container:{
-        flex: 1,
         justifyContent: 'flex-start',
         paddingTop: 30
     }

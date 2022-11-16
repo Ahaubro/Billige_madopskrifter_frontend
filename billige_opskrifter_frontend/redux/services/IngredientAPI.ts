@@ -19,7 +19,7 @@ export type Ingredient = {
     recipeId: number,
     name: string,
     type: string,
-    meassurementUnit: string,
+    measurementUnit: string,
     amount: number,
     alergene: string
 }

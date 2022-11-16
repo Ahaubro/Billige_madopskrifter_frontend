@@ -22,6 +22,7 @@ export type Recipe = {
     prepTime: number,
     numberOfPersons: number,
     estimatedPrice: number,
+    description: string,
     userId: number
 }
 
@@ -45,7 +46,7 @@ export const RecipeAPI = createApi({
             invalidatesTags: ["Recipe"]
         }),
 
-        //Get all recipes
+        //Get all recipes by userId
         getRecipesByUserId: builder.query<{ recipes: Recipe[] }, number>({
             query: userId => `api/recipe/byUserid/${userId}`,
             providesTags: ["Recipe"]

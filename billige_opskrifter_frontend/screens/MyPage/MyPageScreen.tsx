@@ -32,7 +32,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   useEffect(() => {
     if (fetchedRecipesByUserId.data) {
       userRecipeList = fetchedRecipesByUserId.data?.recipes
-      console.log(fetchedRecipesByUserId.data?.recipes)
+      console.log(fetchedRecipesByUserId.data.recipes)
     }
   }, [fetchedRecipesByUserId.data])
 
@@ -53,26 +53,45 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         text='Min side'
       />
 
-      <View style={{paddingTop: 500}}>
+      <View style={{ paddingTop: 500 }}>
 
         {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
           <>
-            <Text style={{fontSize: 14, fontWeight: '700'}}>Authored recipes:</Text>
+            <Text style={{ fontSize: 14, fontWeight: '700' }}>Authored recipes:</Text>
+
+
             <View style={style.recipeCards}>
               <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
                 return (
                   <>
-                    <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
-                      <View style={style.authoredRecipes}>
-                        <Text>{item.name}</Text>
-                        <Text>{item.type}</Text>
-                        <Text>{item.estimatedPrice}</Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        navigation.navigate("SelectedRecipeScreen", {
+                          id: item.id,
+                          name: item.name,
+                          type: item.type,
+                          prepTime: item.prepTime,
+                          estimatedPrice: item.estimatedPrice,
+                          numberOfPersons: item.numberOfPersons,
+                          description: item.description,
+                          userId: item.userId,
+                        })
+                      }}
+                    >
+                      <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
+                        <View style={style.authoredRecipes}>
+                          <Text>{item.name}</Text>
+                          <Text>{item.type}</Text>
+                          <Text>{item.estimatedPrice}</Text>
+                          <Text>{item.description}</Text>
+                        </View>
                       </View>
-                    </View>
+                    </TouchableOpacity>
                   </>
                 )
               }} />
             </View>
+
           </>
         }
 
@@ -89,7 +108,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
       </View>
 
-    </ViewContainer>
+    </ViewContainer >
   )
 }
 

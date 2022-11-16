@@ -15,5 +15,19 @@ export type MyPageNavigationParameters = {
     },
     AddRecipeDescription: {
         recipeId: number
+    },
+    SelectedRecipeScreen: {
+        id: number,
+        name: string,
+        type: string,
+        prepTime: number,
+        estimatedPrice: number,
+        numberOfPersons: number,
+        description: string,
+        userId: number,
+    },
+    CreateReviewScreen:{
+        id: number,
+        userId: number
     }
 }

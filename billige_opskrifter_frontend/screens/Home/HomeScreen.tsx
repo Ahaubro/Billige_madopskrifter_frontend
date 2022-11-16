@@ -7,7 +7,7 @@ import { FONTS } from '../../utils/fontUtils'
 import i18n from 'i18n-js'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import Header from '../../components/Header'
+import HeaderWithoutBack from '../../components/HeaderWithoutBack'
 import ViewContainer from "../../components/ViewContainer"
 
 interface HomeScreenProps {}
@@ -20,8 +20,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <ViewContainer>
       
-      <Header
-        text="Hjem"
+      <HeaderWithoutBack 
+        text='Home'
       />
 
     </ViewContainer>

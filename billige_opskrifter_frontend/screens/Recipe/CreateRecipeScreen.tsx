@@ -53,6 +53,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </TextInput>
 
             <Text style={style.label}>Typen af opskrift:</Text>
+            {/* INDSÆT PICKER / SELECT */}
             <TextInput style={style.input} 
                 onChangeText={ (type) => {
                     createAtr.type = type
@@ -94,8 +95,8 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                     if(createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "" ){
                         create(createAtr).unwrap().then( res => {
                             console.log(res)
-                            navigation.navigate("AddIngredient", {name})
                         })
+                        navigation.navigate("AddIngredient", {name});
                     } else { console.log("Udfyld felterne") }
                 }}
             />
