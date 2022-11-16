@@ -25,20 +25,22 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
   const session = useSelector((state: RootState) => state.session)
 
+  //Fetcher brugerens opskrifter og gemmer dem på en liste
   const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
-
-  let userRecipeList: Recipe[] = []
+  const [userRecipeList, setUserRecipeList] = useState<Recipe[]>([]);
 
   useEffect(() => {
     if (fetchedRecipesByUserId.data) {
-      userRecipeList = fetchedRecipesByUserId.data?.recipes
-      console.log(fetchedRecipesByUserId.data.recipes)
+      setUserRecipeList(fetchedRecipesByUserId.data?.recipes)
     }
   }, [fetchedRecipesByUserId.data])
+
+
 
   return (
     <ViewContainer>
 
+        {/* Navigate to settings */}
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
         <TouchableOpacity
           onPress={() => {
@@ -49,17 +51,18 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
+
+      {/* Header for MyPage */}
       <Header
         text='Min side'
       />
 
+
+      {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
       <View style={{ paddingTop: 200 }}>
-
-        {(fetchedRecipesByUserId.data?.recipes && fetchedRecipesByUserId.data?.recipes) &&
+        <Text style={{ fontSize: 14, fontWeight: '700' }}>Authored recipes:</Text>
+        {userRecipeList.length > 0 ?
           <>
-            <Text style={{ fontSize: 14, fontWeight: '700' }}>Authored recipes:</Text>
-
-
             <View>
               <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
                 return (
@@ -93,8 +96,14 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
             </View>
 
           </>
+
+          :
+
+          <Text style={{textAlign: 'center', paddingVertical: 15}}>Lav din første opskrift idag!</Text>
         }
 
+
+        {/* Opret ny opskrfit  */}
         <View style={{ paddingVertical: 10 }}></View>
 
         <AuthPressable

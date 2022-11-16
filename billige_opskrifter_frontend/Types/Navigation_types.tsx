@@ -33,6 +33,9 @@ export type MyPageNavigationParameters = {
 }
 
 export type RecipeNavigationParameters = {
-    ChooseRecipe: undefined
+    ChooseRecipe: undefined,
+    RecipesScreen: {
+        type: string
+    }
 }
 

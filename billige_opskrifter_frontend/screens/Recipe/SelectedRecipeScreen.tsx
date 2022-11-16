@@ -33,7 +33,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
 
     const thisRecipesReviews = useGetReviewsByRecipeIdQuery(id)
-
     const [listOfReviews, setListOfReviews] = useState<Review[]>([]);
 
     useEffect(() => {
@@ -77,7 +76,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ paddingVertical: 5 }}></View>
 
 
-            {/* Læser ingredienser til opskriften */}
+            {/* Displayer ingredienser til opskriften */}
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={style.card}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Ingredienser:</Text>
@@ -114,8 +113,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             <View style={{ paddingVertical: 5 }}></View>
 
-            {/* Læser opskriftens reviews */}
 
+            {/* Læser opskriftens reviews */}
             <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
             {listOfReviews.length > 0 ?
                 <FlatList
@@ -138,7 +137,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                 ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
                                             />
                                         </View>
-                                        <Text style={{textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
+                                        <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
                                     </View>
                                 </View>
                             </>
@@ -154,6 +153,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             <View style={{ paddingVertical: 5 }}></View>
 
+
+            {/* Nyt review */}
             <AuthPressable
                 text='Nyt review'
                 color='#86DB9D'
@@ -162,7 +163,19 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 }}
             />
 
+            <View style={{ paddingVertical: 5 }}></View>
 
+
+            {/* SLET OPSKRIFT HVIS USER ER AUTHOR */}
+            {userId == session.id &&
+                <AuthPressable
+                    text='Slet opskrift'
+                    color='#FF9C9C'
+                    onPress={() => {
+
+                    }}
+                />
+            }
         </ViewContainer>
     )
 }
