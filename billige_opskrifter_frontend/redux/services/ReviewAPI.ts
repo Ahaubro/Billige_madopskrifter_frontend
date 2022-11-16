@@ -32,7 +32,7 @@ export const ReviewAPI = createApi({
         //Create review
         create: builder.mutation<
         {statusText: string },
-        {id: number, userId: number, recipeId: number, content: string, rating: number}>
+        {userId: number, recipeId: number, content: string, rating: number}>
         ({
             query: body => ({
                 url: "api/review",

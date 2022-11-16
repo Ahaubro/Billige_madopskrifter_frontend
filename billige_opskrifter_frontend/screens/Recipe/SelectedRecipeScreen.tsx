@@ -13,6 +13,7 @@ import { useGetByRecipeIdQuery } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
 import AuthPressable from '../../components/AuthPressable'
+import { AirbnbRating } from 'react-native-ratings'
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -126,8 +127,18 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             <>
                                 <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
                                     <View style={style.card}>
-                                        <Text>{item.content}</Text>
-                                        <Text>{item.rating}</Text>
+                                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
+                                            <AirbnbRating
+                                                reviewSize={16}
+                                                reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
+                                                reviewColor={'black'}
+                                                defaultRating={item.rating}
+                                                size={20}
+                                                isDisabled={true}
+                                                ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                                            />
+                                        </View>
+                                        <Text style={{textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
                                     </View>
                                 </View>
                             </>
@@ -143,11 +154,11 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             <View style={{ paddingVertical: 5 }}></View>
 
-            <AuthPressable 
+            <AuthPressable
                 text='Nyt review'
                 color='#86DB9D'
-                onPress={ () => {
-                    navigation.navigate("CreateReviewScreen", {id, userId})
+                onPress={() => {
+                    navigation.navigate("CreateReviewScreen", { id, userId })
                 }}
             />
 
