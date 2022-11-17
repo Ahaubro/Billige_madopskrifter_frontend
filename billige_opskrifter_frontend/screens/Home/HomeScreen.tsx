@@ -1,8 +1,8 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import HeaderWithoutBack from '../../components/HeaderWithoutBack'
+import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 
 interface HomeScreenProps {}
@@ -15,9 +15,11 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   return (
     <ViewContainer>
       
-      <HeaderWithoutBack 
-        text='Home'
-      />
+      <View style={{paddingTop: 30}}>
+        <Header
+          text='Min side'
+        />
+      </View>
 
     </ViewContainer>
   )

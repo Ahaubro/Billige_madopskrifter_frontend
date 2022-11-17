@@ -2,23 +2,24 @@ import React, { ReactNode } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
 interface BackArrowContainerProps {
-    children: ReactNode
+  children: ReactNode
 }
 
 const BackArrowContainer: React.FC<BackArrowContainerProps> = (BackArrowContainerProps) => {
 
   return (
     <View style={style.container}>
-      {BackArrowContainerProps.children}
+      <View style={{paddingTop: 30}}>
+        {BackArrowContainerProps.children}
+      </View>
     </View>
   )
 }
 
 const style = StyleSheet.create({
-    container:{
-        justifyContent: 'flex-start',
-        paddingTop: 30
-    }
+  container: {
+    justifyContent: 'flex-start',
+  }
 })
 
 export default BackArrowContainer

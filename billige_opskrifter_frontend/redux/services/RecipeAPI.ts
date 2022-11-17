@@ -33,7 +33,7 @@ export const RecipeAPI = createApi({
     tagTypes: ["Recipe"],
     endpoints: builder => ({
 
-        //Create
+        //Create recipe
         create: builder.mutation<
             { statusText: string, name: string },
             { name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }
@@ -58,6 +58,12 @@ export const RecipeAPI = createApi({
             providesTags: ["Recipe"]
         }),
 
+        //Get recipes by type
+        getRecipesByType: builder.query<{ recipes: Recipe[] }, string>({
+            query: type => `api/recipe/getbytype/${type}`,
+            providesTags: ["Recipe"]
+        }),
+
         //Edit funktion der for nu opdatere beskrivelsen til en opskrift
         edit: builder.mutation<
         { statusText: string },
@@ -70,9 +76,22 @@ export const RecipeAPI = createApi({
             }),
             invalidatesTags: ["Recipe"]
         }),
+
+        //Delete recipe
+        deleteRecipe: builder.mutation<
+        {statusText: string},
+        {recipeId: number}
+        >({
+            query: body => ({
+                url: `api/recipe/${body.recipeId}`,
+                method: 'DELETE',
+                body
+            }),
+            invalidatesTags:["Recipe"]
+        })
     }),
 
 })
 
 
-export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation } = RecipeAPI
+export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation, useGetRecipesByTypeQuery, useDeleteRecipeMutation } = RecipeAPI

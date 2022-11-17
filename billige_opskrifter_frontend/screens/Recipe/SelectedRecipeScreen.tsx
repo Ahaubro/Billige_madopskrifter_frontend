@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useGetByRecipeIdQuery } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
+import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
 
@@ -32,6 +33,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
 
+    const [deleteRecipe] = useDeleteRecipeMutation();
+    const [deleteRecipeAtr] = useState<{recipeId: number}>({recipeId: id});
+
     const thisRecipesReviews = useGetReviewsByRecipeIdQuery(id)
     const [listOfReviews, setListOfReviews] = useState<Review[]>([]);
 
@@ -41,7 +45,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
         }
     }, [thisRecipesReviews.data])
 
-    console.log(listOfReviews)
 
     return (
         <ViewContainer>
@@ -172,7 +175,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     text='Slet opskrift'
                     color='#FF9C9C'
                     onPress={() => {
-
+                        deleteRecipe(deleteRecipeAtr);
+                        navigation.pop();
                     }}
                 />
             }

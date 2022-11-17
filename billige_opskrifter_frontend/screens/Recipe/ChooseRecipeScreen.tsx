@@ -18,7 +18,7 @@ type ChooseRecipeScreenProps = {
   route: ChooseRecipeScreenRouteProps
 }
 
-const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ( { navigation, route } ) => {
+const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, route }) => {
 
   const session = useSelector((state: RootState) => state.session)
 
@@ -39,9 +39,8 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ( { navigation, ro
       <ChooseRecipePressable
         text='Morgenmad'
         onPress={() => {
-          //Til morgenmad
           const type = "Morgenmad"
-          navigation.navigate("RecipesScreen", {type})
+          navigation.navigate("RecipesScreen", { type })
         }}
       />
 
@@ -50,9 +49,8 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ( { navigation, ro
       <ChooseRecipePressable
         text='Aftensmad'
         onPress={() => {
-          //Til middagsmad
           const type = "Aftensmad"
-          navigation.navigate("RecipesScreen", {type})
+          navigation.navigate("RecipesScreen", { type })
         }}
       />
 
@@ -61,9 +59,18 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ( { navigation, ro
       <ChooseRecipePressable
         text='Dessert'
         onPress={() => {
-          //Til dessert
           const type = "Dessert"
-          navigation.navigate("RecipesScreen", {type})
+          navigation.navigate("RecipesScreen", { type })
+        }}
+      />
+
+      <View style={{ paddingTop: 15 }}></View>
+
+      <ChooseRecipePressable
+        text='Snacks'
+        onPress={() => {
+          const type = "Snacks"
+          navigation.navigate("RecipesScreen", { type })
         }}
       />
 

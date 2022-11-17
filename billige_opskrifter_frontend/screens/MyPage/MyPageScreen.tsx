@@ -36,11 +36,10 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   }, [fetchedRecipesByUserId.data])
 
 
-
   return (
     <ViewContainer>
 
-        {/* Navigate to settings */}
+      {/* Navigate to settings */}
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
         <TouchableOpacity
           onPress={() => {
@@ -53,9 +52,11 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Header for MyPage */}
-      <Header
-        text='Min side'
-      />
+      <View style={{}}>
+        <Header
+          text='Min side'
+        />
+      </View>
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
@@ -99,7 +100,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
           :
 
-          <Text style={{textAlign: 'center', paddingVertical: 15}}>Lav din første opskrift idag!</Text>
+          <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Lav din første opskrift idag!</Text>
         }
 
 
@@ -127,8 +128,8 @@ const style = StyleSheet.create({
     width: Dimensions.get("window").width / 100 * 94,
     borderRadius: 15,
     paddingVertical: 8,
-    minHeight: 200,
-    maxHeight: 200,
+    minHeight: 150,
+    maxHeight: 150,
     overflowY: 'scroll',
     padding: 10
   },

@@ -50,6 +50,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                 text='Skriv et review'
             />
 
+            {/* React native conmponent react-native-ratings bruges her til at lave en flot repræsentation af review rating */}
             <View style={{ paddingHorizontal: 25, paddingVertical: 35 }}>
                 <AirbnbRating
                     reviewSize={16}
@@ -57,7 +58,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                     reviewColor={'black'}
                     defaultRating={3}
                     size={20}
-                    ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                    ratingContainerStyle={{ backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between' }}
                     onFinishRating={ (rating) => {
                         if(rating != 0){
                             createreviewAtr.rating = rating
@@ -68,6 +69,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                 />
             </View>
 
+            
             <View>
                 <Text>Hvordan var maden?</Text>
                 <TextInput

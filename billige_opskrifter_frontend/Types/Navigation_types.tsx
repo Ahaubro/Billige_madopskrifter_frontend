@@ -36,6 +36,16 @@ export type RecipeNavigationParameters = {
     ChooseRecipe: undefined,
     RecipesScreen: {
         type: string
-    }
+    },
+    SelectedRecipeScreen: {
+        id: number,
+        name: string,
+        type: string,
+        prepTime: number,
+        estimatedPrice: number,
+        numberOfPersons: number,
+        description: string,
+        userId: number,
+    },
 }
 
