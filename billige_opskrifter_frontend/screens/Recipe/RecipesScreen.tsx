@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
@@ -59,7 +59,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
             {/* Her skal der være en search bar med sorteringsmuligheder */}
             <View style={style.inputContainer}>
-                <View style={{paddingLeft: 20}}>
+                <View style={{ paddingLeft: 20 }}>
                     <Ionicons name="search-outline" size={28} color="black" />
                 </View>
                 <TextInput style={style.input} placeholder="Søg efter opskrift">
@@ -76,7 +76,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 onPress={() => {
                     const getRandom = Math.floor(Math.random() * recipeList.length);
                     var random = recipeList[getRandom]
-                    
+
                     navigation.navigate("SelectedRecipeScreen", {
                         id: random.id,
                         name: random.name,
@@ -121,9 +121,13 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                 >
                                     <View style={{ paddingBottom: 15 }}>
                                         <View style={style.card}>
-                                            <Text> <Text style={{ fontWeight: '700' }}>Opskriftens titel:</Text> {item.name}</Text>
-                                            <Text> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                            <Text> <Text style={{ fontWeight: '700' }}>Til personer:</Text> {item.numberOfPersons}</Text>
+                                            <Text style={style.title}> {item.name}</Text>
+                                            <View style={{borderBottomWidth: 0.5, borderBottomColor: 'grey'}}></View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Til personer:</Text> {item.numberOfPersons}</Text>
+                                            </View>
+
                                         </View>
                                     </View>
                                 </TouchableOpacity>
@@ -148,7 +152,8 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-
+        minHeight: Dimensions.get("window").height / 100 * 12,
+        maxHeight: Dimensions.get("window").height / 100 * 12,
     },
     inputContainer: {
         flexDirection: "row",
@@ -168,6 +173,18 @@ const style = StyleSheet.create({
         outline: 'none',
         paddingLeft: 15
     },
+    title: {
+        fontSize: 18,
+        fontWeight: '600',
+        textAlign: 'center',
+        paddingVertical: 10
+    },
+    estPrice: {
+        paddingTop: 15
+    },
+    prepTime: {
+        paddingTop: 15
+    }
 })
 
 export default RecipesScreen

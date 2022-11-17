@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
@@ -33,17 +33,24 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
         recipeId = thisRecipe.data.id
     }
 
-    console.log(recipeId)
-
-    //Ved create knappe - tjek at recipeId != 0
-
 
     const [addIngredient] = useCreateMutation();
     const [addIngredientAtr, setAddIngredientAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
 
+    // const nameRef = useRef(null);
+    // const typeRef = useRef(null);
+    // const measureUnitRef = useRef(null);
+    // const amountRef = useRef(null);
+    // const alerRef = useRef(null);
 
-
+    // const handleSubmit = () => {
+    //     nameRef.current.value = ""
+    //     typeRef.current.value = ""
+    //     measureUnitRef.current.value = ""
+    //     amountRef.current.value = ""
+    //     alerRef.current.value = ""
+    // }
 
     return (
         <ViewContainer>
@@ -53,7 +60,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             />
 
             <Text style={style.label}>Navn på ingrediensen:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                //ref={nameRef}
+                style={style.input}
                 onChangeText={(name) => {
                     addIngredientAtr.name = name
                 }}
@@ -61,7 +70,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             </TextInput>
 
             <Text style={style.label}>Ingrediens type:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                //ref={typeRef}
+                style={style.input}
                 onChangeText={(type) => {
                     addIngredientAtr.type = type
                 }}
@@ -69,7 +80,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             </TextInput>
 
             <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                //ref={measureUnitRef}
+                style={style.input}
                 onChangeText={(mu) => {
                     addIngredientAtr.measurementUnit = mu
                 }}
@@ -77,7 +90,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             </TextInput>
 
             <Text style={style.label}>Mængde:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                //ref={amountRef}
+                style={style.input}
                 onChangeText={(amount) => {
                     addIngredientAtr.amount = Number(amount)
                 }}
@@ -86,7 +101,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             </TextInput>
 
             <Text style={style.label}>Alergener:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                //ref={alerRef}
+                style={style.input}
                 onChangeText={(alergene) => {
                     addIngredientAtr.alergene = alergene
                 }}
@@ -101,7 +118,6 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 onPress={() => {
                     if (recipeId != 0) {
                         addIngredientAtr.recipeId = recipeId
-                        console.log(addIngredientAtr)
                         addIngredient(addIngredientAtr).unwrap().then(res => {
                             console.log(res)
                         })
@@ -118,10 +134,10 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 onPress={() => {
                     if (recipeId != 0) {
                         addIngredientAtr.recipeId = recipeId
-                        console.log(addIngredientAtr)
                         addIngredient(addIngredientAtr).unwrap().then(res => {
                             console.log(res)
                         })
+                        //handleSubmit();
                     }
 
                 }}

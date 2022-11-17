@@ -17,7 +17,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       
       <View style={{paddingTop: 30}}>
         <Header
-          text='Min side'
+          text='Hjem'
         />
       </View>
 

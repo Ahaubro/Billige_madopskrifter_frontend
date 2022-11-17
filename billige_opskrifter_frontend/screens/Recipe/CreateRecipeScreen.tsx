@@ -11,6 +11,7 @@ import Header from '../../components/Header'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { Ionicons } from '@expo/vector-icons';
 import AuthPressable from '../../components/AuthPressable'
+import { Picker } from '@react-native-picker/picker';
 
 
 type CreateRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'CreateRecipe'>
@@ -28,6 +29,8 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
     const [create] = useCreateMutation();
     const [createAtr, setCreateAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
         ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
+
+    const [selectedType, setSelectedType] = useState();
 
     return (
         <ViewContainer>
@@ -54,12 +57,26 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <Text style={style.label}>Typen af opskrift:</Text>
             {/* INDSÆT PICKER / SELECT */}
-            <TextInput style={style.input} 
+            {/* <TextInput style={style.input} 
                 onChangeText={ (type) => {
                     createAtr.type = type
                 }}
             >
-            </TextInput>
+            </TextInput> */}
+            <Picker 
+                style={style.input}
+                selectedValue={selectedType}
+                onValueChange={ (type: string) => {
+                    if(type.length > 1){
+                        createAtr.type = type
+                    } 
+                }}
+            >
+                <Picker.Item label='Morgenmad' value="Morgenmad" />
+                <Picker.Item label='Aftensmad' value="Aftensmad" />
+                <Picker.Item label='Dessert' value="Dessert" />
+                <Picker.Item label='Snacks' value="Snacks" />
+            </Picker>
 
             <Text style={style.label}>Tilberedningstid i mintuer:</Text>
             <TextInput style={style.input} 
@@ -92,6 +109,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 color='#86DB9D'
                 onPress={ () => {
                     let name: string = createAtr.name
+                    if(createAtr.type == ""){
+                        createAtr.type = "Morgenmad"
+                    }
                     if(createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "" ){
                         create(createAtr).unwrap().then( res => {
                             console.log(res)
