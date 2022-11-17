@@ -96,9 +96,9 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
             {/* Her skal opskrifterne præsenteres i kort */}
 
-            <View style={{ paddingTop: 30 }}></View>
+            <View style={{ paddingTop: 50 }}></View>
 
-            <View>
+            <View style={{maxHeight: Dimensions.get("window").height / 100 * 65, flex: 1}}>
                 <FlatList
                     data={recipeList}
                     renderItem={({ item, index }) => {
@@ -125,7 +125,12 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                             <View style={{borderBottomWidth: 0.5, borderBottomColor: 'grey'}}></View>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                 <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Til personer:</Text> {item.numberOfPersons}</Text>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+                                                
                                             </View>
 
                                         </View>
@@ -152,8 +157,8 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 12,
-        maxHeight: Dimensions.get("window").height / 100 * 12,
+        minHeight: Dimensions.get("window").height / 100 * 14,
+        maxHeight: Dimensions.get("window").height / 100 * 14,
     },
     inputContainer: {
         flexDirection: "row",
@@ -177,10 +182,11 @@ const style = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         textAlign: 'center',
-        paddingVertical: 10
+        paddingBottom: 10
     },
     estPrice: {
-        paddingTop: 15
+        paddingTop: 15,
+        marginLeft: -10
     },
     prepTime: {
         paddingTop: 15

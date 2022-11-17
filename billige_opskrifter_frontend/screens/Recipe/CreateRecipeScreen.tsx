@@ -47,29 +47,14 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 text='Ny opskrift'
             />
 
-            <Text style={style.label}>Navnet på opskrfiten:</Text>
-            <TextInput style={style.input} 
-                onChangeText={ (name) => {
-                    createAtr.name = name
-                }}
-            >
-            </TextInput>
-
             <Text style={style.label}>Typen af opskrift:</Text>
-            {/* INDSÆT PICKER / SELECT */}
-            {/* <TextInput style={style.input} 
-                onChangeText={ (type) => {
-                    createAtr.type = type
-                }}
-            >
-            </TextInput> */}
-            <Picker 
+            <Picker
                 style={style.input}
                 selectedValue={selectedType}
-                onValueChange={ (type: string) => {
-                    if(type.length > 1){
+                onValueChange={(type: string) => {
+                    if (type.length > 1) {
                         createAtr.type = type
-                    } 
+                    }
                 }}
             >
                 <Picker.Item label='Morgenmad' value="Morgenmad" />
@@ -78,45 +63,53 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 <Picker.Item label='Snacks' value="Snacks" />
             </Picker>
 
+            <Text style={style.label}>Navnet på opskrfiten:</Text>
+            <TextInput style={style.input}
+                onChangeText={(name) => {
+                    createAtr.name = name
+                }}
+            >
+            </TextInput>
+
             <Text style={style.label}>Tilberedningstid i mintuer:</Text>
-            <TextInput style={style.input} 
-                onChangeText={ (tb) => {
+            <TextInput style={style.input}
+                onChangeText={(tb) => {
                     createAtr.prepTime = Number(tb)
                 }}
             >
             </TextInput>
 
             <Text style={style.label}>Antal personer:</Text>
-            <TextInput style={style.input} 
-                onChangeText={ (persons) => {
+            <TextInput style={style.input}
+                onChangeText={(persons) => {
                     createAtr.numberOfPersons = Number(persons)
                 }}
             >
             </TextInput>
 
             <Text style={style.label}>Ca. Pris:</Text>
-            <TextInput style={style.input} 
-                onChangeText={ (price) => {
+            <TextInput style={style.input}
+                onChangeText={(price) => {
                     createAtr.estimatedPrice = Number(price)
                 }}
             >
             </TextInput>
-            
-            <View style={{paddingTop: 10}}></View>
 
-            <AuthPressable 
+            <View style={{ paddingTop: 10 }}></View>
+
+            <AuthPressable
                 text='Tilføj ingredienser'
                 color='#86DB9D'
-                onPress={ () => {
+                onPress={() => {
                     let name: string = createAtr.name
-                    if(createAtr.type == ""){
+                    if (createAtr.type == "") {
                         createAtr.type = "Morgenmad"
                     }
-                    if(createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "" ){
-                        create(createAtr).unwrap().then( res => {
+                    if (createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "") {
+                        create(createAtr).unwrap().then(res => {
                             console.log(res)
                         })
-                        navigation.navigate("AddIngredient", {name});
+                        navigation.navigate("AddIngredient", { name });
                     } else { console.log("Udfyld felterne") }
                 }}
             />
