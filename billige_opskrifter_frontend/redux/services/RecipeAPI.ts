@@ -64,6 +64,12 @@ export const RecipeAPI = createApi({
             providesTags: ["Recipe"]
         }),
 
+        //Search recipes by type and query
+        searchRecipes: builder.query<{recipes: Recipe[] }, {type: string, query: string}>({
+            query: ({type, query}) => `api/recipe/search/${type}/${query}`,
+            providesTags: ["Recipe"]
+        }),
+
         //Edit funktion der for nu opdatere beskrivelsen til en opskrift
         edit: builder.mutation<
         { statusText: string },
@@ -94,4 +100,4 @@ export const RecipeAPI = createApi({
 })
 
 
-export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation, useGetRecipesByTypeQuery, useDeleteRecipeMutation } = RecipeAPI
+export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation, useGetRecipesByTypeQuery, useDeleteRecipeMutation, useSearchRecipesQuery } = RecipeAPI

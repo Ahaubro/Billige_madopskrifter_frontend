@@ -8,7 +8,7 @@ import { RouteProp } from '@react-navigation/native'
 import { RecipeNavigationParameters } from '../../Types/Navigation_types'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { Ionicons } from '@expo/vector-icons';
-import { Recipe, useGetRecipesByTypeQuery } from "../../redux/services/RecipeAPI"
+import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../redux/services/RecipeAPI"
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Header from '../../components/Header'
 
@@ -27,8 +27,9 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     const session = useSelector((state: RootState) => state.session)
 
     const { type } = route.params
-    const recipes = useGetRecipesByTypeQuery(type)
 
+    //Forming first selection by type
+    const recipes = useGetRecipesByTypeQuery(type)
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
 
     useEffect(() => {
@@ -36,6 +37,15 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             setRecipeList(recipes.data.recipes)
         }
     }, [recipes.data]);
+
+
+    //For search query
+    const [searchQueryAtr, setSearchQueryAtr] = useState<{ type: string, query: string }>({ type: "", query: "" });
+    const recipeSearch = useSearchRecipesQuery(searchQueryAtr, {refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0});
+
+    useEffect( () => {
+        setRecipeList(recipeSearch.data?.recipes ?? [])
+    }, [recipeSearch.data])
 
 
 
@@ -62,7 +72,15 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 <View style={{ paddingLeft: 20 }}>
                     <Ionicons name="search-outline" size={28} color="black" />
                 </View>
-                <TextInput style={style.input} placeholder="Søg efter opskrift">
+                <TextInput style={style.input} placeholder="Søg efter opskrift"
+                    onChangeText={(q) => {
+                        //Evt throttle eller debounce
+                        if(q.length > 2){
+                            setSearchQueryAtr({type: type, query: q})
+                            console.log(searchQueryAtr)
+                        }
+                    }}
+                >
 
                 </TextInput>
             </View>
@@ -98,7 +116,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
             <View style={{ paddingTop: 50 }}></View>
 
-            <View style={{maxHeight: Dimensions.get("window").height / 100 * 65, flex: 1}}>
+            <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65, flex: 1 }}>
                 <FlatList
                     data={recipeList}
                     renderItem={({ item, index }) => {
@@ -122,7 +140,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                     <View style={{ paddingBottom: 15 }}>
                                         <View style={style.card}>
                                             <Text style={style.title}> {item.name}</Text>
-                                            <View style={{borderBottomWidth: 0.5, borderBottomColor: 'grey'}}></View>
+                                            <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                 <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
                                                 <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
@@ -130,7 +148,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                 <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
                                                 <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-                                                
+
                                             </View>
 
                                         </View>
