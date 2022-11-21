@@ -115,7 +115,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
             <View style={{ paddingTop: 50 }}></View>
 
-            <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65, flex: 1 }}>
+            <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65 }}>
 
 
                 {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES */}
@@ -226,11 +226,11 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
 const style = StyleSheet.create({
     card: {
-        backgroundColor: '#DFFEFF',
+        backgroundColor: '#E6FBFF',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 14,
-        maxHeight: Dimensions.get("window").height / 100 * 14,
+        minHeight: Dimensions.get("window").height / 100 * 20,
+        maxHeight: Dimensions.get("window").height / 100 * 20,
     },
     inputContainer: {
         flexDirection: "row",

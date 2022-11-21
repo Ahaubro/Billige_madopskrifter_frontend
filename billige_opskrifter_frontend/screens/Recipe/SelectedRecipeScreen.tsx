@@ -15,7 +15,7 @@ import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/Revie
 import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
-import { LikedRecipe, useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
+import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -162,7 +162,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
             {listOfReviews.length > 0 ?
                 <FlatList
-                    style={{ flex: 1, flexWrap: 'wrap' }}
+                    style={{ flexWrap: 'wrap' }}
                     horizontal={true}
                     data={thisRecipesReviews.data?.reviews || []}
                     renderItem={({ item, index }) => {

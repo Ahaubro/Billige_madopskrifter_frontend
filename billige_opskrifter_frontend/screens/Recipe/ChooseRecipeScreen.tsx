@@ -2,12 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import HeaderWithoutBack from '../../components/HeaderWithoutBack'
 import ViewContainer from "../../components/ViewContainer"
 import ChooseRecipePressable from '../../components/ChooseRecipePressable'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { RecipeNavigationParameters } from '../../Types/Navigation_types'
+import Header from '../../components/Header'
 
 
 type ChooseRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'ChooseRecipe'>
@@ -30,7 +30,7 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
   return (
     <ViewContainer>
 
-      <HeaderWithoutBack
+      <Header
         text='Opskrifter'
       />
 

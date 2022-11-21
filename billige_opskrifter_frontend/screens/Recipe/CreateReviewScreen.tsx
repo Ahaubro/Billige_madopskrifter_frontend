@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import HeaderWithoutBack from '../../components/HeaderWithoutBack'
 import ViewContainer from "../../components/ViewContainer"
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
@@ -13,6 +12,7 @@ import { AirbnbRating } from 'react-native-ratings';
 import { TextInput } from 'react-native-gesture-handler'
 import { useCreateMutation } from "../../redux/services/ReviewAPI"
 import AuthPressable from '../../components/AuthPressable'
+import Header from '../../components/Header'
 
 
 type CreateReviewScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "CreateReviewScreen">
@@ -46,7 +46,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                 </Pressable>
             </BackArrowContainer>
 
-            <HeaderWithoutBack
+            <Header
                 text='Skriv et review'
             />
 
