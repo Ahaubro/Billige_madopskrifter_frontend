@@ -24,13 +24,13 @@ const ChooseRecipePressable: React.FC<ChooseRecipePressableProps> = ({ text, onP
 const style = StyleSheet.create({
    btn:{
     borderRadius: 15,
-    textAlign: 'center',
     paddingVertical: 25,
    },
    text:{
     fontWeight: '700',
     color: 'white',
-    fontSize: 18
+    fontSize: 18,
+    textAlign: 'center',
    }
 })
 

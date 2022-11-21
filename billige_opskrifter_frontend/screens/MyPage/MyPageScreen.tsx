@@ -35,8 +35,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     }
   }, [fetchedRecipesByUserId.data])
 
-  console.log(userRecipeList)
-
 
   return (
     <ViewContainer>
@@ -54,7 +52,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Header for MyPage */}
-      <View style={{}}>
+      <View style={{ paddingTop: -5 }}>
         <Header
           text='Min side'
         />

@@ -30,9 +30,12 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
   return (
     <ViewContainer>
 
-      <Header
-        text='Opskrifter'
-      />
+      <View style={{ paddingTop: 30 }}>
+        <Header
+          text='Opskrifter'
+        />
+      </View>
+
 
       <View style={{ paddingTop: 100 }}></View>
 

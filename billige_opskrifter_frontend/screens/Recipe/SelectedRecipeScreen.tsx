@@ -16,6 +16,7 @@ import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeA
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
 import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
+import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -67,7 +68,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     // For at ændre knappens udseende - Lav getbyuseridandrecipeid er den = 0 like - findes den vis unlike
 
     return (
-        <ViewContainer>
+        <ScrollViewContainer>
             <BackArrowContainer>
                 <Pressable onPress={() => {
                     navigation.pop();
@@ -94,7 +95,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                         <Ionicons name="heart-dislike" style={{ textAlign: 'center' }} size={30} color="red" />
                         :
-                        <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="#FC7E7E" />
+                        <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="red" />
                     }
 
                 </Pressable>
@@ -221,7 +222,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     }}
                 />
             }
-        </ViewContainer>
+        </ScrollViewContainer>
     )
 }
 

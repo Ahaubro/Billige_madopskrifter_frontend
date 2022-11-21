@@ -25,11 +25,12 @@ const style = StyleSheet.create({
    btn:{
     borderRadius: 15,
     textAlign: 'center',
-    paddingVertical: 15,
+    paddingVertical: 20,
    },
    text:{
     fontWeight: '700',
-    color: 'white'
+    color: 'white',
+    textAlign: 'center'
    }
 })
 
