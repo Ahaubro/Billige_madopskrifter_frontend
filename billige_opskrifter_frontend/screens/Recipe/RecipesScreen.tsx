@@ -31,6 +31,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     //Forming first selection by type
     const recipes = useGetRecipesByTypeQuery(type)
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
+    const [searchList, setSearchList] = useState<Recipe[]>([]);
 
     useEffect(() => {
         if (recipes.data) {
@@ -44,9 +45,8 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     const recipeSearch = useSearchRecipesQuery(searchQueryAtr, {refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0});
 
     useEffect( () => {
-        setRecipeList(recipeSearch.data?.recipes ?? [])
+        setSearchList(recipeSearch.data?.recipes ?? [])
     }, [recipeSearch.data])
-
 
 
     return (
@@ -77,7 +77,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                         //Evt throttle eller debounce
                         if(q.length > 2){
                             setSearchQueryAtr({type: type, query: q})
-                            console.log(searchQueryAtr)
                         }
                     }}
                 >
@@ -107,7 +106,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                     })
                 }}
             >
-                <Text style={{ textAlign: 'center', fontWeight: '700' }}> Prøv lykken </Text>
+                <Text style={{ textAlign: 'center', fontWeight: '700', fontStyle: 'italic', color: 'blue' }}> Prøv lykken </Text>
             </TouchableOpacity>
 
 
@@ -117,6 +116,11 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             <View style={{ paddingTop: 50 }}></View>
 
             <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65, flex: 1 }}>
+
+
+                {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES */}
+                {searchList.length == 0 ?
+                         
                 <FlatList
                     data={recipeList}
                     renderItem={({ item, index }) => {
@@ -160,6 +164,56 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 >
 
                 </FlatList>
+
+                :
+
+                <FlatList
+                    data={searchList}
+                    renderItem={({ item, index }) => {
+                        return (
+                            <>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        navigation.navigate("SelectedRecipeScreen", {
+                                            id: item.id,
+                                            name: item.name,
+                                            type: item.type,
+                                            prepTime: item.prepTime,
+                                            estimatedPrice: item.estimatedPrice,
+                                            numberOfPersons: item.numberOfPersons,
+                                            description: item.description,
+                                            userId: item.userId,
+
+                                        })
+                                    }}
+                                >
+                                    <View style={{ paddingBottom: 15 }}>
+                                        <View style={style.card}>
+                                            <Text style={style.title}> {item.name}</Text>
+                                            <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+
+                                            </View>
+
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            </>
+                        )
+                    }}
+                >
+
+                </FlatList>
+
+
+            }
+
             </View>
 
 
@@ -172,7 +226,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
 const style = StyleSheet.create({
     card: {
-        backgroundColor: 'rgb(247,247,255)',
+        backgroundColor: '#DFFEFF',
         borderRadius: 15,
         padding: 12,
         minHeight: Dimensions.get("window").height / 100 * 14,

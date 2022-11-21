@@ -1,10 +1,10 @@
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import HomeScreen from '../screens/Home/HomeScreen'
+import HomeNavigator from "./CustomNavigators/HomeNavigator"
 import MyPageNavigator from "./CustomNavigators/MyPageNavigtor"
 import Ionicons from '@expo/vector-icons/Ionicons'
-import AuthNavigator from "./AuthNavigator"
+import AuthNavigator from "./CustomNavigators/AuthNavigator"
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import RecipeNavigator from './CustomNavigators/RecipeNavigator'
@@ -35,7 +35,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName
 
-            if (route.name === 'Home') {
+            if (route.name === 'HomeNavigator') {
               iconName = focused ? 'home' : 'home-outline'
             } else if (route.name === 'Settings') {
               iconName = focused ? 'ios-list' : 'ios-list-outline'
@@ -54,7 +54,7 @@ const Navigation: React.FC<NavigationProps> = () => {
 
         {session.token && session.token != 'abcdefg' &&
           <>
-            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{ title: "Hjem" }} />
             <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
             <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{ title: "Min side" }} />
           </>

@@ -15,6 +15,7 @@ import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/Revie
 import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
+import { LikedRecipe, useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -28,14 +29,18 @@ type SelectedRecipeScreenProps = {
 const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation, route }) => {
 
     const session = useSelector((state: RootState) => state.session)
+    const thisUser = session.id
 
     const { id, name, type, prepTime, numberOfPersons, estimatedPrice, description, userId } = route.params
 
+    //Getting the recipes ingrediens
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
 
+    //Delete recipe
     const [deleteRecipe] = useDeleteRecipeMutation();
-    const [deleteRecipeAtr] = useState<{recipeId: number}>({recipeId: id});
+    const [deleteRecipeAtr] = useState<{ recipeId: number }>({ recipeId: id });
 
+    //Recipe reviews 
     const thisRecipesReviews = useGetReviewsByRecipeIdQuery(id)
     const [listOfReviews, setListOfReviews] = useState<Review[]>([]);
 
@@ -45,6 +50,21 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
         }
     }, [thisRecipesReviews.data])
 
+
+    //For liking and checking if a recipe is liked
+    const [likeRecipe] = useAddLikedRecipeMutation();
+    const [likeRecipeAtr] = useState<{ userId: number, recipeId: number }>({ userId: thisUser, recipeId: id })
+
+    const checkLike = useLikeCheckQuery({ userId: thisUser, recipeId: id }, { refetchOnMountOrArgChange: true });
+    const [likedCheck, setLikeCheck] = useState<string>("")
+
+    useEffect(() => {
+        if (checkLike.data) {
+            setLikeCheck(checkLike.data.statusText);
+        }
+    }, [checkLike.data])
+
+    // For at ændre knappens udseende - Lav getbyuseridandrecipeid er den = 0 like - findes den vis unlike
 
     return (
         <ViewContainer>
@@ -59,6 +79,27 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <Header
                 text={name}
             />
+
+
+            {/* LIKE OPSKRIFT */}
+            <View style={{ paddingVertical: 15 }}>
+                <Pressable
+                    onPress={() => {
+                        likeRecipe(likeRecipeAtr).unwrap().then(res => {
+                            //console.log(res)
+                        });
+                    }}
+                >
+                    {likedCheck == "isLiked" ?
+
+                        <Ionicons name="heart-dislike" style={{ textAlign: 'center' }} size={30} color="red" />
+                        :
+                        <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="#FC7E7E" />
+                    }
+
+                </Pressable>
+            </View>
+
 
             {/* Displayer først prepTime, personer og pris */}
             <View style={{ flexDirection: 'row', paddingTop: 20, paddingBottom: 5 }}>
@@ -203,7 +244,8 @@ const style = StyleSheet.create({
         textAlign: 'justify',
         fontSize: 14,
         padding: 12
-    }
+    },
+
 })
 
 export default SelectedRecipeScreen

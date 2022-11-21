@@ -35,6 +35,8 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     }
   }, [fetchedRecipesByUserId.data])
 
+  console.log(userRecipeList)
+
 
   return (
     <ViewContainer>

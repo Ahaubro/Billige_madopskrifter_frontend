@@ -49,3 +49,17 @@ export type RecipeNavigationParameters = {
     },
 }
 
+export type HomeNavigationParameters = {
+    HomeScreen: undefined,
+    SelectedRecipeScreen: {
+        id: number,
+        name: string,
+        type: string,
+        prepTime: number,
+        estimatedPrice: number,
+        numberOfPersons: number,
+        description: string,
+        userId: number,
+    },
+}
+
