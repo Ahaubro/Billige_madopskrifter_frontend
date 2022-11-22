@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../redux/services/RecipeAPI"
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Header from '../../components/Header'
+import { Picker } from '@react-native-picker/picker'
 
 
 type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
@@ -37,6 +38,8 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
         if (recipes.data) {
             setRecipeList(recipes.data.recipes)
         }
+
+
     }, [recipes.data]);
 
 
@@ -49,8 +52,30 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     }, [recipeSearch.data])
 
 
-    //Sort modal
+    //Sorteringsmuligheder & sorterings modal
     const [isModalVisible, setModalVisible] = useState(false)
+    const [selectedSort, setSelectedSort] = useState("");
+    const sortedRecipes = [...recipeList]
+
+    useEffect( () => {
+        if(selectedSort == "fast"){
+            sortedRecipes.sort( (a, b) => (a.prepTime - b.prepTime))
+            setRecipeList(sortedRecipes)
+        } 
+        if(selectedSort == "slow"){
+            sortedRecipes.sort( (a, b) => (b.prepTime - a.prepTime))
+            setRecipeList(sortedRecipes)
+        }
+        if(selectedSort == "cheap"){
+            sortedRecipes.sort( (a, b) => (a.estimatedPrice - b.estimatedPrice))
+            setRecipeList(sortedRecipes)
+        }
+        if(selectedSort == "expensive"){
+            sortedRecipes.sort( (a, b) => (b.estimatedPrice - a.estimatedPrice))
+            setRecipeList(sortedRecipes)
+        }
+
+    }, [selectedSort])
 
 
     return (
@@ -106,12 +131,23 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                     transparent={true}
                 >
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 45 }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 65 }}>
                         <View style={style.modal}>
-                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600'}}>Filtrer søgning</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Sorteringsmuligheder</Text>
 
-                            <View>
-                                
+                            <View style={{marginTop: -40}}>
+                                <Picker
+                                    selectedValue={selectedSort}
+                                    onValueChange={(sort: string) => {
+                                        setSelectedSort(sort)
+                                        console.log(sort)                                     
+                                    }}
+                                >
+                                    <Picker.Item label='Dyreste pris' value="expensive" />
+                                    <Picker.Item label='Billigste pris' value="cheap" />
+                                    <Picker.Item label='Kort tilberedningstid' value="fast" />
+                                    <Picker.Item label='Lang tilberedningstid' value="slow" />
+                                </Picker>
                             </View>
 
 
@@ -120,7 +156,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                     setModalVisible(!isModalVisible);
                                 }}
                             >
-                                <Ionicons style={{textAlign: 'center'}} name="close-outline" size={28} color="black" />
+                                <Ionicons style={{ textAlign: 'center', marginTop: -20 }} name="close-outline" size={50} color="black" />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -163,7 +199,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65 }}>
 
 
-                {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES */}
+                {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES*/}
                 {searchList.length == 0 ?
 
                     <FlatList
@@ -309,12 +345,17 @@ const style = StyleSheet.create({
         paddingTop: 15
     },
     modal: {
-        height: Dimensions.get("window").height / 100 * 20,
-        width: Dimensions.get("window").width / 100 * 95,
+        height: Dimensions.get("window").height / 100 * 37,
+        width: Dimensions.get("window").width / 100 * 97,
         backgroundColor: "rgb(247,247,255)",
         padding: 20,
-        borderRadius: 10,
-        borderColor: "white"
+        borderRadius: 15,
+        borderColor: "grey",
+        shadowColor: 'black',
+        shadowOffset: {width: 2, height: 8},
+        shadowOpacity: 0.4,
+        shadowRadius: 15
+        
     }
 })
 

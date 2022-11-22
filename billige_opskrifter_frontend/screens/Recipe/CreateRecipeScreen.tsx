@@ -30,7 +30,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
     const [createAtr, setCreateAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
         ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
 
-    const [selectedType, setSelectedType] = useState();
+    const [selectedType, setSelectedType] = useState("");
 
     return (
         <ViewContainer>
@@ -53,7 +53,8 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 selectedValue={selectedType}
                 onValueChange={(type: string) => {
                     if (type.length > 1) {
-                        createAtr.type = type
+                        setSelectedType(type)
+                        createAtr.type = selectedType
                     }
                 }}
             >
