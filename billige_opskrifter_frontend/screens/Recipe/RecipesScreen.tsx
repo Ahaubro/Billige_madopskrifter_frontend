@@ -74,6 +74,14 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             sortedRecipes.sort( (a, b) => (b.estimatedPrice - a.estimatedPrice))
             setRecipeList(sortedRecipes)
         }
+        if(selectedSort == "few"){
+            sortedRecipes.sort( (a, b) => (a.numberOfPersons - b.numberOfPersons))
+            setRecipeList(sortedRecipes)
+        }
+        if(selectedSort == "many"){
+            sortedRecipes.sort( (a, b) => (b.numberOfPersons - a.numberOfPersons))
+            setRecipeList(sortedRecipes)
+        }
 
     }, [selectedSort])
 
@@ -147,6 +155,8 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                     <Picker.Item label='Billigste pris' value="cheap" />
                                     <Picker.Item label='Kort tilberedningstid' value="fast" />
                                     <Picker.Item label='Lang tilberedningstid' value="slow" />
+                                    <Picker.Item label='Få spisende gæster' value="few" />
+                                    <Picker.Item label='Mange spisende gæster' value="many" />
                                 </Picker>
                             </View>
 
