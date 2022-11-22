@@ -55,7 +55,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     //Sorteringsmuligheder & sorterings modal
     const [isModalVisible, setModalVisible] = useState(false)
     const [selectedSort, setSelectedSort] = useState("");
-    const sortedRecipes = [...recipeList]
+    const sortedRecipes = [...recipeList] 
 
     useEffect( () => {
         if(selectedSort == "fast"){
@@ -82,7 +82,30 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             sortedRecipes.sort( (a, b) => (b.numberOfPersons - a.numberOfPersons))
             setRecipeList(sortedRecipes)
         }
-
+        if(selectedSort == "nameaz"){
+            let sortRecipesByName = sortedRecipes.sort( (a, b) => {
+                if(a.name < b.name){
+                    return -1
+                }
+                if(a.name > b.name){
+                    return 1
+                }
+                return 0
+            })
+            setRecipeList(sortRecipesByName)
+        }
+        if(selectedSort == "nameza"){
+            let sortRecipesByName = sortedRecipes.sort( (a, b) => {
+                if(b.name < a.name){
+                    return -1
+                }
+                if(b.name > a.name){
+                    return 1
+                }
+                return 0
+            })
+            setRecipeList(sortRecipesByName)
+        }
     }, [selectedSort])
 
 
@@ -147,14 +170,15 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                 <Picker
                                     selectedValue={selectedSort}
                                     onValueChange={(sort: string) => {
-                                        setSelectedSort(sort)
-                                        console.log(sort)                                     
+                                        setSelectedSort(sort)                                    
                                     }}
                                 >
                                     <Picker.Item label='Dyreste pris' value="expensive" />
                                     <Picker.Item label='Billigste pris' value="cheap" />
                                     <Picker.Item label='Kort tilberedningstid' value="fast" />
                                     <Picker.Item label='Lang tilberedningstid' value="slow" />
+                                    <Picker.Item label='Sorter efter navn a - z' value="nameaz" />
+                                    <Picker.Item label='Sorter efter navn z - a' value="nameza" />
                                     <Picker.Item label='Få spisende gæster' value="few" />
                                     <Picker.Item label='Mange spisende gæster' value="many" />
                                 </Picker>
