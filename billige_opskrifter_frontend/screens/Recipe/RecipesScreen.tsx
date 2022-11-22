@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, TextInput, View, Modal } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
@@ -42,11 +42,15 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
     //For search query
     const [searchQueryAtr, setSearchQueryAtr] = useState<{ type: string, query: string }>({ type: "", query: "" });
-    const recipeSearch = useSearchRecipesQuery(searchQueryAtr, {refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0});
+    const recipeSearch = useSearchRecipesQuery(searchQueryAtr, { refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0 });
 
-    useEffect( () => {
+    useEffect(() => {
         setSearchList(recipeSearch.data?.recipes ?? [])
     }, [recipeSearch.data])
+
+
+    //Sort modal
+    const [isModalVisible, setModalVisible] = useState(false)
 
 
     return (
@@ -74,15 +78,56 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 </View>
                 <TextInput style={style.input} placeholder="Søg efter opskrift"
                     onChangeText={(q) => {
-                        //Evt throttle eller debounce
-                        if(q.length > 2){
-                            setSearchQueryAtr({type: type, query: q})
+                        if (q.length > 2) {
+                            setSearchQueryAtr({ type: type, query: q })
                         }
                     }}
                 >
 
                 </TextInput>
+                <View style={{ paddingRight: 20 }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(true)
+                        }}
+                    >
+                        <Ionicons name="filter-outline" size={28} color="black" />
+                    </TouchableOpacity>
+                </View>
             </View>
+
+
+            {/* Modal der viser sorteringsmuligheder */}
+
+            <View>
+                <Modal
+                    visible={isModalVisible}
+                    animationType="slide"
+                    transparent={true}
+                >
+
+                    <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 45 }}>
+                        <View style={style.modal}>
+                            <Text style={{textAlign: 'center', fontSize: 18, fontWeight: '600'}}>Filtrer søgning</Text>
+
+                            <View>
+                                
+                            </View>
+
+
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setModalVisible(!isModalVisible);
+                                }}
+                            >
+                                <Ionicons style={{textAlign: 'center'}} name="close-outline" size={28} color="black" />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </Modal>
+            </View>
+
 
 
 
@@ -120,99 +165,99 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
                 {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES */}
                 {searchList.length == 0 ?
-                         
-                <FlatList
-                    data={recipeList}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        navigation.navigate("SelectedRecipeScreen", {
-                                            id: item.id,
-                                            name: item.name,
-                                            type: item.type,
-                                            prepTime: item.prepTime,
-                                            estimatedPrice: item.estimatedPrice,
-                                            numberOfPersons: item.numberOfPersons,
-                                            description: item.description,
-                                            userId: item.userId,
 
-                                        })
-                                    }}
-                                >
-                                    <View style={{ paddingBottom: 15 }}>
-                                        <View style={style.card}>
-                                            <Text style={style.title}> {item.name}</Text>
-                                            <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                                <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                    <FlatList
+                        data={recipeList}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate("SelectedRecipeScreen", {
+                                                id: item.id,
+                                                name: item.name,
+                                                type: item.type,
+                                                prepTime: item.prepTime,
+                                                estimatedPrice: item.estimatedPrice,
+                                                numberOfPersons: item.numberOfPersons,
+                                                description: item.description,
+                                                userId: item.userId,
+
+                                            })
+                                        }}
+                                    >
+                                        <View style={{ paddingBottom: 15 }}>
+                                            <View style={style.card}>
+                                                <Text style={style.title}> {item.name}</Text>
+                                                <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+
+                                                </View>
+
                                             </View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-
-                                            </View>
-
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </>
-                        )
-                    }}
-                >
+                                    </TouchableOpacity>
+                                </>
+                            )
+                        }}
+                    >
 
-                </FlatList>
+                    </FlatList>
 
-                :
+                    :
 
-                <FlatList
-                    data={searchList}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        navigation.navigate("SelectedRecipeScreen", {
-                                            id: item.id,
-                                            name: item.name,
-                                            type: item.type,
-                                            prepTime: item.prepTime,
-                                            estimatedPrice: item.estimatedPrice,
-                                            numberOfPersons: item.numberOfPersons,
-                                            description: item.description,
-                                            userId: item.userId,
+                    <FlatList
+                        data={searchList}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            navigation.navigate("SelectedRecipeScreen", {
+                                                id: item.id,
+                                                name: item.name,
+                                                type: item.type,
+                                                prepTime: item.prepTime,
+                                                estimatedPrice: item.estimatedPrice,
+                                                numberOfPersons: item.numberOfPersons,
+                                                description: item.description,
+                                                userId: item.userId,
 
-                                        })
-                                    }}
-                                >
-                                    <View style={{ paddingBottom: 15 }}>
-                                        <View style={style.card}>
-                                            <Text style={style.title}> {item.name}</Text>
-                                            <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                                <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                                            })
+                                        }}
+                                    >
+                                        <View style={{ paddingBottom: 15 }}>
+                                            <View style={style.card}>
+                                                <Text style={style.title}> {item.name}</Text>
+                                                <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+
+                                                </View>
+
                                             </View>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
-                                                <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-
-                                            </View>
-
                                         </View>
-                                    </View>
-                                </TouchableOpacity>
-                            </>
-                        )
-                    }}
-                >
+                                    </TouchableOpacity>
+                                </>
+                            )
+                        }}
+                    >
 
-                </FlatList>
+                    </FlatList>
 
 
-            }
+                }
 
             </View>
 
@@ -262,6 +307,14 @@ const style = StyleSheet.create({
     },
     prepTime: {
         paddingTop: 15
+    },
+    modal: {
+        height: Dimensions.get("window").height / 100 * 20,
+        width: Dimensions.get("window").width / 100 * 95,
+        backgroundColor: "rgb(247,247,255)",
+        padding: 20,
+        borderRadius: 10,
+        borderColor: "white"
     }
 })
 
