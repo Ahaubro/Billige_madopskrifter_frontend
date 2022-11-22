@@ -52,7 +52,8 @@ const Navigation: React.FC<NavigationProps> = () => {
         })}
       >
 
-        {session.token && session.token != 'abcdefg' &&
+
+        {session.token && session.token != 'abcdefg' && session.token != "guest" &&
           <>
             <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{ title: "Hjem" }} />
             <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
@@ -66,6 +67,12 @@ const Navigation: React.FC<NavigationProps> = () => {
 
         {!session.token &&
           <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }} />
+        }
+
+        {session.token == "guest" &&
+          <>
+            <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
+          </>
         }
 
 
