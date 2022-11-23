@@ -20,7 +20,6 @@ const style = StyleSheet.create({
         padding: 10,
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
-
     }
 })
 

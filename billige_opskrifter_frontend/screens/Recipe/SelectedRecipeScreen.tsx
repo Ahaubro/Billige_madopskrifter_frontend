@@ -70,10 +70,10 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const customShare = async () => {
         const ingrediens = thisRecipesIngrediens.data?.ingredients
         const options = {
-            message: name + '\n' + '\nCa pris: ' + estimatedPrice + 
-            ' kr' + '\n' + '\nFremgangsmåde: ' + description + '\n' + '\ningredinser: ' + ingrediens?.map( (i) => {
-                return '\n' + i.name + " " + i.amount + " " + i.measurementUnit + " " + '(' + i.type + ')' 
-            })
+            message: name + '\n' + '\nCa pris: ' + estimatedPrice +
+                ' kr' + '\n' + '\nFremgangsmåde: ' + description + '\n' + '\ningredinser: ' + ingrediens?.map((i) => {
+                    return '\n' + i.name + " " + i.amount + " " + i.measurementUnit + " " + '(' + i.type + ')'
+                })
             //url: 'http://localhost:19006/'
         }
         try {
@@ -156,12 +156,10 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={style.card}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Ingredienser:</Text>
-                    <FlatList
-                        style={{ flex: 1, flexWrap: 'wrap' }}
-                        data={thisRecipesIngrediens.data?.ingredients || []}
-                        renderItem={({ item, index }) => {
+                    <>
+                        {thisRecipesIngrediens.data?.ingredients.map( (item, index) => {
                             return (
-                                <>
+                                <View key={index}>
                                     <View style={{ paddingBottom: 5 }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                                             <Text style={{ paddingLeft: 30 }}>{index + 1}: {item.name}</Text>
@@ -170,12 +168,11 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                             <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
                                         </View>
                                     </View>
-
-                                </>
+                                </View>
                             )
-                        }}
-                    >
-                    </FlatList>
+                        })}
+                        
+                    </>
                 </View>
             </View>
 
@@ -193,34 +190,40 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             {/* Læser opskriftens reviews */}
             <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
             {listOfReviews.length > 0 ?
-                <FlatList
-                    style={{ flexWrap: 'wrap' }}
-                    horizontal={true}
-                    data={thisRecipesReviews.data?.reviews || []}
-                    renderItem={({ item, index }) => {
-                        return (
-                            <>
-                                <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
-                                    <View style={style.card}>
-                                        <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
-                                            <AirbnbRating
-                                                reviewSize={16}
-                                                reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
-                                                reviewColor={'black'}
-                                                defaultRating={item.rating}
-                                                size={20}
-                                                isDisabled={true}
-                                                ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
-                                            />
+
+                <View>
+                    <>
+                    <FlatList
+                        style={{ flexWrap: 'wrap' }}
+                        horizontal={true}
+                        data={thisRecipesReviews.data?.reviews || []}
+                        renderItem={({ item, index }) => {
+                            return (
+                                <>
+                                    <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
+                                        <View style={style.card}>
+                                            <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
+                                                <AirbnbRating
+                                                    reviewSize={16}
+                                                    reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
+                                                    reviewColor={'black'}
+                                                    defaultRating={item.rating}
+                                                    size={20}
+                                                    isDisabled={true}
+                                                    ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                                                />
+                                            </View>
+                                            <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
                                         </View>
-                                        <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
                                     </View>
-                                </View>
-                            </>
-                        )
-                    }}
-                >
-                </FlatList>
+                                </>
+                            )
+                        }}
+                    >
+                    </FlatList>
+                    </>
+                </View>
+
 
                 :
 
