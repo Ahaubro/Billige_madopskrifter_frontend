@@ -6,10 +6,10 @@ import Header from '../../components/Header'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { useGetRecipesByNameAndUserIdQuery } from "../../redux/services/RecipeAPI"
+import { useGetRecipesByNameAndUserIdQuery, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import { Ingredient, useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation } from '../../redux/services/IngredientAPI'
 import AuthPressable from '../../components/AuthPressable'
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
@@ -27,6 +27,8 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     const session = useSelector((state: RootState) => state.session)
     const { name } = route.params;
 
+
+    //Getting recipe to add ingredients
     const [thisRecipeAtr] = useState<{ userId: number, name: string }>({ userId: session.id, name: name })
     const thisRecipe = useGetRecipesByNameAndUserIdQuery(thisRecipeAtr, { refetchOnMountOrArgChange: true });
     let recipeId: number = 0
@@ -35,23 +37,28 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
         recipeId = thisRecipe.data.id
     }
 
-    const [deleteIngredient] = useDeleteIngredientMutation();
-
-
+    
+    //Add ingredient props
     const [addIngredient] = useCreateMutation();
     const [addIngredientAtr, setAddIngredientAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
-        ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
+    ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
+    
 
+    //Getting ingredients that have been made for this recipe for the user to see
     const thisRecipesIngredients = useGetByRecipeIdQuery(recipeId);
     const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
-
+    
     useEffect(() => {
         if (thisRecipesIngredients.data) {
             setIngredientsList(thisRecipesIngredients.data.ingredients)
         }
     })
+    
 
-    console.log(ingredientsList)
+    // Delete ingredient & recipe
+    const [deleteIngredient] = useDeleteIngredientMutation();
+    const [deleteRecipe] = useDeleteRecipeMutation();
+
 
 
     // const nameRef = useRef(null);
@@ -80,16 +87,16 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
             <View>
                 {ingredientsList.length != 0 ?
-                    <View style={{paddingVertical: 5}}>
+                    <View style={{ paddingVertical: 5 }}>
                         <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '700', paddingVertical: 10 }}>Tilføjede ingredienser</Text>
                         {ingredientsList.map((item, index) => {
                             return (
-                                <View key={index} style={{flexDirection: 'row', justifyContent: 'center', paddingVertical: 1}}>
-                                    <Text style={{fontWeight: '700', fontSize: 16}}>#{index + 1}</Text>
-                                    <Text style={{fontSize: 16}}> {item.name} {item.amount}{item.measurementUnit}</Text>
+                                <View key={index} style={{ flexDirection: 'row', justifyContent: 'center', paddingVertical: 1 }}>
+                                    <Text style={{ fontWeight: '700', fontSize: 16 }}>#{index + 1}</Text>
+                                    <Text style={{ fontSize: 16 }}> {item.name} {item.amount}{item.measurementUnit}</Text>
                                     <TouchableOpacity
-                                        onPress={ () => {
-                                            deleteIngredient({id: item.id})
+                                        onPress={() => {
+                                            deleteIngredient({ id: item.id })
                                         }}
                                     >
                                         <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
@@ -101,7 +108,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                     </View>
                     :
 
-                    <Text style={{textAlign: 'center', paddingVertical: 15}}>Du har ikke tilføjet ingredienser til opskriften endnu</Text>
+                    <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Du har ikke tilføjet ingredienser til opskriften endnu</Text>
                 }
             </View>
 
@@ -192,7 +199,21 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 }}
             />
 
-            <View style={{paddingTop: 50}}></View>
+            <View style={{ paddingTop: 10 }}></View>
+
+            <AuthPressable
+                text='Afbryd'
+                color='#FF9C9C'
+                onPress={() => {
+                    if(recipeId != 0){
+                        deleteRecipe({recipeId: recipeId}).unwrap().then(res => {
+                            navigation.navigate('MyPage')
+                        })
+                    }
+                }}
+            />
+
+            <View style={{ paddingTop: 50 }}></View>
 
         </ScrollViewContainer>
 
