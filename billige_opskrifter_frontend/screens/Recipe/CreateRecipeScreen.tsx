@@ -6,12 +6,12 @@ import { useCreateMutation } from '../../redux/services/RecipeAPI'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp, TabActions } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import ViewContainer from '../../components/ViewContainer'
 import Header from '../../components/Header'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { Ionicons } from '@expo/vector-icons';
 import AuthPressable from '../../components/AuthPressable'
 import { Picker } from '@react-native-picker/picker';
+import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
 type CreateRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'CreateRecipe'>
@@ -27,13 +27,13 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
     const session = useSelector((state: RootState) => state.session)
 
     const [create] = useCreateMutation();
-    const [createAtr, setCreateAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
+    const [createAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
         ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
 
     const [selectedType, setSelectedType] = useState("");
 
     return (
-        <ViewContainer>
+        <ScrollViewContainer>
 
             <BackArrowContainer>
                 <Pressable onPress={() => {
@@ -49,12 +49,12 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <Text style={style.label}>Typen af opskrift:</Text>
             <Picker
-                style={style.input}
                 selectedValue={selectedType}
                 onValueChange={(type: string) => {
                     if (type.length > 1) {
                         setSelectedType(type)
-                        createAtr.type = selectedType
+                        createAtr.type = type
+                        console.log("HERHEHREH", type)
                     }
                 }}
             >
@@ -114,8 +114,10 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                     } else { console.log("Udfyld felterne") }
                 }}
             />
+            
+            <View style={{paddingTop: 50}}></View>
 
-        </ViewContainer>
+        </ScrollViewContainer>
     )
 }
 

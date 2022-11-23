@@ -224,7 +224,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
 
             {/* Her skal opskrifterne præsenteres i kort */}
-            <View style={{ paddingTop: 50 }}></View>
+            <View style={{ paddingTop: 30 }}></View>
 
             <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65 }}>
 

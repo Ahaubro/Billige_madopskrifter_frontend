@@ -39,16 +39,30 @@ export const IngredientAPI = createApi({
                 url: "api/ingredient",
                 method: 'POST',
                 body
-            })
+            }),
+            invalidatesTags: ["Ingredient"]
         }),
 
         //Get ingredients by recipeId
         getByRecipeId: builder.query<{ingredients: Ingredient[]}, number>({
             query: recipeId => `api/ingredient/getbyrecipeid/${recipeId}`,
             providesTags: ["Ingredient"]
-        })
+        }),
+
+        //Delete ingredient
+        deleteIngredient: builder.mutation<
+        {statusText: string},
+        {id: number}
+        >({
+            query: body => ({
+                url: `api/ingredient/${body.id}`,
+                method: 'DELETE',
+                body
+            }),
+            invalidatesTags:["Ingredient"]
+        }),
 
     })
 })
 
-export const { useCreateMutation, useGetByRecipeIdQuery } = IngredientAPI
+export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation } = IngredientAPI
