@@ -68,9 +68,13 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     //For sharing a recipe
     const customShare = async () => {
+        const ingrediens = thisRecipesIngrediens.data?.ingredients
         const options = {
-            message: 'Tryk her for at se opskriften' + ({ name }),
-            url: 'http://localhost:19006/'
+            message: name + '\n' + '\nCa pris: ' + estimatedPrice + 
+            ' kr' + '\n' + '\nFremgangsmåde: ' + description + '\n' + '\ningredinser: ' + ingrediens?.map( (i) => {
+                return '\n' + i.name + " " + i.amount + " " + i.measurementUnit + " " + '(' + i.type + ')' 
+            })
+            //url: 'http://localhost:19006/'
         }
 
         try {
