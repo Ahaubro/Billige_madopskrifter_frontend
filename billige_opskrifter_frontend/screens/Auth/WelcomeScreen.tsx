@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { AuthNavigationParameters } from "../../Types/Navigation_types"
 import ViewContainer from "../../components/ViewContainer"
-import Header from "../../components/Header"
 import AuthPressable from "../../components/AuthPressable"
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { startSession } from '../../redux/slices/sessionSlice'
+import PriceComponent from '../../components/PriceComponent'
 
 
 type WelcomeScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Welcome'>

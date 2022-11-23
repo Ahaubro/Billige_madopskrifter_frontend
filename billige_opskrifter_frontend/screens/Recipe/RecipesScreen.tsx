@@ -12,6 +12,7 @@ import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../r
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Header from '../../components/Header'
 import { Picker } from '@react-native-picker/picker'
+import PriceComponent from '../../components/PriceComponent'
 
 
 type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
@@ -26,14 +27,13 @@ type RecipesScreenProps = {
 const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
     const session = useSelector((state: RootState) => state.session)
-
     const { type } = route.params
 
-    //Forming first selection by type
+    //Forming first selection of recipes by type
     const recipes = useGetRecipesByTypeQuery(type)
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
-    const [searchList, setSearchList] = useState<Recipe[]>([]);
 
+    const [searchList, setSearchList] = useState<Recipe[]>([]);
     useEffect(() => {
         if (recipes.data) {
             setRecipeList(recipes.data.recipes)
@@ -55,51 +55,51 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     //Sorteringsmuligheder & sorterings modal
     const [isModalVisible, setModalVisible] = useState(false)
     const [selectedSort, setSelectedSort] = useState("");
-    const sortedRecipes = [...recipeList] 
+    const sortedRecipes = [...recipeList]
 
-    useEffect( () => {
-        if(selectedSort == "fast"){
-            sortedRecipes.sort( (a, b) => (a.prepTime - b.prepTime))
-            setRecipeList(sortedRecipes)
-        } 
-        if(selectedSort == "slow"){
-            sortedRecipes.sort( (a, b) => (b.prepTime - a.prepTime))
+    useEffect(() => {
+        if (selectedSort == "fast") {
+            sortedRecipes.sort((a, b) => (a.prepTime - b.prepTime))
             setRecipeList(sortedRecipes)
         }
-        if(selectedSort == "cheap"){
-            sortedRecipes.sort( (a, b) => (a.estimatedPrice - b.estimatedPrice))
+        if (selectedSort == "slow") {
+            sortedRecipes.sort((a, b) => (b.prepTime - a.prepTime))
             setRecipeList(sortedRecipes)
         }
-        if(selectedSort == "expensive"){
-            sortedRecipes.sort( (a, b) => (b.estimatedPrice - a.estimatedPrice))
+        if (selectedSort == "cheap") {
+            sortedRecipes.sort((a, b) => (a.estimatedPrice - b.estimatedPrice))
             setRecipeList(sortedRecipes)
         }
-        if(selectedSort == "few"){
-            sortedRecipes.sort( (a, b) => (a.numberOfPersons - b.numberOfPersons))
+        if (selectedSort == "expensive") {
+            sortedRecipes.sort((a, b) => (b.estimatedPrice - a.estimatedPrice))
             setRecipeList(sortedRecipes)
         }
-        if(selectedSort == "many"){
-            sortedRecipes.sort( (a, b) => (b.numberOfPersons - a.numberOfPersons))
+        if (selectedSort == "few") {
+            sortedRecipes.sort((a, b) => (a.numberOfPersons - b.numberOfPersons))
             setRecipeList(sortedRecipes)
         }
-        if(selectedSort == "nameaz"){
-            let sortRecipesByName = sortedRecipes.sort( (a, b) => {
-                if(a.name < b.name){
+        if (selectedSort == "many") {
+            sortedRecipes.sort((a, b) => (b.numberOfPersons - a.numberOfPersons))
+            setRecipeList(sortedRecipes)
+        }
+        if (selectedSort == "nameaz") {
+            let sortRecipesByName = sortedRecipes.sort((a, b) => {
+                if (a.name < b.name) {
                     return -1
                 }
-                if(a.name > b.name){
+                if (a.name > b.name) {
                     return 1
                 }
                 return 0
             })
             setRecipeList(sortRecipesByName)
         }
-        if(selectedSort == "nameza"){
-            let sortRecipesByName = sortedRecipes.sort( (a, b) => {
-                if(b.name < a.name){
+        if (selectedSort == "nameza") {
+            let sortRecipesByName = sortedRecipes.sort((a, b) => {
+                if (b.name < a.name) {
                     return -1
                 }
-                if(b.name > a.name){
+                if (b.name > a.name) {
                     return 1
                 }
                 return 0
@@ -124,6 +124,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 text={type}
             />
 
+
             <View style={{ paddingTop: 10 }}></View>
 
 
@@ -139,7 +140,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                         }
                     }}
                 >
-
                 </TextInput>
                 <View style={{ paddingRight: 20 }}>
                     <TouchableOpacity
@@ -166,11 +166,11 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                         <View style={style.modal}>
                             <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Sorteringsmuligheder</Text>
 
-                            <View style={{marginTop: -40}}>
+                            <View style={{ marginTop: -40 }}>
                                 <Picker
                                     selectedValue={selectedSort}
                                     onValueChange={(sort: string) => {
-                                        setSelectedSort(sort)                                    
+                                        setSelectedSort(sort)
                                     }}
                                 >
                                     <Picker.Item label='Dyreste pris' value="expensive" />
@@ -199,8 +199,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             </View>
 
 
-
-
             {/* Her skal implementeres prøv lykken funktionalitet */}
             <View style={{ paddingTop: 10 }}></View>
 
@@ -225,15 +223,13 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             </TouchableOpacity>
 
 
-
             {/* Her skal opskrifterne præsenteres i kort */}
-
             <View style={{ paddingTop: 50 }}></View>
 
             <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65 }}>
 
 
-                {/* HVIS SEARCH RESULT ER MINDRE END 0  SKAL ALLE OPSKRIFTER VISES*/}
+                {/* HVIS SEARCH RESULT ER MINDRE END 0 SKAL ALLE OPSKRIFTER VISES*/}
                 {searchList.length == 0 ?
 
                     <FlatList
@@ -261,12 +257,13 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                                 <Text style={style.title}> {item.name}</Text>
                                                 <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
                                                     <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
                                                 </View>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                     <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
-                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+                                                    <Text style={style.priceComponent}> <PriceComponent price={item.estimatedPrice} />  </Text>
+
 
                                                 </View>
 
@@ -307,12 +304,13 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                                 <Text style={style.title}> {item.name}</Text>
                                                 <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
                                                     <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}></Text> //Pris farve komponent</Text>
                                                 </View>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                     <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
-                                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+                                                    <Text style={style.priceComponent}> <PriceComponent price={item.estimatedPrice} />  </Text>
+
 
                                                 </View>
 
@@ -323,25 +321,17 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                             )
                         }}
                     >
-
                     </FlatList>
-
-
                 }
 
             </View>
-
-
-
-
-
         </ViewContainer>
     )
 }
 
 const style = StyleSheet.create({
     card: {
-        backgroundColor: '#E6FBFF',
+        backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
         minHeight: Dimensions.get("window").height / 100 * 20,
@@ -373,7 +363,6 @@ const style = StyleSheet.create({
     },
     estPrice: {
         paddingTop: 15,
-        marginLeft: -10
     },
     prepTime: {
         paddingTop: 15
@@ -386,10 +375,13 @@ const style = StyleSheet.create({
         borderRadius: 15,
         borderColor: "grey",
         shadowColor: 'black',
-        shadowOffset: {width: 2, height: 8},
+        shadowOffset: { width: 2, height: 8 },
         shadowOpacity: 0.4,
         shadowRadius: 15
-        
+    },
+    priceComponent: {
+        paddingTop: 15,
+        paddingRight: 60,
     }
 })
 
