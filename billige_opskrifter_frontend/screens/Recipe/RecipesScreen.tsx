@@ -256,15 +256,12 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                                             <View style={style.card}>
                                                 <Text style={style.title}> {item.name}</Text>
                                                 <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                                                <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
                                                     <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-                                                    <Text style={style.estPrice}> <Text style={{ fontWeight: '700' }}>Ca. pris:</Text> {item.estimatedPrice}</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                                                     <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
-                                                    <Text style={style.priceComponent}> <PriceComponent price={item.estimatedPrice} />  </Text>
-
-
+                                                </View>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -20}}>
+                                                    <Text style={[style.priceComponent]}> <PriceComponent price={item.estimatedPrice} />  </Text>
                                                 </View>
 
                                             </View>
@@ -379,8 +376,8 @@ const style = StyleSheet.create({
         shadowRadius: 15
     },
     priceComponent: {
-        marginTop: 10,
-        paddingRight: 30,
+        marginTop: -40,
+        marginRight: 20
     }
 })
 

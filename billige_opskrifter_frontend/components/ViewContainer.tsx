@@ -18,8 +18,8 @@ const ViewContainer: React.FC<ViewContainerProps> = (props) => {
 const style = StyleSheet.create({
     container: {
         padding: 10,
-        maxHeight: Dimensions.get('window').height,
-        maxWidth: Dimensions.get('window').width,
+        height: Dimensions.get('window').height,
+        width: Dimensions.get('window').width,
 
     }
 })

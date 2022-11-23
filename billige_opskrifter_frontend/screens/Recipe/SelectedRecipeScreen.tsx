@@ -104,7 +104,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <TouchableOpacity
                         onPress={() => {
                             likeRecipe(likeRecipeAtr).unwrap().then(res => {
-                                //console.log(res)
                             });
                         }}
                     >
