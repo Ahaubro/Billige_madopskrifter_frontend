@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Pressable, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
@@ -65,7 +65,20 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
         }
     }, [checkLike.data])
 
-    // For at ændre knappens udseende - Lav getbyuseridandrecipeid er den = 0 like - findes den vis unlike
+
+    //For sharing a recipe
+    const customShare = async () => {
+        const options = {
+            message: 'Tryk her for at se opskriften' + ({ name }),
+            url: 'http://localhost:19006/'
+        }
+
+        try {
+            const ShareRes = await Share.share(options);
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
         <ScrollViewContainer>
@@ -82,24 +95,40 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             />
 
 
-            {/* LIKE OPSKRIFT */}
-            <View style={{ paddingVertical: 15 }}>
-                <Pressable
-                    onPress={() => {
-                        likeRecipe(likeRecipeAtr).unwrap().then(res => {
-                            //console.log(res)
-                        });
-                    }}
-                >
-                    {likedCheck == "isLiked" ?
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                {/* LIKE OPSKRIFT */}
+                <View style={{ paddingVertical: 25, padding: 20 }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            likeRecipe(likeRecipeAtr).unwrap().then(res => {
+                                //console.log(res)
+                            });
+                        }}
+                    >
+                        {likedCheck == "isLiked" ?
 
-                        <Ionicons name="heart-dislike" style={{ textAlign: 'center' }} size={30} color="red" />
-                        :
-                        <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="red" />
-                    }
+                            <Ionicons name="heart-dislike" style={{ textAlign: 'center' }} size={30} color="red" />
+                            :
+                            <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="red" />
+                        }
 
-                </Pressable>
+                    </TouchableOpacity>
+
+                </View>
+
+
+                {/* Del knap */}
+                <View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            customShare();
+                        }}
+                    >
+                        <Ionicons name="share-social-outline" size={30} color="green" />
+                    </TouchableOpacity>
+                </View>
             </View>
+
 
 
             {/* Displayer først prepTime, personer og pris */}
