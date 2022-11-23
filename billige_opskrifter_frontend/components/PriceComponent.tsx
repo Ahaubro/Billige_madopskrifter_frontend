@@ -48,8 +48,8 @@ const style = StyleSheet.create({
         alignItems: 'center',
     },
     lightGreen: {
-        backgroundColor: '#B7FFC6',
-        borderBottomColor: '#B7FFC6'
+        backgroundColor: '#5AFF80',
+        borderBottomColor: '#5AFF80'
     },
     green:{
         backgroundColor: 'green',
@@ -60,12 +60,12 @@ const style = StyleSheet.create({
         borderBottomColor: 'yellow'
     },
     yellow:{
-        backgroundColor: '#FDEF29',
-        borderBottomColor: '#FDEF29'
+        backgroundColor: '#FFBD3A',
+        borderBottomColor: '#FFBD3A'
     },
     lightRed:{
-        backgroundColor: '#FF7F8C',
-        borderBottomColor: '#FF7F8C'
+        backgroundColor: '#FC6373',
+        borderBottomColor: '#FC6373'
     },
     red: {
         backgroundColor: 'red',

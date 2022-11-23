@@ -379,8 +379,8 @@ const style = StyleSheet.create({
         shadowRadius: 15
     },
     priceComponent: {
-        paddingTop: 15,
-        paddingRight: 60,
+        marginTop: 10,
+        paddingRight: 30,
     }
 })
 

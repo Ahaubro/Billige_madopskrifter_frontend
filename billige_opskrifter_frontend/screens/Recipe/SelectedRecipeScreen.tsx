@@ -76,7 +76,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             })
             //url: 'http://localhost:19006/'
         }
-
         try {
             const ShareRes = await Share.share(options);
         } catch (err) {
