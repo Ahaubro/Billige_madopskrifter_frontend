@@ -13,7 +13,7 @@ export const rtkQueryErrorLogger: Middleware =
       )
       if (action.payload.status !== 401) {
         Sentry.Native.captureException(new Error(JSON.stringify(action)))
-        // Optionally can show some kind of notification/toast here
+
       }
     }
 

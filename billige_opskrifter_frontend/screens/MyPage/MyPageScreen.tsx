@@ -58,6 +58,10 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         />
       </View>
 
+      <View>
+        
+      </View>
+
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
       <View style={{ paddingTop: 200 }}>

@@ -3,12 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 export interface SessionState {
   id: number
   token?: string
+  fullName?: string
   isLoading: boolean
 }
 
 const initialState: SessionState = {
   token: undefined,
   id: 0,
+  fullName: undefined,
   isLoading: true,
 }
 
@@ -21,15 +23,18 @@ export const sessionSlice = createSlice({
       action: PayloadAction<{
         id: number
         token: string
+        fullName: string
       }>
     ) => {
       state.id = action.payload.id
       state.token = action.payload.token
+      state.fullName = action.payload.fullName
       state.isLoading = false
     },
     endSession: (state: SessionState) => {
       state.id = initialState.id
       state.token = initialState.token
+      state.fullName = initialState.fullName
     },
     setSessionLoading: (
       state: SessionState,
