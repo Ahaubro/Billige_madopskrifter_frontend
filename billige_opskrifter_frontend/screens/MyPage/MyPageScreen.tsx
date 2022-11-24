@@ -133,7 +133,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
-      <View style={{ paddingTop: 150 }}>
+      <View style={{ paddingTop: 100 }}>
         <Text style={{ fontSize: 18, fontWeight: '700' }}>Authored recipes:</Text>
         {userRecipeList.length > 0 ?
           <>
