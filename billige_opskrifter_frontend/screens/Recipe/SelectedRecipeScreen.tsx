@@ -97,10 +97,11 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 text={name}
             />
 
-
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                {/* LIKE OPSKRIFT */}
-                <View style={{ paddingVertical: 25, padding: 20 }}>
+
+                {session.token != 'guest' &&
+                <>
+                    <View style={{ paddingVertical: 25 }}>
                     <TouchableOpacity
                         onPress={() => {
                             likeRecipe(likeRecipeAtr).unwrap().then(res => {
@@ -109,20 +110,23 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     >
                         {likedCheck == "isLiked" ?
 
-                            <Ionicons name="heart-dislike" style={{ textAlign: 'center' }} size={30} color="red" />
+                            <Ionicons name="heart-dislike" size={30} color="red" />
                             :
-                            <Ionicons name="heart" size={30} style={{ textAlign: 'center' }} color="red" />
+                            <Ionicons name="heart" size={30} color="red" />
                         }
 
                     </TouchableOpacity>
-
                 </View>
 
+                <View style={{paddingHorizontal: 10}}></View>
+                </>
+                }
 
-                {/* Del knap */}
-                <View>
+
+                <View style={{ paddingVertical: 25 }}>
                     <TouchableOpacity
                         onPress={() => {
+                            //Share btn
                             customShare();
                         }}
                     >
@@ -157,7 +161,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 <View style={style.card}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Ingredienser:</Text>
                     <>
-                        {thisRecipesIngrediens.data?.ingredients.map( (item, index) => {
+                        {thisRecipesIngrediens.data?.ingredients.map((item, index) => {
                             return (
                                 <View key={index}>
                                     <View style={{ paddingBottom: 5 }}>
@@ -171,7 +175,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 </View>
                             )
                         })}
-                        
+
                     </>
                 </View>
             </View>
@@ -189,45 +193,46 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             {/* Læser opskriftens reviews */}
             <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
-            {listOfReviews.length > 0 ?
+            {
+                listOfReviews.length > 0 ?
 
-                <View>
-                    <>
-                    <FlatList
-                        style={{ flexWrap: 'wrap' }}
-                        horizontal={true}
-                        data={thisRecipesReviews.data?.reviews || []}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <>
-                                    <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
-                                        <View style={style.card}>
-                                            <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
-                                                <AirbnbRating
-                                                    reviewSize={16}
-                                                    reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
-                                                    reviewColor={'black'}
-                                                    defaultRating={item.rating}
-                                                    size={20}
-                                                    isDisabled={true}
-                                                    ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
-                                                />
+                    <View>
+                        <>
+                            <FlatList
+                                style={{ flexWrap: 'wrap' }}
+                                horizontal={true}
+                                data={thisRecipesReviews.data?.reviews || []}
+                                renderItem={({ item, index }) => {
+                                    return (
+                                        <>
+                                            <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
+                                                <View style={style.card}>
+                                                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
+                                                        <AirbnbRating
+                                                            reviewSize={16}
+                                                            reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
+                                                            reviewColor={'black'}
+                                                            defaultRating={item.rating}
+                                                            size={20}
+                                                            isDisabled={true}
+                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                                                        />
+                                                    </View>
+                                                    <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
+                                                </View>
                                             </View>
-                                            <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
-                                        </View>
-                                    </View>
-                                </>
-                            )
-                        }}
-                    >
-                    </FlatList>
-                    </>
-                </View>
+                                        </>
+                                    )
+                                }}
+                            >
+                            </FlatList>
+                        </>
+                    </View>
 
 
-                :
+                    :
 
-                <Text style={{ textAlign: 'center' }}>Denne opskrift har ingen reviews endnu, bliv den første!</Text>
+                    <Text style={{ textAlign: 'center' }}>Denne opskrift har ingen reviews endnu, bliv den første!</Text>
             }
 
             <View style={{ paddingVertical: 5 }}></View>
@@ -246,7 +251,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
 
             {/* SLET OPSKRIFT HVIS USER ER AUTHOR */}
-            {userId == session.id &&
+            {
+                userId == session.id &&
                 <AuthPressable
                     text='Slet opskrift'
                     color='#FF9C9C'
@@ -256,7 +262,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     }}
                 />
             }
-        </ScrollViewContainer>
+        </ScrollViewContainer >
     )
 }
 
