@@ -248,6 +248,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                 }
 
             </View>
+            
         </ViewContainer>
     )
 }

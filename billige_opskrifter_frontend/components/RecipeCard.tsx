@@ -1,9 +1,11 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
 import { Recipe } from "../redux/services/RecipeAPI"
 import { RecipeNavigationParameters } from "../Types/Navigation_types"
 import PriceComponent from "./PriceComponent"
+import { Allergi, useGetAllergiesByUserIdQuery } from "../redux/services/AllergiAPI"
+import AllergiComponent from "./AllergiComponent"
 
 
 type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
@@ -16,9 +18,8 @@ type RecipeCardProps = {
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
 
-
     return (
-        <View style={{flex: 1}}>
+        <View>
             <FlatList
                 data={recipes}
                 renderItem={({ item, index }) => {
@@ -41,8 +42,11 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
                             >
                                 <View style={{ paddingBottom: 15 }}>
                                     <View style={style.card}>
-                                        <Text style={style.title}> {item.name}</Text>
+
+                                        <Text style={style.title}> {item.name} <AllergiComponent item={item} /></Text>
+
                                         <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
+
                                         <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
                                             <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
                                             <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
