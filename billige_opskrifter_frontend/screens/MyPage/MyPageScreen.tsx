@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { FlatList, Text, View, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
@@ -11,6 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
+import { useCreateAllergiMutation, useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
 
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
@@ -36,6 +37,24 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   }, [fetchedRecipesByUserId.data])
 
 
+  // Fetcher brugerens allergier
+  const fetchedUserAllergies = useGetAllergiesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
+  const [userAllergiesList, setUsersAllergiesList] = useState<Allergi[]>([]);
+
+  useEffect(() => {
+    if (fetchedUserAllergies.data) {
+      setUsersAllergiesList(fetchedUserAllergies.data.allergies)
+    }
+  }, [fetchedUserAllergies.data])
+
+
+  //Slet allergie
+  const [deleteAllergi] = useDeleteAllergiMutation();
+
+  //Create allergie
+  const [createAllergiAtr, setCreateAllergiAtr] = useState<{ userId: number, allergi: string }>({ userId: 0, allergi: '' });
+  const [createAllergi] = useCreateAllergiMutation();
+
   return (
     <ViewContainer>
 
@@ -58,14 +77,64 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         />
       </View>
 
-      <View>
-        
+      <View style={{ paddingTop: 25 }}>
+        <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Velkommen {session.fullName}</Text>
+      </View>
+
+
+      {/* Allergies menu */}
+      <View style={{ paddingTop: 35 }}>
+        <Text style={{ fontWeight: '600', fontSize: 18 }}>Allergier:</Text>
+        {userAllergiesList.length > 0 ?
+
+          <View>
+            {userAllergiesList.map((item, index) => {
+              return (
+                <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                  <Text> {item.allergi}</Text>
+                  <TouchableOpacity
+                    onPress={() => {
+                      deleteAllergi({ id: item.id })
+                    }}
+                  >
+                    <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
+                  </TouchableOpacity>
+                </View>
+              )
+            })}
+          </View>
+
+          :
+
+          <Text>Ingen allergi registreret</Text>
+        }
+
+        <View style={{ paddingVertical: 5 }}></View>
+
+        <TextInput
+          style={style.input}
+          onChangeText={(al) => {
+            setCreateAllergiAtr({ userId: session.id, allergi: al })
+          }}
+        >
+        </TextInput>
+
+        <AuthPressable
+          text='Tilføj en allergi'
+          color='#86DB9D'
+          onPress={() => {
+            if (createAllergiAtr.allergi != '') {
+              createAllergi(createAllergiAtr);
+            }
+          }}
+        />
+        <View style={{ paddingVertical: 5 }}></View>
       </View>
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
-      <View style={{ paddingTop: 200 }}>
-        <Text style={{ fontSize: 14, fontWeight: '700' }}>Authored recipes:</Text>
+      <View style={{ paddingTop: 150 }}>
+        <Text style={{ fontSize: 18, fontWeight: '700' }}>Authored recipes:</Text>
         {userRecipeList.length > 0 ?
           <>
             <View>
@@ -137,6 +206,13 @@ const style = StyleSheet.create({
     overflowY: 'scroll',
     padding: 10
   },
+  input: {
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingVertical: 15,
+    paddingHorizontal: 5,
+    borderColor: 'rgb(242,242,242)',
+  }
 })
 
 export default MyPageScreen

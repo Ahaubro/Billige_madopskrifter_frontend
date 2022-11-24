@@ -7,6 +7,7 @@ import { RecipeAPI } from './services/RecipeAPI'
 import { IngredientAPI } from "./services/IngredientAPI"
 import { ReviewAPI } from './services/ReviewAPI'
 import { LikedRecAPI } from './services/LikedRecAPI'
+import { AllergiAPI } from './services/AllergiAPI'
 
 const store = configureStore({
   reducer: {
@@ -16,9 +17,10 @@ const store = configureStore({
     [IngredientAPI.reducerPath]: IngredientAPI.reducer,
     [ReviewAPI.reducerPath]: ReviewAPI.reducer,
     [LikedRecAPI.reducerPath]: LikedRecAPI.reducer,
+    [AllergiAPI.reducerPath]: AllergiAPI.reducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat([UserAPI.middleware, RecipeAPI.middleware, IngredientAPI.middleware, ReviewAPI.middleware, LikedRecAPI.middleware, rtkQueryErrorLogger]),
+    getDefaultMiddleware().concat([UserAPI.middleware, RecipeAPI.middleware, IngredientAPI.middleware, ReviewAPI.middleware, LikedRecAPI.middleware, AllergiAPI.middleware, rtkQueryErrorLogger]),
     
 })
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors

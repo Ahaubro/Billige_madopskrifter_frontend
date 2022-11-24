@@ -175,7 +175,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                     if (recipeId != 0) {
                         addIngredientAtr.recipeId = recipeId
                         addIngredient(addIngredientAtr).unwrap().then(res => {
-                            console.log(res)
+                            //Refresh
                         })
                         //handleSubmit();
                     }
