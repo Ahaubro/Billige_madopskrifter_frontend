@@ -29,7 +29,8 @@ export type MyPageNavigationParameters = {
     CreateReviewScreen:{
         id: number,
         userId: number
-    }
+    },
+    AddAllergiScreen: undefined
 }
 
 export type RecipeNavigationParameters = {

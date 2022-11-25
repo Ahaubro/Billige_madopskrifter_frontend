@@ -50,9 +50,9 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
 
 
     return (
-        <View style={{paddingLeft: 20}}>
+        <View>
            {isAllergic ? 
-            <Text> <MaterialCommunityIcons name="allergy" size={24} color="red" /> </Text>   
+            <Text> <MaterialCommunityIcons name="allergy" size={30} color="red" /> </Text>   
         :
             <Text></Text>
         }

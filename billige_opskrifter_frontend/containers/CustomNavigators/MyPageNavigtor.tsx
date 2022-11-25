@@ -1,4 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack'
+import AddAllergiScreen from '../../screens/Allergi/AddAllergiScreen';
 import MyPageScreen from '../../screens/MyPage/MyPageScreen';
 import AddIngredientScreen from '../../screens/Recipe/AddIngredientScreen';
 import AddRecipeDescriptionScreen from '../../screens/Recipe/AddRecipeDescription';
@@ -26,6 +27,7 @@ export default function Auth_navigator(){
             <stack.Screen name="AddRecipeDescription" component={AddRecipeDescriptionScreen} />
             <stack.Screen name="SelectedRecipeScreen" component={SelectedRecipeScreen} />
             <stack.Screen name="CreateReviewScreen" component={CreateReviewScreen} />
+            <stack.Screen name="AddAllergiScreen" component={AddAllergiScreen}/>
 
         </stack.Navigator>
     ) 

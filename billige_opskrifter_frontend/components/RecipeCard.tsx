@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
 import { Recipe } from "../redux/services/RecipeAPI"
-import { RecipeNavigationParameters } from "../Types/Navigation_types"
+import { MyPageNavigationParameters, RecipeNavigationParameters } from "../Types/Navigation_types"
 import PriceComponent from "./PriceComponent"
 import { Allergi, useGetAllergiesByUserIdQuery } from "../redux/services/AllergiAPI"
 import AllergiComponent from "./AllergiComponent"
@@ -43,7 +43,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
                                 <View style={{ paddingBottom: 15 }}>
                                     <View style={style.card}>
 
-                                        <Text style={style.title}> {item.name} <AllergiComponent item={item} /></Text>
+                                        <Text style={style.title}> {item.name} <AllergiComponent item={item} /> </Text>
 
                                         <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
 

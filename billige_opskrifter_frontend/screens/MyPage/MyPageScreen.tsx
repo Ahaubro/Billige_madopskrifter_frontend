@@ -12,6 +12,8 @@ import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
 import { useCreateAllergiMutation, useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
+import ScrollViewContainer from '../../components/ScrollViewContainer'
+import RecipeCard from '../../components/RecipeCard'
 
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
@@ -51,12 +53,9 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   //Slet allergie
   const [deleteAllergi] = useDeleteAllergiMutation();
 
-  //Create allergie
-  const [createAllergiAtr, setCreateAllergiAtr] = useState<{ userId: number, allergi: string }>({ userId: 0, allergi: '' });
-  const [createAllergi] = useCreateAllergiMutation();
 
   return (
-    <ViewContainer>
+    <ScrollViewContainer>
 
       {/* Navigate to settings */}
       <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
@@ -83,7 +82,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Allergies menu */}
-      <View style={{ paddingTop: 35 }}>
+      <View style={style.card}>
         <Text style={{ fontWeight: '600', fontSize: 18 }}>Allergier:</Text>
         {userAllergiesList.length > 0 ?
 
@@ -110,26 +109,16 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         }
 
         <View style={{ paddingVertical: 5 }}></View>
-
-        <TextInput
-          style={style.input}
-          onChangeText={(al) => {
-            setCreateAllergiAtr({ userId: session.id, allergi: al })
-          }}
-        >
-        </TextInput>
-
-        <AuthPressable
-          text='Tilføj en allergi'
-          color='#86DB9D'
-          onPress={() => {
-            if (createAllergiAtr.allergi != '') {
-              createAllergi(createAllergiAtr);
-            }
-          }}
-        />
-        <View style={{ paddingVertical: 5 }}></View>
       </View>
+
+      <AuthPressable
+        text='Tilføj en allergi'
+        color='#86DB9D'
+        onPress={() => {
+          navigation.navigate("AddAllergiScreen")
+        }}
+      />
+      <View style={{ paddingVertical: 5 }}></View>
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
@@ -156,7 +145,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                       }}
                     >
                       <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
-                        <View style={style.authoredRecipes}>
+                        <View style={style.card}>
                           <Text>Navn: {item.name}</Text>
                           <Text>Type: {item.type}</Text>
                           <Text>Ca. pris: {item.estimatedPrice}</Text>
@@ -191,12 +180,12 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
       </View>
 
-    </ViewContainer >
+    </ScrollViewContainer >
   )
 }
 
 const style = StyleSheet.create({
-  authoredRecipes: {
+  card: {
     backgroundColor: "rgb(247,247,255)",
     width: Dimensions.get("window").width / 100 * 94,
     borderRadius: 15,
@@ -206,13 +195,6 @@ const style = StyleSheet.create({
     overflowY: 'scroll',
     padding: 10
   },
-  input: {
-    borderRadius: 8,
-    borderWidth: 1,
-    paddingVertical: 15,
-    paddingHorizontal: 5,
-    borderColor: 'rgb(242,242,242)',
-  }
 })
 
 export default MyPageScreen
