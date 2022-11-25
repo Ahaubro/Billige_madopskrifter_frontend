@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useCreateAllergiMutation, useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 import RecipeCard from '../../components/RecipeCard'
+import AuthoredRecipeCards from '../../components/AuthoredRecipeCards'
 
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
@@ -129,7 +130,12 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         {userRecipeList.length > 0 ?
           <>
             <View>
-              <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
+
+              <AuthoredRecipeCards 
+                recipes={userRecipeList}
+                navigation={navigation}
+              />
+              {/* <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
                 return (
                   <>
                     <TouchableOpacity
@@ -157,7 +163,8 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                     </TouchableOpacity>
                   </>
                 )
-              }} />
+              }} /> */}
+
             </View>
 
           </>

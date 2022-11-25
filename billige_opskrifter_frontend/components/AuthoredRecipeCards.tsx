@@ -7,19 +7,20 @@ import PriceComponent from "./PriceComponent"
 import AllergiComponent from "./AllergiComponent"
 
 
-type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
+type MyPgeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 
-type RecipeCardProps = {
+type AuthoredRecipeCardsProps = {
     recipes: Recipe[]
-    navigation: RecipesScreenNavigationProps
+    navigation: MyPgeScreenNavigationProps
 }
 
 
-const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
+const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navigation }) => {
 
     return (
         <View>
             <FlatList
+            horizontal={true}
                 data={recipes}
                 renderItem={({ item, index }) => {
                     return (
@@ -39,7 +40,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
                                     )
                                 }}
                             >
-                                <View style={{ paddingBottom: 15 }}>
+                                <View style={{ paddingEnd: 5 }}>
                                     <View style={style.card}>
 
                                         <Text style={style.title}> {item.name} <AllergiComponent item={item} /> </Text>
@@ -84,6 +85,7 @@ const style = StyleSheet.create({
         padding: 12,
         minHeight: Dimensions.get("window").height / 100 * 20,
         maxHeight: Dimensions.get("window").height / 100 * 20,
+        width: Dimensions.get("window").width / 100 * 95
     },
     title: {
         fontSize: 18,
@@ -93,4 +95,4 @@ const style = StyleSheet.create({
     },
 })
 
-export default RecipeCard;
+export default AuthoredRecipeCards;
