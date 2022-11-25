@@ -58,7 +58,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     <ScrollViewContainer>
 
       {/* Navigate to settings */}
-      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }}>
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingVertical: 10 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Settings")
@@ -76,21 +76,21 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         />
       </View>
 
-      <View style={{ paddingTop: 25 }}>
-        <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Velkommen {session.fullName}</Text>
+      <View style={{ paddingVertical: 25 }}>
+        <Text style={{ textAlign: 'center', fontSize: 22, fontWeight: '600' }}>Velkommen {session.fullName}</Text>
       </View>
 
 
       {/* Allergies menu */}
+      <Text style={style.label}>Dine registrerede allergier.</Text>
       <View style={style.card}>
-        <Text style={{ fontWeight: '600', fontSize: 18 }}>Allergier:</Text>
         {userAllergiesList.length > 0 ?
 
           <View>
             {userAllergiesList.map((item, index) => {
               return (
                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                  <Text> {item.allergi}</Text>
+                  <Text> #{index + 1} {item.allergi} allergiker</Text>
                   <TouchableOpacity
                     onPress={() => {
                       deleteAllergi({ id: item.id })
@@ -107,23 +107,25 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
           <Text>Ingen allergi registreret</Text>
         }
-
-        <View style={{ paddingVertical: 5 }}></View>
       </View>
 
-      <AuthPressable
-        text='Tilføj en allergi'
-        color='#86DB9D'
-        onPress={() => {
-          navigation.navigate("AddAllergiScreen")
-        }}
-      />
-      <View style={{ paddingVertical: 5 }}></View>
+      <View style={{ paddingVertical: 10 }}>
+        <AuthPressable
+          text='Tilføj en allergi'
+          color='#86DB9D'
+          onPress={() => {
+            navigation.navigate("AddAllergiScreen")
+          }}
+        />
+      </View>
+
+
+      <View style={{ paddingVertical: 20 }}></View>
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
-      <View style={{ paddingTop: 100 }}>
-        <Text style={{ fontSize: 18, fontWeight: '700' }}>Authored recipes:</Text>
+      <View>
+        <Text style={style.label}>Opskrifter lavet af dig.</Text>
         {userRecipeList.length > 0 ?
           <>
             <View>
@@ -167,15 +169,18 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
         {/* Opret ny opskrfit  */}
-        <View style={{ paddingVertical: 10 }}></View>
+        <View style={{ paddingVertical: 10 }}>
 
-        <AuthPressable
-          text='Ny opskrift'
-          color='#86DB9D'
-          onPress={() => {
-            navigation.navigate("CreateRecipe", { userId: session.id })
-          }}
-        />
+          <AuthPressable
+            text='Ny opskrift'
+            color='#86DB9D'
+            onPress={() => {
+              navigation.navigate("CreateRecipe", { userId: session.id })
+            }}
+          />
+
+        </View>
+
 
 
       </View>
@@ -194,6 +199,11 @@ const style = StyleSheet.create({
     maxHeight: 150,
     overflowY: 'scroll',
     padding: 10
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: '600',
+    paddingVertical: 5
   },
 })
 

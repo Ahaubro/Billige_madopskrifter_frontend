@@ -46,7 +46,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
       </View>
 
 
-      <Text style={{paddingTop: 35, paddingBottom: 10, fontWeight: '700'}}> opskrifter du har liket:</Text>
+      <Text style={{paddingTop: 35, paddingBottom: 10, fontWeight: '700'}}> Opskrifter du har følger.</Text>
 
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&

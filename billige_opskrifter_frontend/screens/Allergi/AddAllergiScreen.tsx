@@ -45,7 +45,8 @@ const AddAllergiScreen: React.FC<AddAllergiScreenProps> = ({ navigation, route }
             />
 
             <View style={{ paddingTop: 10 }}>
-                <Text>Her kan du tilføje en allergi hvis du er allergisk, og herved se advarsler på opskrifter der skulle indeholde disse allergener!</Text>
+                <Text style={{textAlign: 'justify', paddingTop: 5, fontSize: 14, paddingBottom: 15}}>Her kan du tilføje en allergi hvis du er allergisk, og herved se advarsler på opskrifter der skulle indeholde disse allergener!</Text>
+                <Text style={{fontStyle: 'italic', fontWeight: '600'}}>Eks. Gluten, Laktose, Fisk, Skalddyr, osv. </Text>
 
                 <TextInput
                     style={style.input}
