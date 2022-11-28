@@ -34,23 +34,24 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     const recipes = useGetRecipesByTypeQuery(type)
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
 
-    const [searchList, setSearchList] = useState<Recipe[]>([]);
     useEffect(() => {
         if (recipes.data) {
             setRecipeList(recipes.data.recipes)
         }
-
-
+        
+        
     }, [recipes.data]);
-
-
+    
+    
     //For search query
     const [searchQueryAtr, setSearchQueryAtr] = useState<{ type: string, query: string }>({ type: "", query: "" });
     const recipeSearch = useSearchRecipesQuery(searchQueryAtr, { refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0 });
+    const [searchList, setSearchList] = useState<Recipe[]>([]);
 
     useEffect(() => {
         setSearchList(recipeSearch.data?.recipes ?? [])
     }, [recipeSearch.data])
+
 
 
     //Sorteringsmuligheder & sorterings modal

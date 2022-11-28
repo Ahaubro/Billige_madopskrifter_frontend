@@ -65,3 +65,8 @@ export type HomeNavigationParameters = {
 }
 
 
+export type IngredientSearchNavigationParameters = {
+    IngredientSearchScreen: undefined
+}
+
+

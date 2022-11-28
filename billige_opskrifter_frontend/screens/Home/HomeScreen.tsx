@@ -10,6 +10,7 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { HomeNavigationParameters } from '../../Types/Navigation_types'
+import LikedRecipeCards from '../../components/LikedRecipeCards'
 
 
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
@@ -46,7 +47,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
       </View>
 
 
-      <Text style={{paddingTop: 35, paddingBottom: 10, fontWeight: '700'}}> Opskrifter du har følger.</Text>
+      <Text style={{paddingTop: 35, paddingBottom: 10, fontWeight: '700'}}> Opskrifter du følger.</Text>
 
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&
@@ -55,38 +56,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
           <Text>Du har ikke liket nogen opskrifter, kom igang!</Text>
         </View>
       }
-      <FlatList
-        data={likedRecipeList}
-        horizontal={true}
-        renderItem={({ item, index }) => {
-          return (
-            <TouchableOpacity
-              onPress={ () => {
-                navigation.navigate("SelectedRecipeScreen", {
-                  id: item.id,
-                  name: item.name,
-                  type: item.type,
-                  prepTime: item.prepTime,
-                  estimatedPrice: item.estimatedPrice,
-                  numberOfPersons: item.numberOfPersons,
-                  description: item.description,
-                  userId: item.userId
-                })
-              }}
-            >
-              <View style={{ paddingEnd: 5 }}>
-                <View style={style.likedRecipes}>
-                  <Text> {item.name}</Text>
-                  <Text> {item.prepTime}</Text>
-                  <Text> {item.estimatedPrice}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          )
-        }}
-      >
-
-      </FlatList>
+      
+      <LikedRecipeCards 
+        recipes={likedRecipeList}
+        navigation={navigation}
+      />
 
     </ViewContainer>
   )

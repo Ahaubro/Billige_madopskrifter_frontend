@@ -62,7 +62,14 @@ export const IngredientAPI = createApi({
             invalidatesTags:["Ingredient"]
         }),
 
+        //Search for ingredient
+        searchIngredients: builder.query<{ingredients: Ingredient[]}, {search: string}> ({
+            query: ({ search }) => `api/ingredient/search/${search}`,
+            providesTags:["Ingredient"]
+        }),
+        
+
     })
 })
 
-export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation } = IngredientAPI
+export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation, useSearchIngredientsQuery } = IngredientAPI

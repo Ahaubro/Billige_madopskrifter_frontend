@@ -8,6 +8,7 @@ import AuthNavigator from "./CustomNavigators/AuthNavigator"
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import RecipeNavigator from './CustomNavigators/RecipeNavigator'
+import IngredientSearchNavigator from './CustomNavigators/IngredientSearchNavigator'
 
 
 interface NavigationProps { }
@@ -45,6 +46,8 @@ const Navigation: React.FC<NavigationProps> = () => {
               iconName = focused ? 'person-outline' : 'person-outline'
             } else if (route.name === 'RecipeNavigator') {
               iconName = focused ? 'ios-fast-food-outline' : 'ios-fast-food-outline'
+            } else if(route.name === 'IngredientSearchNavigator'){
+              iconName = focused ? 'shuffle' : 'shuffle'
             }
 
             return <Ionicons name={iconName as any} size={size} color={color} />
@@ -57,6 +60,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           <>
             <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{ title: "Hjem" }} />
             <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
+            <Tab.Screen name="IngredientSearchNavigator" component={IngredientSearchNavigator} options={{title: "Ingrediens menu"}} />
             <Tab.Screen name='MyPageNavigator' component={MyPageNavigator} options={{ title: "Min side" }} />
           </>
         }
