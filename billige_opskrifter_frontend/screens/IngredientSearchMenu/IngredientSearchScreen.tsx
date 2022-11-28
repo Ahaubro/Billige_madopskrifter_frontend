@@ -38,8 +38,11 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
     }, [ingredientSearch.data])
 
 
-    console.log(ingrList, "HEHEHEHE")
-
+    //Forsøg på at opfriske så snart der tilføjes til en liste
+    useEffect( () => {
+        setChosenIngredients(chosenIngredients);
+    }, [chosenIngredients])
+    
 
 
     return (
@@ -51,6 +54,8 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                 />
             </View>
 
+
+            {/* Her vises ingredienser man har tilføjet fra search query */}
             <View style={{ paddingTop: 15 }}>
                 {chosenIngredients.length > 0 &&
                     <>
@@ -65,7 +70,6 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                     </>
                 }
             </View>
-
 
 
             <View style={{ paddingTop: 20 }}>
@@ -106,7 +110,8 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                             recipeId: item.recipeId,
                                             alergene: item.alergene
                                         }
-                                        chosenIngredients.push(ingr)
+
+                                        setChosenIngredients([...chosenIngredients, ingr])
                                     }}
                                 >
                                     <AntDesign name="plus" size={24} color="green" />
