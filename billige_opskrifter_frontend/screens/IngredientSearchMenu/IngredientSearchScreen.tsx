@@ -10,6 +10,9 @@ import { AntDesign } from '@expo/vector-icons';
 import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI"
+import AuthPressable from '../../components/AuthPressable'
+import DisplayOneRecipe from '../../components/DisplayOneRecipe'
+
 
 
 type IngredientSearchScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
@@ -24,25 +27,30 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
     const session = useSelector((state: RootState) => state.session)
 
+
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });
     const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0 });
     const [ingrList, setIngrList] = useState<Ingredient[]>([]);
     const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([])
+    const [ingrStringSet, setIngrStringSet] = useState(new Set<string>);
+    const [ingrStringArr, setIngrStringArr] = useState<string[]>([]);
+
 
 
     useEffect(() => {
         if (ingredientSearch.data) {
             setIngrList(ingredientSearch.data?.ingredients ?? [])
+
+            ingrList.forEach((ingr) => {
+
+                ingrStringSet.add(ingr.name)
+            })
+            setIngrStringSet(ingrStringSet);
+            setIngrStringArr(Array.from(ingrStringSet))
         }
     }, [ingredientSearch.data])
 
-
-    //Forsøg på at opfriske så snart der tilføjes til en liste
-    useEffect( () => {
-        setChosenIngredients(chosenIngredients);
-    }, [chosenIngredients])
-    
 
 
     return (
@@ -50,7 +58,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
             <View style={{ paddingTop: 30 }}>
                 <Header
-                    text='Find opskrifter ud fra ingredienser i hjemmet!'
+                    text='Find opskrifter ud fra ingredienser du har i hjemmet!'
                 />
             </View>
 
@@ -59,11 +67,20 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
             <View style={{ paddingTop: 15 }}>
                 {chosenIngredients.length > 0 &&
                     <>
-                        <Text style={{textAlign: 'center'}}>Du har valgt følgende ingredienser: </Text>
+                        <Text style={{ textAlign: 'center' }}>Du har valgt følgende ingredienser: </Text>
                         {chosenIngredients.map((item, index) => {
                             return (
-                                <View key={index}>
+                                <View key={index} style={{ flexDirection: 'row' }}>
                                     <Text>{index + 1} {item.name}</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            chosenIngredients.splice(index)
+                                            setChosenIngredients([...chosenIngredients])
+                                        }}
+                                    >
+
+                                        <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
+                                    </TouchableOpacity>
                                 </View>
                             )
                         })}
@@ -79,8 +96,8 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                     <View style={{ paddingLeft: 20 }}>
                         <Ionicons name="search-outline" size={28} color="black" />
                     </View>
-                    <TextInput 
-                        style={style.input} 
+                    <TextInput
+                        style={style.input}
                         placeholder="Tilføj de ingredienser du har i hjemmet"
                         onChangeText={(s) => {
                             setSearchIngrAtr({ search: s })
@@ -93,33 +110,85 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
 
             {/* Her displayes søge resultaterne */}
-            {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
+            {/* {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
                 <View>
                     {ingrList.map((item, index) => {
+                        if(ingrList[index].name === item.name){
+                            console.log(index, "HERHEHR", item)
+                            
+                        }
                         return (
                             <View key={index} style={{ flexDirection: 'row' }}>
-                                <Text> {index + 1} {item.name}</Text>
+                                    <Text style={{paddingStart: 15, paddingTop: 8}}> {index + 1} {item.name}</Text>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            let ingr: Ingredient = {
+                                                id: item.id,
+                                                name: item.name,
+                                                type: item.type,
+                                                amount: item.amount,
+                                                measurementUnit: item.measurementUnit,
+                                                recipeId: item.recipeId,
+                                                alergene: item.alergene
+                                            }
+
+                                            setChosenIngredients([...chosenIngredients, ingr])
+                                        }}
+                                    >
+                                        <AntDesign style={{paddingTop: 8}} name="plus" size={24} color="green" />
+                                    </TouchableOpacity>
+                            </View>
+                        )
+                    })}
+                </View>
+            } */}
+
+
+            {/* {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
+                <View>
+                    {ingrStringArr.map((item, index) => {
+                        return (
+                            <View key={index} style={{ flexDirection: 'row' }}>
+                                <Text style={{ paddingStart: 15, paddingTop: 8 }}> {index + 1} {item.name}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
-                                        let ingr: Ingredient = {
-                                            id: item.id,
-                                            name: item.name,
-                                            type: item.type,
-                                            amount: item.amount,
-                                            measurementUnit: item.measurementUnit,
-                                            recipeId: item.recipeId,
-                                            alergene: item.alergene
-                                        }
-
                                         setChosenIngredients([...chosenIngredients, ingr])
                                     }}
                                 >
-                                    <AntDesign name="plus" size={24} color="green" />
+                                    <AntDesign style={{ paddingTop: 8 }} name="plus" size={24} color="green" />
                                 </TouchableOpacity>
                             </View>
                         )
                     })}
                 </View>
+            } */}
+
+
+            {/* Find opskrifter med de valgte ingredienser */}
+            {chosenIngredients.length > 0 &&
+                <>
+                    <View style={{ paddingTop: 15 }}>
+                        <AuthPressable
+                            text='Find opskrifter nu'
+                            color='#86C3F7'
+                            onPress={() => {
+                                navigation.navigate("IngredientSearchResultScreen", { ingredients: chosenIngredients })
+                            }}
+                        />
+                    </View>
+
+                    {/* Clear listen */}
+                    <View style={{ paddingTop: 15 }}>
+                        <AuthPressable
+                            text='Reset'
+                            color='#FF9C9C'
+                            onPress={() => {
+                                setChosenIngredients([]);
+                            }}
+                        />
+                    </View>
+
+                </>
             }
 
         </ViewContainer>

@@ -1,3 +1,5 @@
+import { Ingredient } from "../redux/services/IngredientAPI"
+
 export type AuthNavigationParameters = {
     Login: undefined,
     Welcome: undefined,
@@ -67,6 +69,9 @@ export type HomeNavigationParameters = {
 
 export type IngredientSearchNavigationParameters = {
     IngredientSearchScreen: undefined
+    IngredientSearchResultScreen: {
+        ingredients: Ingredient[]
+    }
 }
 
 

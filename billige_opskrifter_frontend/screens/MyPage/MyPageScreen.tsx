@@ -135,35 +135,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                 recipes={userRecipeList}
                 navigation={navigation}
               />
-              {/* <FlatList horizontal={true} data={fetchedRecipesByUserId.data?.recipes || []} renderItem={({ item, index }) => {
-                return (
-                  <>
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate("SelectedRecipeScreen", {
-                          id: item.id,
-                          name: item.name,
-                          type: item.type,
-                          prepTime: item.prepTime,
-                          estimatedPrice: item.estimatedPrice,
-                          numberOfPersons: item.numberOfPersons,
-                          description: item.description,
-                          userId: item.userId,
-                        })
-                      }}
-                    >
-                      <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
-                        <View style={style.card}>
-                          <Text>Navn: {item.name}</Text>
-                          <Text>Type: {item.type}</Text>
-                          <Text>Ca. pris: {item.estimatedPrice}</Text>
-                          <Text>{item.description}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  </>
-                )
-              }} /> */}
 
             </View>
 
