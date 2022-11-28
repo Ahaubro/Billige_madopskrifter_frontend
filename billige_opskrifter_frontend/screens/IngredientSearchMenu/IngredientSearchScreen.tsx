@@ -34,22 +34,28 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
     const [ingrList, setIngrList] = useState<Ingredient[]>([]);
     const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([])
     const [ingrStringSet, setIngrStringSet] = useState(new Set<string>);
-    const [ingrStringArr, setIngrStringArr] = useState<string[]>([]);
+    const [isIncluded, setIsIncluded] = useState<string[]>([]);
 
+
+    //Fjerne duplikater så der kun bliver vist en ingredient en gang - da der læses direkte fra ingrediens tabellen
+    function removeDuplicatesA(arr: Ingredient[]){
+        return arr.filter((v,i,a)=>a.findIndex(v2=>(v2.name===v.name))===i)
+    }
 
 
     useEffect(() => {
         if (ingredientSearch.data) {
-            setIngrList(ingredientSearch.data?.ingredients ?? [])
+
+            setIngrList(removeDuplicatesA(ingredientSearch.data?.ingredients) ?? [])
 
             ingrList.forEach((ingr) => {
-
                 ingrStringSet.add(ingr.name)
             })
-            setIngrStringSet(ingrStringSet);
-            setIngrStringArr(Array.from(ingrStringSet))
+
         }
     }, [ingredientSearch.data])
+
+    console.log(ingrList)
 
 
 
@@ -110,48 +116,25 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
 
             {/* Her displayes søge resultaterne */}
-            {/* {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
+            {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
                 <View>
                     {ingrList.map((item, index) => {
-                        if(ingrList[index].name === item.name){
-                            console.log(index, "HERHEHR", item)
-                            
-                        }
-                        return (
-                            <View key={index} style={{ flexDirection: 'row' }}>
-                                    <Text style={{paddingStart: 15, paddingTop: 8}}> {index + 1} {item.name}</Text>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            let ingr: Ingredient = {
-                                                id: item.id,
-                                                name: item.name,
-                                                type: item.type,
-                                                amount: item.amount,
-                                                measurementUnit: item.measurementUnit,
-                                                recipeId: item.recipeId,
-                                                alergene: item.alergene
-                                            }
 
-                                            setChosenIngredients([...chosenIngredients, ingr])
-                                        }}
-                                    >
-                                        <AntDesign style={{paddingTop: 8}} name="plus" size={24} color="green" />
-                                    </TouchableOpacity>
-                            </View>
-                        )
-                    })}
-                </View>
-            } */}
-
-
-            {/* {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
-                <View>
-                    {ingrStringArr.map((item, index) => {
                         return (
                             <View key={index} style={{ flexDirection: 'row' }}>
                                 <Text style={{ paddingStart: 15, paddingTop: 8 }}> {index + 1} {item.name}</Text>
                                 <TouchableOpacity
                                     onPress={() => {
+                                        let ingr: Ingredient = {
+                                            id: item.id,
+                                            name: item.name,
+                                            type: item.type,
+                                            amount: item.amount,
+                                            measurementUnit: item.measurementUnit,
+                                            recipeId: item.recipeId,
+                                            alergene: item.alergene
+                                        }
+
                                         setChosenIngredients([...chosenIngredients, ingr])
                                     }}
                                 >
@@ -161,7 +144,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                         )
                     })}
                 </View>
-            } */}
+            }
 
 
             {/* Find opskrifter med de valgte ingredienser */}
