@@ -67,9 +67,15 @@ export const IngredientAPI = createApi({
             query: ({ search }) => `api/ingredient/search/${search}`,
             providesTags:["Ingredient"]
         }),
+
+        //Search for ingredient
+        searchIngredientByMultipleNames: builder.query<{ingredients: Ingredient[]}, {searchList: string}> ({
+            query: ({ searchList }) => `api/ingredient/searchlist/${searchList}`,
+            providesTags:["Ingredient"]
+        }),
         
 
     })
 })
 
-export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation, useSearchIngredientsQuery } = IngredientAPI
+export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation, useSearchIngredientsQuery, useSearchIngredientByMultipleNamesQuery } = IngredientAPI

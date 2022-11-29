@@ -27,14 +27,12 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
     const session = useSelector((state: RootState) => state.session)
 
-
+    
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });
     const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0 });
     const [ingrList, setIngrList] = useState<Ingredient[]>([]);
     const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([])
-    const [ingrStringSet, setIngrStringSet] = useState(new Set<string>);
-    const [isIncluded, setIsIncluded] = useState<string[]>([]);
 
 
     //Fjerne duplikater så der kun bliver vist en ingredient en gang - da der læses direkte fra ingrediens tabellen
@@ -42,21 +40,11 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
         return arr.filter((v,i,a)=>a.findIndex(v2=>(v2.name===v.name))===i)
     }
 
-
     useEffect(() => {
         if (ingredientSearch.data) {
-
             setIngrList(removeDuplicatesA(ingredientSearch.data?.ingredients) ?? [])
-
-            ingrList.forEach((ingr) => {
-                ingrStringSet.add(ingr.name)
-            })
-
         }
     }, [ingredientSearch.data])
-
-    console.log(ingrList)
-
 
 
     return (

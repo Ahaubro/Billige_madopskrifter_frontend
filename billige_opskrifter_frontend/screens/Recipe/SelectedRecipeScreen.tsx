@@ -97,6 +97,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 text={name}
             />
 
+
+
+            {/* Her kan man like / unlike et opslag (Hvis man har liket det vises hjerte med streg over) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
                 {session.token != 'guest' &&
@@ -105,6 +108,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <TouchableOpacity
                         onPress={() => {
                             likeRecipe(likeRecipeAtr).unwrap().then(res => {
+                                //console.log(res)
                             });
                         }}
                     >

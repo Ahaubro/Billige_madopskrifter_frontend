@@ -1,14 +1,15 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, Pressable } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { RootState } from '../../redux/store'
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types'
+import { Ingredient, useSearchIngredientByMultipleNamesQuery } from "../../redux/services/IngredientAPI"
 import DisplayOneRecipe from '../../components/DisplayOneRecipe'
 
 
@@ -24,17 +25,34 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
 
   const session = useSelector((state: RootState) => state.session)
 
-  const { ingredients } =  route.params;
+  const { ingredients } = route.params;
 
-  // Get ingredients by name med en contains method i backend, så du får alle ingredienser med kylling f.eks.
-  //Brug herefter evt. komponentet til at vise dem. Og tjek i samme forbindelse om hvor vidt andre ingrdienser fra den oprindelige 
-  //liste tilhøhrer samme opskrift, for at kunne påbegynde det match noget
 
-  //Object er egentlig ligemeget, her skal jeg bare bruge navnet for at lave ale søgningerne igen(men behold obj for nu - name er navnet der kan tælle for flere)
+  //Laver et string array med ingrediensnavnene
+  let ingredientNames = ""
+
+  ingredients.forEach((ingr) => {
+    ingredientNames += ingr.name + ";"
+  })
 
   console.log(ingredients)
+  console.log(" STRING", ingredientNames)
 
-  //Get ingredients by name
+  const [multipleIngrAtr] = useState<{ searchList: string }>({ searchList: ingredientNames })
+  const allIngredients = useSearchIngredientByMultipleNamesQuery(multipleIngrAtr, { refetchOnMountOrArgChange: true })
+  const [allIngredientsList, setAllIngredientsList] = useState<Ingredient[]>([])
+
+  // MIDLERTIDIG - Der det skal være muligt at hvor mange ingredienser 
+
+  function removeDuplicatesA(arr: Ingredient[]) {
+    return arr.filter((v, i, a) => a.findIndex(v2 => (v2.recipeId === v.recipeId)) === i)
+  }
+
+  useEffect(() => {
+    if (allIngredients.data) {
+      setAllIngredientsList(removeDuplicatesA(allIngredients.data?.ingredients))
+    }
+  }, [allIngredients.data])
 
 
   return (
@@ -54,21 +72,38 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
       />
 
 
-      {ingredients.map( (item, index) => {
-        return (
-            <View key={index}>
-                <DisplayOneRecipe item={item} />
+      {/* Okay, den er lidt pebberet den her - Der mappes gennem de unikke elementer fra IngredientSearchScreen
+          og for hvert element bruges FindRecipesComponent, som bruger samme search funktionalitet fra IngredientSearchScreen
+          til at læse ALLE ingredienser der f.eks. indeholder kylling, sådan at man kan få displayet alle opskrifter, uden at man skal kunne 
+          vælge fra alle ingredienser(F.eks. kylling x 4, da en ingrediens er registreret til en opskrift.). Inde i FindRecipesComponent kaldes der så 
+          på komponenten DisplayOneRecipe, som bruges til at displaye alle de nye funde opskrifter inde i FindRecipesComponent. Altså:
+          IngredientResultSearchScreen -> FindRecipesComponent -> DisplayOneRecipe
+      */}
+
+      {/* <View>
+        {ingredients.map((item, index) => {
+          return (
+            <View key={item.id}>
+                <Text style={{paddingVertical: 10, fontWeight: '700'}}> Opskrifter med {item.name}</Text>
+                <FindRecipesComponent item={item}/>
             </View>
-        )
-      })}
+          )
+        })}
+      </View> */}
 
 
+      {/* DEN HER ER BEDRE AT ARBEJDE VIDERE PÅ!!!! Der læses alle ingredienser fra db her, som der så laves map på med evt. component
+      Nu skal der findes en måde at lave noget med match, alt efter hvor mange ingredienser man har */}
 
-
-
-
-
-     
+      <View>
+        {allIngredientsList.map((item, index) => {
+          return (
+            <View key={item.id}>
+              <DisplayOneRecipe item={item} />
+            </View>
+          )
+        })}
+      </View>
 
     </ViewContainer>
   )
