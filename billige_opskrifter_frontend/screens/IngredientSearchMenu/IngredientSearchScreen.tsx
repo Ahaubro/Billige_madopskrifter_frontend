@@ -94,7 +94,9 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                         style={style.input}
                         placeholder="Tilføj de ingredienser du har i hjemmet"
                         onChangeText={(s) => {
-                            setSearchIngrAtr({ search: s })
+                            if(s != "" && s != " "){
+                                setSearchIngrAtr({ search: s })
+                            }
                         }}
                     >
                     </TextInput>

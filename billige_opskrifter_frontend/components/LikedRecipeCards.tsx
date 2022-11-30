@@ -83,8 +83,8 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 20,
-        maxHeight: Dimensions.get("window").height / 100 * 20,
+        minHeight: Dimensions.get("window").height / 100 * 40,
+        maxHeight: Dimensions.get("window").height / 100 * 40,
         width: Dimensions.get("window").width / 100 * 95
     },
     title: {

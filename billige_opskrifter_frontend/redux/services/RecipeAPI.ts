@@ -65,7 +65,7 @@ export const RecipeAPI = createApi({
         }),
 
         //Get recipe by id
-        getRecipeById: builder.query<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }, number>({
+        getRecipeById: builder.query<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }, number>({
             query: id => `api/recipe/${id}`,
             providesTags: ["Recipe"]
         }),

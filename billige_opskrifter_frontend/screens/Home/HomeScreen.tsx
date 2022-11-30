@@ -47,20 +47,24 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
       </View>
 
 
-      <Text style={{paddingTop: 35, paddingBottom: 10, fontWeight: '700'}}> Opskrifter du følger.</Text>
+      <Text style={{ paddingTop: 50, paddingBottom: 10, fontWeight: '700' }}> Opskrifter du følger.</Text>
 
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&
-      
+
         <View style={style.likedRecipes}>
           <Text>Du har ikke liket nogen opskrifter, kom igang!</Text>
         </View>
       }
-      
-      <LikedRecipeCards 
-        recipes={likedRecipeList}
-        navigation={navigation}
-      />
+
+      <View>
+
+        <LikedRecipeCards
+          recipes={likedRecipeList}
+          navigation={navigation}
+        />
+
+      </View>
 
     </ViewContainer>
   )
