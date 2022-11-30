@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import IngredientSearchResultScreen from '../../screens/IngredientSearchMenu/IngredientSearchResultScreen';
 import IngredientSearchScreen from '../../screens/IngredientSearchMenu/IngredientSearchScreen';
+import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types';
 
 
@@ -17,6 +18,7 @@ export default function IngredientSearchNavigator(){
         >
             <stack.Screen name="IngredientSearchScreen" component={IngredientSearchScreen} />
             <stack.Screen name="IngredientSearchResultScreen" component={IngredientSearchResultScreen} />
+            <stack.Screen name='SelectedRecipeScreen' component={SelectedRecipeScreen}/>
 
         </stack.Navigator>
     ) 

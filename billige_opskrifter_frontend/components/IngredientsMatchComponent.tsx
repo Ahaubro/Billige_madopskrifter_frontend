@@ -1,5 +1,5 @@
 import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native"
 import { Ingredient } from "../redux/services/IngredientAPI"
 import { useGetByRecipeIdQuery } from "../redux/services/IngredientAPI"
 import { Recipe } from "../redux/services/RecipeAPI"
@@ -7,20 +7,24 @@ import { Recipe } from "../redux/services/RecipeAPI"
 
 type IngredientsMatchComponentProps = {
     recItem: Recipe
-    matchItems: Ingredient[]
+    allIngr: Ingredient[]
 }
 
-const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ recItem, matchItems }) => {
+const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ recItem, allIngr }) => {
 
+    //Get all ingr by recipe id, tag total antallet af dem og 
+
+    // conditions om rækkefølge udfra matches?
 
     return (
-        <View>
-            {matchItems.map((item) => {
+        <ScrollView>
+            <Text style={{fontWeight: '700', paddingTop: 15, paddingBottom: 5}}>Matchende ingredienser:</Text>
+            {allIngr.map((item, index) => {
                 if(item.recipeId === recItem.id){
                     return (
                         <View key={item.id}>
                             <View>
-                                <Text>Indeholder ingredienser: {item.name}</Text>
+                                <Text>{item.name}</Text>
                             </View>
                         </View>
                     )
@@ -28,7 +32,7 @@ const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ r
             })
             }
 
-        </View>
+        </ScrollView>
     )
 }
 

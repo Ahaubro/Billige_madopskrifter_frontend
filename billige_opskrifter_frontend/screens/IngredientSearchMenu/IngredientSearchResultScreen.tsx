@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React, { useState, useEffect } from 'react'
-import { Text, View, Pressable } from 'react-native'
+import { Text, View, Pressable, Dimensions, ScrollView } from 'react-native'
 import { useSelector } from 'react-redux'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { RootState } from '../../redux/store'
@@ -91,18 +91,19 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
       */}
 
 
-      <View style={{flex: 1}}>
+      <ScrollView style={{maxHeight: Dimensions.get('window').height / 100 * 80}}>
         {clonedForMapNoDuplicates.map((item, index) => {
           return (
             <View key={index}>
               <DisplayOneRecipe
                 item={item}
                 allIngr={allIngredientsList}
+                navigation={navigation}
               />
             </View>
           )
         })}
-      </View>
+      </ScrollView>
 
     </ViewContainer>
   )

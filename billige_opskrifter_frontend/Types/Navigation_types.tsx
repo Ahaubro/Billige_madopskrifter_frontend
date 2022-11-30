@@ -71,7 +71,17 @@ export type IngredientSearchNavigationParameters = {
     IngredientSearchScreen: undefined
     IngredientSearchResultScreen: {
         ingredients: Ingredient[]
-    }
+    },
+    SelectedRecipeScreen: {
+        id: number,
+        name: string,
+        type: string,
+        prepTime: number,
+        estimatedPrice: number,
+        numberOfPersons: number,
+        description: string,
+        userId: number,
+    },
 }
 
 

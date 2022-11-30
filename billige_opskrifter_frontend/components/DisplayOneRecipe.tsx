@@ -1,48 +1,81 @@
+import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useState, useEffect } from "react"
-import { View, StyleSheet, Text, Dimensions } from "react-native"
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native"
 import { Ingredient } from "../redux/services/IngredientAPI"
 import { Recipe, useGetRecipeByIdQuery } from "../redux/services/RecipeAPI"
+import { IngredientSearchNavigationParameters } from "../Types/Navigation_types"
 import AllergiComponent from "./AllergiComponent"
 import IngredientsMatchComponent from "./IngredientsMatchComponent"
 import PriceComponent from "./PriceComponent"
 
 
+type SearchIngrScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchResultScreen'>
+
 type DisplayOneRecipeProps = {
     item: Ingredient
     allIngr: Ingredient[]
+    navigation: SearchIngrScreenNavigationProps
+
 }
 
-const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr }) => {
+const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr, navigation }) => {
 
     const recipe = useGetRecipeByIdQuery(item.recipeId, { refetchOnMountOrArgChange: true })
+
+    const [thisRecipe, setThisRecipe] = useState<{id: number, name: string, type: string, prepTime: number, estimatedPrice: number, numberOfPersons: number, description: string, userId: number}>
+    ({id: 0, name: '', type: '', prepTime: 0, estimatedPrice: 0, numberOfPersons: 0, description: '', userId: 0})
+
+    useEffect( () => {
+        if(recipe.data){
+            setThisRecipe({
+                id: recipe.data.id, 
+                name: recipe.data.name, 
+                type: recipe.data.type, 
+                prepTime: recipe.data.prepTime, 
+                estimatedPrice: recipe.data.estimatedPrice, 
+                numberOfPersons: recipe.data.numberOfPersons, 
+                description: recipe.data.description, 
+                userId: recipe.data.userId })
+        }
+    }, [recipe.data])
 
     return (
         <View>
             {recipe.data &&
-                <View style={{}}>
-                    <>
+                <>
+                    <TouchableOpacity
+                        onPress={ () => {
+                            navigation.navigate("SelectedRecipeScreen", {
+                                id: thisRecipe.id,
+                                name: thisRecipe.name,
+                                type: thisRecipe.type,
+                                prepTime: thisRecipe.prepTime,
+                                estimatedPrice: thisRecipe.estimatedPrice,
+                                numberOfPersons: thisRecipe.numberOfPersons,
+                                description: thisRecipe.description,
+                                userId: thisRecipe.userId
+                            })
+                        }}
+                    >
                         <View style={{ paddingBottom: 15 }}>
                             <View style={style.card}>
 
-                                <Text style={style.title}> {recipe.data.name} <AllergiComponent item={recipe.data} /> </Text>
+                                <Text style={style.title}> {thisRecipe.name} <AllergiComponent item={recipe.data} /> </Text>
 
                                 <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
 
                                 <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {recipe.data.numberOfPersons}</Text>
-                                    <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {recipe.data.prepTime}</Text>
+                                    <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {thisRecipe.prepTime}</Text>
+                                    <IngredientsMatchComponent recItem={recipe.data} allIngr={allIngr} />
+                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -40 }}>
+                                        <Text style={[style.priceComponent]}> <PriceComponent price={thisRecipe.estimatedPrice} />  </Text>
+                                    </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -20 }}>
-                                    <Text style={[style.priceComponent]}> <PriceComponent price={recipe.data.estimatedPrice} />  </Text>
-                                </View>
-
-
-                                <IngredientsMatchComponent recItem={recipe.data} matchItems={allIngr} />
 
                             </View>
                         </View>
-                    </>
-                </View>
+                    </TouchableOpacity>
+                </>
             }
         </View>
     )

@@ -30,7 +30,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
     
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });
-    const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0 });
+    const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0});
     const [ingrList, setIngrList] = useState<Ingredient[]>([]);
     const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([])
 
@@ -66,13 +66,14 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                             return (
                                 <View key={index} style={{ flexDirection: 'row' }}>
                                     <Text>{index + 1} {item.name}</Text>
+
+                                    {/* Slet valgte ingredienser */}
                                     <TouchableOpacity
                                         onPress={() => {
                                             chosenIngredients.splice(index)
                                             setChosenIngredients([...chosenIngredients])
                                         }}
                                     >
-
                                         <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
                                     </TouchableOpacity>
                                 </View>
@@ -94,7 +95,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                         style={style.input}
                         placeholder="Tilføj de ingredienser du har i hjemmet"
                         onChangeText={(s) => {
-                            if(s != "" && s != " "){
+                            if(s != " "){
                                 setSearchIngrAtr({ search: s })
                             }
                         }}
