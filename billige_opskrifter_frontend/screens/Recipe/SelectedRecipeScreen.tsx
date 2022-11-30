@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share } from 'react-native'
+import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share, TextInput } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
@@ -9,7 +9,7 @@ import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import { RouteProp } from '@react-navigation/native'
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
-import { useGetByRecipeIdQuery } from "../../redux/services/IngredientAPI"
+import { useGetByRecipeIdQuery, useEditMutation } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
 import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
@@ -36,6 +36,14 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     //Getting the recipes ingrediens
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
+
+    //Edit recipes ingredients
+    const [editIngrAtr, setEditIngrAtr] = useState<{ id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
+        ({ id: 0, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' })
+    const [editIngredient] = useEditMutation();
+    const [isEditing, setIsEditing] = useState(false)
+    const[idForEdit, setIdForEdit] = useState(0);
+    
 
     //Delete recipe
     const [deleteRecipe] = useDeleteRecipeMutation();
@@ -103,27 +111,27 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
                 {session.token != 'guest' &&
-                <>
-                    <View style={{ paddingVertical: 25 }}>
-                    <TouchableOpacity
-                        onPress={() => {
-                            likeRecipe(likeRecipeAtr).unwrap().then(res => {
-                                //console.log(res)
-                            });
-                        }}
-                    >
-                        {likedCheck == "isLiked" ?
+                    <>
+                        <View style={{ paddingVertical: 25 }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    likeRecipe(likeRecipeAtr).unwrap().then(res => {
+                                        //console.log(res)
+                                    });
+                                }}
+                            >
+                                {likedCheck == "isLiked" ?
 
-                            <Ionicons name="heart-dislike" size={30} color="red" />
-                            :
-                            <Ionicons name="heart" size={30} color="red" />
-                        }
+                                    <Ionicons name="heart-dislike" size={30} color="red" />
+                                    :
+                                    <Ionicons name="heart" size={30} color="red" />
+                                }
 
-                    </TouchableOpacity>
-                </View>
+                            </TouchableOpacity>
+                        </View>
 
-                <View style={{paddingHorizontal: 10}}></View>
-                </>
+                        <View style={{ paddingHorizontal: 10 }}></View>
+                    </>
                 }
 
 
@@ -170,10 +178,64 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 <View key={index}>
                                     <View style={{ paddingBottom: 5 }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                                            <Text style={{ paddingLeft: 30 }}>{index + 1}: {item.name}</Text>
-                                            <Text> {item.amount}</Text>
-                                            <Text>{item.measurementUnit}</Text>
-                                            <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
+
+                                            {/* Hvis isEditing er true og idForEdit er item.id kan man redigere i det enkelte objekt  */}
+                                            {isEditing == true && item.id === idForEdit  ?
+                                                <>
+                                                    <TextInput style={style.editInput} placeholder={item.name} editable={true}
+                                                        onChangeText={ (name) => {
+                                                            editIngrAtr.name = name
+                                                    }}></TextInput>
+                                                    <TextInput style={style.editInput} value={item.type}></TextInput>
+                                                    <TextInput style={style.editInput} value={String(item.amount)}></TextInput>
+                                                    <TextInput style={style.editInput} value={item.measurementUnit}></TextInput>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            editIngrAtr.id = item.id
+                                                            if(editIngrAtr.name == ""){
+                                                                editIngrAtr.name = item.name
+                                                            }
+                                                            if(editIngrAtr.type == ""){
+                                                                editIngrAtr.type = item.type
+                                                            }
+                                                            if(editIngrAtr.amount == 0){
+                                                                editIngrAtr.amount = item.amount
+                                                            }
+                                                            if(editIngrAtr.measurementUnit == ""){
+                                                                editIngrAtr.measurementUnit = item.measurementUnit
+                                                            }
+                                                            if(editIngrAtr.alergene == ""){
+                                                                editIngrAtr.alergene = item.alergene
+                                                            }
+                                                            console.log(editIngrAtr)
+                                                            editIngredient(editIngrAtr).unwrap().then( res => {
+                                                                console.log(res)
+                                                            })
+                                                            setIsEditing(false)
+                                                        }}
+                                                    >
+                                                        <Text>Save</Text>
+                                                    </TouchableOpacity>
+                                                </>
+
+                                                :
+
+                                                <>
+
+                                                    <Text style={{ paddingLeft: 30 }}>{index + 1}: {item.name}</Text>
+                                                    <Text> {item.amount}</Text>
+                                                    <Text>{item.measurementUnit}</Text>
+                                                    <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            setIdForEdit(item.id)
+                                                            setIsEditing(true)
+                                                        }}
+                                                    >
+                                                        <Text>Edit</Text>
+                                                    </TouchableOpacity>
+                                                </>
+                                            }
                                         </View>
                                     </View>
                                 </View>
@@ -199,7 +261,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
             {
                 listOfReviews.length > 0 ?
-
                     <View>
                         <>
                             <FlatList
@@ -232,8 +293,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             </FlatList>
                         </>
                     </View>
-
-
                     :
 
                     <Text style={{ textAlign: 'center' }}>Denne opskrift har ingen reviews endnu, bliv den første!</Text>
@@ -242,21 +301,26 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ paddingVertical: 5 }}></View>
 
 
-            {/* Nyt review */}
-            <AuthPressable
-                text='Nyt review'
-                color='#86DB9D'
-                onPress={() => {
-                    navigation.navigate("CreateReviewScreen", { id, userId })
-                }}
-            />
+            {/* Nyt review hvis man ikke er gæst */}
+            {session.token != 'guest' ?
+                <>
+                    <AuthPressable
+                        text='Nyt review'
+                        color='#86DB9D'
+                        onPress={() => {
+                            navigation.navigate("CreateReviewScreen", { id, userId })
+                        }}
+                    />
 
-            <View style={{ paddingVertical: 5 }}></View>
+                    <View style={{ paddingVertical: 5 }}></View>
+                </>
+                :
+                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!</Text>
+            }
 
 
             {/* SLET OPSKRIFT HVIS USER ER AUTHOR */}
-            {
-                userId == session.id &&
+            {userId == session.id &&
                 <AuthPressable
                     text='Slet opskrift'
                     color='#FF9C9C'
@@ -290,6 +354,13 @@ const style = StyleSheet.create({
         fontSize: 14,
         padding: 12
     },
+    editInput:{
+        width: 70,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: 'black',
+
+    }
 
 })
 

@@ -56,16 +56,6 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
   const clonedForMapNoDuplicates = removeDuplicatesA([...allIngredientsList])
 
 
-  //  //Funtion der sender os de ingredienser med samme recipeId
-  //  function getDuplicates(arr: Ingredient[]) {
-  //   return arr.filter((v, i, a) => a.findIndex(v2 => (v2.recipeId === v.recipeId)) !== i)
-  // }
-
-  // //Gemmer en ny liste der kun indeholder ingredienser med samme recipeId (Skal bruges til at tjekke hvor mange ingredienser opskriften matcher med)
-  // const matchingIngredients = getDuplicates([...allIngredientsList])
-  // console.log("Til at tjekke matches", matchingIngredients)
-
-
   return (
     <ViewContainer>
 

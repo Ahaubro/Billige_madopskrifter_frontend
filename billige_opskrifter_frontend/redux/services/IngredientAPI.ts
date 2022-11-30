@@ -73,9 +73,22 @@ export const IngredientAPI = createApi({
             query: ({ searchList }) => `api/ingredient/searchlist/${searchList}`,
             providesTags:["Ingredient"]
         }),
+
+        //Edit ingredient
+        edit: builder.mutation<
+        { statusText: string, name: string },
+        { id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }
+        >({
+            query: body => ({
+                url: `api/ingredient/${body.id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: ["Ingredient"]
+        }),
         
 
     })
 })
 
-export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation, useSearchIngredientsQuery, useSearchIngredientByMultipleNamesQuery } = IngredientAPI
+export const { useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation, useSearchIngredientsQuery, useSearchIngredientByMultipleNamesQuery, useEditMutation } = IngredientAPI

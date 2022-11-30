@@ -22,7 +22,7 @@ const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ r
             {allIngr.map((item, index) => {
                 if(item.recipeId === recItem.id){
                     return (
-                        <View key={item.id}>
+                        <View key={index}>
                             <View>
                                 <Text>{item.name}</Text>
                             </View>
