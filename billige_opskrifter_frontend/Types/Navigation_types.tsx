@@ -50,6 +50,16 @@ export type RecipeNavigationParameters = {
         description: string,
         userId: number,
     },
+    CreateReviewScreen:{
+        id: number,
+        userId: number
+    },
+    AddIngredient: {
+        name: string
+    },
+    AddIngredientAfterCreationScreen:{
+        recipeId: number
+    }
 }
 
 export type HomeNavigationParameters = {

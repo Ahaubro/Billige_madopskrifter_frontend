@@ -5,11 +5,11 @@ import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { StackNavigationProp } from '@react-navigation/stack'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
+import { RecipeNavigationParameters } from '../../Types/Navigation_types'
 import { RouteProp } from '@react-navigation/native'
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
-import { useGetByRecipeIdQuery, useEditMutation } from "../../redux/services/IngredientAPI"
+import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
 import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
@@ -19,8 +19,8 @@ import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/servic
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
-type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
-type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'SelectedRecipeScreen'>
+type SelectedRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, "SelectedRecipeScreen">
+type SelectedRecipeScreenRouteProps = RouteProp<RecipeNavigationParameters, 'SelectedRecipeScreen'>
 
 type SelectedRecipeScreenProps = {
     navigation: SelectedRecipeScreenNavigationProps
@@ -34,20 +34,23 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     const { id, name, type, prepTime, numberOfPersons, estimatedPrice, description, userId } = route.params
 
-    //Getting the recipes ingrediens
+    //Getting the recipes ingrediens & setUp delete ingr and create ingr
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
+    const [deleteIngredient] = useDeleteIngredientMutation();
+
 
     //Edit recipes ingredients
     const [editIngrAtr, setEditIngrAtr] = useState<{ id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ id: 0, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' })
     const [editIngredient] = useEditMutation();
     const [isEditing, setIsEditing] = useState(false)
-    const[idForEdit, setIdForEdit] = useState(0);
-    
+    const [idForEdit, setIdForEdit] = useState(0);
 
-    //Delete recipe
+
+    //Delete recipe & ingredient
     const [deleteRecipe] = useDeleteRecipeMutation();
     const [deleteRecipeAtr] = useState<{ recipeId: number }>({ recipeId: id });
+
 
     //Recipe reviews 
     const thisRecipesReviews = useGetReviewsByRecipeIdQuery(id)
@@ -180,42 +183,60 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                                             {/* Hvis isEditing er true og idForEdit er item.id kan man redigere i det enkelte objekt  */}
-                                            {isEditing == true && item.id === idForEdit  ?
+                                            {isEditing == true && item.id === idForEdit ?
                                                 <>
-                                                    <TextInput style={style.editInput} placeholder={item.name} editable={true}
-                                                        onChangeText={ (name) => {
-                                                            editIngrAtr.name = name
-                                                    }}></TextInput>
-                                                    <TextInput style={style.editInput} value={item.type}></TextInput>
-                                                    <TextInput style={style.editInput} value={String(item.amount)}></TextInput>
-                                                    <TextInput style={style.editInput} value={item.measurementUnit}></TextInput>
-                                                    <TouchableOpacity
-                                                        onPress={() => {
-                                                            editIngrAtr.id = item.id
-                                                            if(editIngrAtr.name == ""){
-                                                                editIngrAtr.name = item.name
-                                                            }
-                                                            if(editIngrAtr.type == ""){
-                                                                editIngrAtr.type = item.type
-                                                            }
-                                                            if(editIngrAtr.amount == 0){
-                                                                editIngrAtr.amount = item.amount
-                                                            }
-                                                            if(editIngrAtr.measurementUnit == ""){
-                                                                editIngrAtr.measurementUnit = item.measurementUnit
-                                                            }
-                                                            if(editIngrAtr.alergene == ""){
-                                                                editIngrAtr.alergene = item.alergene
-                                                            }
-                                                            console.log(editIngrAtr)
-                                                            editIngredient(editIngrAtr).unwrap().then( res => {
-                                                                console.log(res)
-                                                            })
-                                                            setIsEditing(false)
-                                                        }}
-                                                    >
-                                                        <Text>Save</Text>
-                                                    </TouchableOpacity>
+                                                    <View style={{ paddingLeft: 30, flexDirection: 'row' }}>
+                                                        <TextInput style={style.editInput} placeholder={item.name} editable={true}
+                                                            onChangeText={(name) => {
+                                                                editIngrAtr.name = name
+                                                            }}></TextInput>
+                                                        <TextInput style={style.editInput} placeholder={item.type} editable={true}
+                                                            onChangeText={(type) => {
+                                                                editIngrAtr.type = type
+                                                            }}>
+                                                        </TextInput>
+                                                        <TextInput style={style.editInput} placeholder={String(item.amount)} editable={true}
+                                                            onChangeText={(amount) => {
+                                                                editIngrAtr.amount = Number(amount)
+                                                            }}></TextInput>
+                                                        <TextInput style={style.editInput} placeholder={item.measurementUnit} editable={true}
+                                                            onChangeText={(mu) => {
+                                                                editIngrAtr.measurementUnit = mu
+                                                            }}></TextInput>
+                                                        <TextInput style={style.editInput} placeholder='Alergi' editable={true}
+                                                            onChangeText={(al) => {
+                                                                editIngrAtr.alergene = al
+                                                            }}></TextInput>
+                                                        <TouchableOpacity
+                                                            style={style.saveEdit}
+                                                            onPress={() => {
+                                                                //Sætter det redigerde objekts atr hvis de ikke bliver ændret af brugeren
+                                                                editIngrAtr.id = item.id
+                                                                if (editIngrAtr.name == "") {
+                                                                    editIngrAtr.name = item.name
+                                                                }
+                                                                if (editIngrAtr.type == "") {
+                                                                    editIngrAtr.type = item.type
+                                                                }
+                                                                if (editIngrAtr.amount == 0) {
+                                                                    editIngrAtr.amount = item.amount
+                                                                }
+                                                                if (editIngrAtr.measurementUnit == "") {
+                                                                    editIngrAtr.measurementUnit = item.measurementUnit
+                                                                }
+                                                                if (editIngrAtr.alergene == "") {
+                                                                    editIngrAtr.alergene = item.alergene
+                                                                }
+                                                                console.log(editIngrAtr)
+                                                                editIngredient(editIngrAtr).unwrap().then(res => {
+                                                                    console.log(res)
+                                                                })
+                                                                setIsEditing(false)
+                                                            }}
+                                                        >
+                                                            <Text style={{ color: 'white', textAlign: 'center' }}>Save</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
                                                 </>
 
                                                 :
@@ -226,14 +247,29 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                     <Text> {item.amount}</Text>
                                                     <Text>{item.measurementUnit}</Text>
                                                     <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
-                                                    <TouchableOpacity
-                                                        onPress={() => {
-                                                            setIdForEdit(item.id)
-                                                            setIsEditing(true)
-                                                        }}
-                                                    >
-                                                        <Text>Edit</Text>
-                                                    </TouchableOpacity>
+
+                                                    {/* Hvis man er forfatter til opskriften kan man redigere & slette ingredienserne */}
+                                                    {userId == session.id &&
+                                                        <View style={{ flexDirection: 'row' }}>
+                                                            <TouchableOpacity
+                                                                style={style.editBtn}
+                                                                onPress={() => {
+                                                                    setIdForEdit(item.id)
+                                                                    setIsEditing(true)
+                                                                }}
+                                                            >
+                                                                <Text style={{ color: 'white', textAlign: 'center' }}>Rediger <Ionicons name="ios-pencil-outline" size={18} color="blue" /></Text>
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity
+                                                                style={style.deleteIngr}
+                                                                onPress={() => {
+                                                                    deleteIngredient({ id: item.id })
+                                                                }}
+                                                            >
+                                                                <Text style={{ color: 'white', textAlign: 'center' }}>Slet <Ionicons name="trash-outline" size={18} color="#FF9C9C" /></Text>
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    }
                                                 </>
                                             }
                                         </View>
@@ -245,8 +281,25 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </>
                 </View>
             </View>
+            
+            {/* Man kan tilføje ingredienser til opskriften hvis man er forfatter*/}
+            {userId === session.id &&
+                <View style={{ paddingVertical: 5 }}>
+                    <AuthPressable
+                        text='Tilføj yderligere ingrediens'
+                        color='#86DB9D'
+                        onPress={() => {
+                            navigation.navigate("AddIngredientAfterCreationScreen", {
+                                recipeId: id
+                            })
+                        }}
+                    />
+                </View>
+            }
 
             <View style={{ paddingVertical: 5 }}></View>
+
+
 
             {/* Læser opskriftens fremgangsmetode */}
             <View style={style.card}>
@@ -301,7 +354,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ paddingVertical: 5 }}></View>
 
 
-            {/* Nyt review hvis man ikke er gæst */}
+            {/* Nyt review hvis man ikke er gæst og GØR SÅ MAN IKKE KAN SKRIVE REVIEW SOM FORFATTER*/}
             {session.token != 'guest' ?
                 <>
                     <AuthPressable
@@ -354,12 +407,27 @@ const style = StyleSheet.create({
         fontSize: 14,
         padding: 12
     },
-    editInput:{
-        width: 70,
+    editInput: {
+        width: 50,
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: 'black',
 
+    },
+    editBtn: {
+        padding: 3,
+        backgroundColor: '#86C3F7',
+        borderRadius: 5,
+    },
+    deleteIngr: {
+        backgroundColor: '#FF9C9C',
+        padding: 3,
+        borderRadius: 5
+    },
+    saveEdit: {
+        backgroundColor: '#86DB9D',
+        padding: 3,
+        borderRadius: 5
     }
 
 })
