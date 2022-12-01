@@ -11,8 +11,6 @@ import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI"
 import AuthPressable from '../../components/AuthPressable'
-import DisplayOneRecipe from '../../components/DisplayOneRecipe'
-import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions'
 
 
 
@@ -128,7 +126,6 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                         }
 
                                         setChosenIngredients(removeDuplicatesByName([...chosenIngredients, ingr]))
-
 
                                     }}
                                 >

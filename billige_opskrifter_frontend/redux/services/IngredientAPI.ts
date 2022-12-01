@@ -68,7 +68,7 @@ export const IngredientAPI = createApi({
             providesTags:["Ingredient"]
         }),
 
-        //Search for ingredient
+        //Search for ingredient by multiple names
         searchIngredientByMultipleNames: builder.query<{ingredients: Ingredient[]}, {searchList: string}> ({
             query: ({ searchList }) => `api/ingredient/searchlist/${searchList}`,
             providesTags:["Ingredient"]

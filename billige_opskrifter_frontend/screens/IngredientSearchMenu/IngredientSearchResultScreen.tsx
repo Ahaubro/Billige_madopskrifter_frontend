@@ -67,21 +67,15 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
         </Pressable>
       </BackArrowContainer>
 
-
-      <Header
-        text='Resultater'
-      />
-
-
-      {/* DEN HER ER BEDRE AT ARBEJDE VIDERE PÅ!!!! Der læses alle ingredienser fra db her, som der så laves map på med evt. component
-      Nu skal der findes en måde at lave noget med match, alt efter hvor mange ingredienser man har 
-      For nu skal der udtænkes en måde hvor at der kan tjekkes hvor mange ingredienser der findes på hver opskrift, uden at opskriften skal displayes flere gange
-      For nu virker det fordi at allIngrList får fjernet duplikater med samme recipeId i useEffect, men disse skal nok bruges for at tjekke efter match, så der skal opsættes en
-      anden måde at vise opskrifter en de komponenter der bruges nu. Ellers skal de laves om.
-      */}
+      <View style={{paddingBottom: 25}}>
+        <Header
+          text='Opskrifter med de valgte ingredienser'
+        />
+      </View>
 
 
-      <ScrollView style={{maxHeight: Dimensions.get('window').height / 100 * 80}}>
+      {/* Der bliver displayet en opskrift for hver af de ingredienser med et unikt RecipeId med komponenten displayOneRecipe */}
+      <ScrollView style={{ maxHeight: Dimensions.get('window').height / 100 * 80 }}>
         {clonedForMapNoDuplicates.map((item, index) => {
           return (
             <View key={index}>
