@@ -79,7 +79,11 @@ export type HomeNavigationParameters = {
     },
     AddExtraIngredientAfterCreationScreen: {
         recipeId: number
-    }
+    },
+    CreateReviewScreen:{
+        id: number,
+        userId: number
+    },
 }
 
 
@@ -97,6 +101,13 @@ export type IngredientSearchNavigationParameters = {
         numberOfPersons: number,
         description: string,
         userId: number,
+    },
+    AddExtraIngredientAfterCreationScreen: {
+        recipeId: number
+    },
+    CreateReviewScreen:{
+        id: number,
+        userId: number
     },
 }
 
