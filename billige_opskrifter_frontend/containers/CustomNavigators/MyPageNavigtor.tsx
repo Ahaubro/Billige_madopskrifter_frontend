@@ -7,13 +7,14 @@ import CreateRecipeScreen from '../../screens/Recipe/CreateRecipeScreen';
 import CreateReviewScreen from '../../screens/Recipe/CreateReviewScreen';
 import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import SettingsScreen from '../../screens/Settings/SettingsScreen';
+import AddExtraIngredientAfterCreationScreen from "../../screens/Recipe/AddExtraIngredientAfterCreationScreen"
 import { MyPageNavigationParameters } from '../../Types/Navigation_types';
 
 
 
 const stack = createStackNavigator<MyPageNavigationParameters>();
 
-export default function Auth_navigator(){
+export default function MyPageNavigator(){
     
     return (
         <stack.Navigator
@@ -28,6 +29,7 @@ export default function Auth_navigator(){
             <stack.Screen name="SelectedRecipeScreen" component={SelectedRecipeScreen} />
             <stack.Screen name="CreateReviewScreen" component={CreateReviewScreen} />
             <stack.Screen name="AddAllergiScreen" component={AddAllergiScreen}/>
+            <stack.Screen name="AddExtraIngredientAfterCreationScreen" component={AddExtraIngredientAfterCreationScreen}/>
 
         </stack.Navigator>
     ) 

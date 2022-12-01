@@ -32,7 +32,10 @@ export type MyPageNavigationParameters = {
         id: number,
         userId: number
     },
-    AddAllergiScreen: undefined
+    AddAllergiScreen: undefined,
+    AddExtraIngredientAfterCreationScreen:{
+        recipeId: number
+    }
 }
 
 export type RecipeNavigationParameters = {
@@ -57,7 +60,7 @@ export type RecipeNavigationParameters = {
     AddIngredient: {
         name: string
     },
-    AddIngredientAfterCreationScreen:{
+    AddExtraIngredientAfterCreationScreen: {
         recipeId: number
     }
 }
@@ -74,6 +77,9 @@ export type HomeNavigationParameters = {
         description: string,
         userId: number,
     },
+    AddExtraIngredientAfterCreationScreen: {
+        recipeId: number
+    }
 }
 
 

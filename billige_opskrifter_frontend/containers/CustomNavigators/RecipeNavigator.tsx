@@ -1,5 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack'
-import AddIngredientAfterCreationScreen from '../../screens/Recipe/AddIngredientAfterCreationScreen';
+import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
 import AddIngredientScreen from '../../screens/Recipe/AddIngredientScreen';
 import ChooseRecipeScreen from '../../screens/Recipe/ChooseRecipeScreen';
 import CreateReviewScreen from '../../screens/Recipe/CreateReviewScreen';
@@ -11,7 +11,7 @@ import { RecipeNavigationParameters } from '../../Types/Navigation_types';
 
 const stack = createStackNavigator<RecipeNavigationParameters>();
 
-export default function Auth_navigator(){
+export default function RecipeNavigator(){
     
     return (
         <stack.Navigator
@@ -23,7 +23,7 @@ export default function Auth_navigator(){
             <stack.Screen name='SelectedRecipeScreen' component={SelectedRecipeScreen}/>
             <stack.Screen name='AddIngredient' component={AddIngredientScreen}/>
             <stack.Screen name='CreateReviewScreen' component={CreateReviewScreen} />
-            <stack.Screen name="AddIngredientAfterCreationScreen" component={AddIngredientAfterCreationScreen}/>
+            <stack.Screen name="AddExtraIngredientAfterCreationScreen" component={AddExtraIngredientAfterCreationScreen}/>
 
         </stack.Navigator>
     ) 

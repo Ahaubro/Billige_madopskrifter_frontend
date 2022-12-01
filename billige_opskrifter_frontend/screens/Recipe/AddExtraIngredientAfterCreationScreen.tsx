@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useState, useEffect } from "react"
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
 import { useCreateMutation } from "../../redux/services/IngredientAPI"
-import { RecipeNavigationParameters } from "../../Types/Navigation_types"
+import { MyPageNavigationParameters } from "../../Types/Navigation_types"
 import AuthPressable from "../../components/AuthPressable"
 import { RouteProp } from "@react-navigation/native"
 import BackArrowContainer from "../../components/BackArrowContainer"
@@ -10,8 +10,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Header from "../../components/Header"
 import ViewContainer from "../../components/ViewContainer"
 
-type AddIngredientComponentNavigationProps = StackNavigationProp<RecipeNavigationParameters, "AddIngredientAfterCreationScreen">
-type SelectedRecipeScreenRouteProps = RouteProp<RecipeNavigationParameters, 'AddIngredientAfterCreationScreen'>
+type AddIngredientComponentNavigationProps = StackNavigationProp<MyPageNavigationParameters, "AddExtraIngredientAfterCreationScreen">
+type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddExtraIngredientAfterCreationScreen'>
 
 type AddIngredientComponentProps = {
     navigation: AddIngredientComponentNavigationProps
@@ -39,7 +39,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <View style={{paddingVertical: 5, paddingBottom: 15}}>
                 <Header 
-                    text="Tilføj ekstra ingrediens"
+                    text="Tilføj en ekstra ingrediens"
                 />
             </View>
 
@@ -97,14 +97,10 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
                 text='Gem'
                 color='#86DB9D'
                 onPress={() => {
-
                     newIngrAtr.recipeId = recipeId
                     console.log(newIngrAtr)
-                    addIngredient(newIngrAtr).unwrap().then(res => {
-                        navigation.pop();
-                    })
-                    //handleSubmit();
-
+                    addIngredient(newIngrAtr)
+                    navigation.pop();
                 }}
             />
         </ViewContainer>

@@ -5,7 +5,7 @@ import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RecipeNavigationParameters } from '../../Types/Navigation_types'
+import { MyPageNavigationParameters, RecipeNavigationParameters } from '../../Types/Navigation_types'
 import { RouteProp } from '@react-navigation/native'
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
@@ -19,8 +19,8 @@ import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/servic
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
-type SelectedRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, "SelectedRecipeScreen">
-type SelectedRecipeScreenRouteProps = RouteProp<RecipeNavigationParameters, 'SelectedRecipeScreen'>
+type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
+type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'SelectedRecipeScreen'>
 
 type SelectedRecipeScreenProps = {
     navigation: SelectedRecipeScreenNavigationProps
@@ -289,7 +289,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                         text='Tilføj yderligere ingrediens'
                         color='#86DB9D'
                         onPress={() => {
-                            navigation.navigate("AddIngredientAfterCreationScreen", {
+                            navigation.navigate("AddExtraIngredientAfterCreationScreen", {
                                 recipeId: id
                             })
                         }}
