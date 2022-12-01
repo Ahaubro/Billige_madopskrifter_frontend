@@ -37,13 +37,13 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
 
     //Fjerne duplikater så der kun bliver vist en ingredient en gang - da der læses direkte fra ingrediens tabellen
-    function removeDuplicatesA(arr: Ingredient[]) {
+    function removeDuplicatesByName(arr: Ingredient[]) {
         return arr.filter((v, i, a) => a.findIndex(v2 => (v2.name === v.name)) === i)
     }
 
     useEffect(() => {
         if (ingredientSearch.data) {
-            setIngrList(removeDuplicatesA(ingredientSearch.data?.ingredients) ?? [])
+            setIngrList(removeDuplicatesByName(ingredientSearch.data?.ingredients) ?? [])
         }
     }, [ingredientSearch.data])
 
@@ -126,8 +126,9 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                             recipeId: item.recipeId,
                                             alergene: item.alergene
                                         }
-                                        
-                                        setChosenIngredients([...chosenIngredients, ingr])
+
+                                        setChosenIngredients(removeDuplicatesByName([...chosenIngredients, ingr]))
+
 
                                     }}
                                 >
