@@ -12,6 +12,7 @@ import ViewContainer from "../../components/ViewContainer"
 import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI"
 import AuthPressable from '../../components/AuthPressable'
 import DisplayOneRecipe from '../../components/DisplayOneRecipe'
+import { listenerCancelled } from '@reduxjs/toolkit/dist/listenerMiddleware/exceptions'
 
 
 
@@ -27,17 +28,17 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
     const session = useSelector((state: RootState) => state.session)
 
-    
+
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });
-    const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0});
+    const ingredientSearch = useSearchIngredientsQuery(searchIngrAtr, { refetchOnMountOrArgChange: true, skip: searchIngrAtr.search.length === 0 });
     const [ingrList, setIngrList] = useState<Ingredient[]>([]);
     const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([])
 
 
     //Fjerne duplikater så der kun bliver vist en ingredient en gang - da der læses direkte fra ingrediens tabellen
-    function removeDuplicatesA(arr: Ingredient[]){
-        return arr.filter((v,i,a)=>a.findIndex(v2=>(v2.name===v.name))===i)
+    function removeDuplicatesA(arr: Ingredient[]) {
+        return arr.filter((v, i, a) => a.findIndex(v2 => (v2.name === v.name)) === i)
     }
 
     useEffect(() => {
@@ -95,7 +96,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                         style={style.input}
                         placeholder="Tilføj de ingredienser du har i hjemmet"
                         onChangeText={(s) => {
-                            if(s != " "){
+                            if (s != " ") {
                                 setSearchIngrAtr({ search: s })
                             }
                         }}
@@ -125,8 +126,9 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                             recipeId: item.recipeId,
                                             alergene: item.alergene
                                         }
-
+                                        
                                         setChosenIngredients([...chosenIngredients, ingr])
+
                                     }}
                                 >
                                     <AntDesign style={{ paddingTop: 8 }} name="plus" size={24} color="green" />

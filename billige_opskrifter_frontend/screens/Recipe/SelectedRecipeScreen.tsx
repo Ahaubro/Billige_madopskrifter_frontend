@@ -355,7 +355,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
 
             {/* Nyt review hvis man ikke er gæst og GØR SÅ MAN IKKE KAN SKRIVE REVIEW SOM FORFATTER*/}
-            {session.token != 'guest' ?
+            {session.token != 'guest' && session.id != userId ?
                 <>
                     <AuthPressable
                         text='Nyt review'
@@ -368,8 +368,13 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <View style={{ paddingVertical: 5 }}></View>
                 </>
                 :
-                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!</Text>
+                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!-skift teksten</Text>
+                
             }
+            
+            {/* Man skal ikke selv kunne lave reviews på sine egne opskrifter */}
+
+
 
 
             {/* SLET OPSKRIFT HVIS USER ER AUTHOR */}
