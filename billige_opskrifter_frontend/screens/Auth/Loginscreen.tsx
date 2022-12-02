@@ -22,60 +22,67 @@ type LoginScreenProps = {
     route: LoginScreenRouteProps
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({navigation, route}) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
 
-  const session = useSelector((state: RootState) => state.session)
-  const dispatch = useDispatch();
+    const session = useSelector((state: RootState) => state.session)
+    const dispatch = useDispatch();
 
-  const [login, { isLoading} ] = useLoginMutation();
-  const [loginAtr, setLoginAtr] = useState<{email: string, password: string}>({email: "", password: ""})
+    const [login, { isLoading }] = useLoginMutation();
+    const [loginAtr, setLoginAtr] = useState<{ email: string, password: string }>({ email: "", password: "" })
 
-  return (
-    <ViewContainer>
+    return (
+        <ViewContainer>
 
-        <BackArrowContainer>
-            <Pressable onPress={ () => {
-                navigation.pop();
-            }}>
-                <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
-            </Pressable>
-        </BackArrowContainer>
+            <BackArrowContainer>
+                <Pressable onPress={() => {
+                    navigation.pop();
+                }}>
+                    <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
+                </Pressable>
+            </BackArrowContainer>
 
-      <Header text='Login'/>
+            <Header text='Login' />
 
-      <View style={{paddingTop: 100}}>
-            <Text style={style.label}>Mail:</Text>
-            <TextInput style={style.input} onChangeText={(m) => {
-                loginAtr.email = m
-            }}></TextInput>
-      </View>
+            <View style={{ paddingTop: 100 }}>
+                <Text style={style.label}>Mail:</Text>
+                <TextInput
+                    blurOnSubmit={true}
+                    style={style.input}
+                    onChangeText={(m) => {
+                        loginAtr.email = m
+                    }}></TextInput>
+            </View>
 
-      <View style={{paddingTop: 5, paddingBottom: 20}}>
-            <Text style={style.label}>Kodeord:</Text>
-            <TextInput secureTextEntry={true} style={style.input} onChangeText={(p) => {
-                loginAtr.password = p
-            }}></TextInput>
-      </View>
+            <View style={{ paddingTop: 5, paddingBottom: 20 }}>
+                <Text style={style.label}>Kodeord:</Text>
+                <TextInput
+                    blurOnSubmit={true}
+                    secureTextEntry={true}
+                    style={style.input}
+                    onChangeText={(p) => {
+                        loginAtr.password = p
+                    }}></TextInput>
+            </View>
 
-      <AuthPressable 
-        text='Login'
-        color='#86C3F7'
-        onPress={ () => {
-            console.log({...loginAtr})
-            if(loginAtr.email && loginAtr.password){
-                login({...loginAtr}).unwrap().then( res => {
-                    if (res.token != null){
-                        dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName }))
+            <AuthPressable
+                text='Login'
+                color='#86C3F7'
+                onPress={() => {
+                    console.log({ ...loginAtr })
+                    if (loginAtr.email && loginAtr.password) {
+                        login({ ...loginAtr }).unwrap().then(res => {
+                            if (res.token != null) {
+                                dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName }))
+                            }
+                        }).catch(err => {
+                            console.log(err)
+                        })
                     }
-                }).catch(err => {
-                    console.log(err)
-                })
-            }          
-        }}
-      />
-    
-    </ViewContainer>
-  )
+                }}
+            />
+
+        </ViewContainer>
+    )
 }
 
 const style = StyleSheet.create({
@@ -84,7 +91,7 @@ const style = StyleSheet.create({
         fontWeight: '600',
         paddingVertical: 5
     },
-    input:{
+    input: {
         borderRadius: 8,
         borderWidth: 1,
         paddingVertical: 15,

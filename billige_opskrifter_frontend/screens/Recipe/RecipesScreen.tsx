@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, View, Modal } from 'react-native'
+import { Dimensions, Pressable, StyleSheet, Text, TextInput, View, Modal, ScrollView, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
@@ -9,10 +9,8 @@ import { RecipeNavigationParameters } from '../../Types/Navigation_types'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { Ionicons } from '@expo/vector-icons';
 import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../redux/services/RecipeAPI"
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Header from '../../components/Header'
 import { Picker } from '@react-native-picker/picker'
-import PriceComponent from '../../components/PriceComponent'
 import RecipeCard from '../../components/RecipeCard'
 
 
@@ -228,8 +226,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             {/* Her skal opskrifterne præsenteres i kort */}
             <View style={{ paddingTop: 30 }}></View>
 
-            <View style={{ maxHeight: Dimensions.get("window").height / 100 * 65 }}>
-
+            <ScrollView style={{ maxHeight: Dimensions.get("window").height / 100 * 65, paddingBottom: 15 }}>
 
                 {/* HVIS SEARCH RESULT ER MINDRE END 0 SKAL ALLE OPSKRIFTER VISES*/}
                 {searchList.length == 0 ?
@@ -244,11 +241,10 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                     <RecipeCard 
                         recipes={searchList} 
                         navigation={navigation}                    
-                    />
-                    
+                    />                   
                 }
 
-            </View>
+            </ScrollView>
             
         </ViewContainer>
     )

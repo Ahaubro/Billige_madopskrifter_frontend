@@ -1,8 +1,8 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
+import React  from "react"
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
 import { Recipe } from "../redux/services/RecipeAPI"
-import { HomeNavigationParameters, MyPageNavigationParameters, RecipeNavigationParameters } from "../Types/Navigation_types"
+import { HomeNavigationParameters } from "../Types/Navigation_types"
 import PriceComponent from "./PriceComponent"
 import AllergiComponent from "./AllergiComponent"
 

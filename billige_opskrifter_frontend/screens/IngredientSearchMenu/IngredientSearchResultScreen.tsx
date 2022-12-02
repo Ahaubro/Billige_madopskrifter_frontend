@@ -34,7 +34,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
     ingredientNames += ingr.name + ";"
   })
 
-
+  
   const [multipleIngrAtr] = useState<{ searchList: string }>({ searchList: ingredientNames })
   const allIngredients = useSearchIngredientByMultipleNamesQuery(multipleIngrAtr, { refetchOnMountOrArgChange: true })
   const [allIngredientsList, setAllIngredientsList] = useState<Ingredient[]>([])
@@ -67,7 +67,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
         </Pressable>
       </BackArrowContainer>
 
-      <View style={{paddingBottom: 25}}>
+      <View style={{paddingBottom: 40}}>
         <Header
           text='Opskrifter med de valgte ingredienser'
         />
@@ -75,7 +75,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
 
 
       {/* Der bliver displayet en opskrift for hver af de ingredienser med et unikt RecipeId med komponenten displayOneRecipe */}
-      <ScrollView style={{ maxHeight: Dimensions.get('window').height / 100 * 80 }}>
+      <ScrollView style={{ maxHeight: Dimensions.get("window").height / 100 * 70, paddingBottom: 15 }}>
         {clonedForMapNoDuplicates.map((item, index) => {
           return (
             <View key={index}>

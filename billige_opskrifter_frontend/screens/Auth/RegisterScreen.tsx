@@ -58,7 +58,10 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
 
             <View style={{ paddingVertical: 5 }}>
                 <Text style={style.label}>Kodeord:</Text>
-                <TextInput style={style.input} onChangeText={ (p) => {
+                <TextInput 
+                    secureTextEntry={true}
+                    style={style.input} 
+                    onChangeText={ (p) => {
                     pw1 = p
                     registerAtr.password = p
                 }}></TextInput>
@@ -66,7 +69,10 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
 
             <View style={{ paddingBottom: 20 }}>
                 <Text style={style.label}>Bekræft kodeord:</Text>
-                <TextInput style={style.input} onChangeText={ (p) => {
+                <TextInput 
+                    secureTextEntry={true}
+                    style={style.input} 
+                    onChangeText={ (p) => {
                     pw2 = p
                     registerAtr.password = p
                 }}></TextInput>
