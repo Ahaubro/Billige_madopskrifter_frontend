@@ -36,7 +36,10 @@ const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({
             />
 
             <Text style={style.label}>Beskriv fremgangs metoden:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+                multiline={true}
+                blurOnSubmit={true}
+                style={style.input}
                 onChangeText={(des) => {
                     editAtr.description = des
                 }}

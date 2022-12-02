@@ -11,6 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { HomeNavigationParameters } from '../../Types/Navigation_types'
 import LikedRecipeCards from '../../components/LikedRecipeCards'
+import AuthPressable from '../../components/AuthPressable'
 
 
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
@@ -57,7 +58,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         </View>
       }
 
-      <View>
+      <View style={{paddingBottom: 15}}>
 
         <LikedRecipeCards
           recipes={likedRecipeList}
@@ -65,6 +66,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         />
 
       </View>
+
+      <AuthPressable 
+        text='Find flere opskrifter nu!'
+        color='#86DB9D'
+        onPress={ () => {
+          navigation.navigate("ChooseRecipe")
+        }}
+      />
 
     </ViewContainer>
   )

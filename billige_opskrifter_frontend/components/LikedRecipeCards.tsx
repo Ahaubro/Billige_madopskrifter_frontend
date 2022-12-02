@@ -20,7 +20,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
     return (
         <View>
             <FlatList
-            horizontal={true}
+                horizontal={true}
                 data={recipes}
                 renderItem={({ item, index }) => {
                     return (
@@ -48,11 +48,17 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                         <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
 
                                         <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                                            <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-                                            <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                            <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+                                            <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -20 }}>
-                                            <Text style={[style.priceComponent]}> <PriceComponent price={item.estimatedPrice} />  </Text>
+                                            <Text style={[style.priceComponent]}><PriceComponent price={item.estimatedPrice} />  </Text>
+                                        </View>
+
+
+                                        <View>
+                                            <Text style={{fontWeight: '700', paddingTop: 15, paddingBottom: 5}}>Hurtig guide:</Text>
+                                            <Text>{item.description}</Text>
                                         </View>
 
                                     </View>

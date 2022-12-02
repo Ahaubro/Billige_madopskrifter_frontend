@@ -84,6 +84,10 @@ export type HomeNavigationParameters = {
         id: number,
         userId: number
     },
+    ChooseRecipe: undefined,
+    RecipesScreen: {
+        type: string
+    },
 }
 
 

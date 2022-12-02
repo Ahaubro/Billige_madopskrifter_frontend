@@ -125,9 +125,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             >
                                 {likedCheck == "isLiked" ?
 
-                                    <Ionicons name="heart-dislike" size={30} color="red" />
-                                    :
                                     <Ionicons name="heart" size={30} color="red" />
+                                    :
+                                    <Ionicons name="heart-outline" size={30} color="red" />
                                 }
 
                             </TouchableOpacity>
