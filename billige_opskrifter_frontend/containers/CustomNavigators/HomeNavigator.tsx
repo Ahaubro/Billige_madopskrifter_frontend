@@ -2,11 +2,12 @@ import {createStackNavigator} from '@react-navigation/stack'
 import HomeScreen from '../../screens/Home/HomeScreen';
 import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
 import ChooseRecipeScreen from '../../screens/Recipe/ChooseRecipeScreen';
-import CreateReviewScreen from '../../screens/Recipe/CreateReviewScreen';
+import CreateReviewScreen from '../../screens/Reviews/CreateReviewScreen';
 import RecipesScreen from '../../screens/Recipe/RecipesScreen';
 
 import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import { HomeNavigationParameters } from '../../Types/Navigation_types';
+import AllReviewsScreen from '../../screens/Reviews/AllReviewsScreen';
 
 
 
@@ -26,6 +27,8 @@ export default function HomeNavigator(){
             <stack.Screen name="CreateReviewScreen" component={CreateReviewScreen} />
             <stack.Screen name='ChooseRecipe' component={ChooseRecipeScreen} />
             <stack.Screen name='RecipesScreen' component={RecipesScreen}/>
+            <stack.Screen name='AllReviewsScreen' component={AllReviewsScreen}/>
+
 
         </stack.Navigator>
     ) 

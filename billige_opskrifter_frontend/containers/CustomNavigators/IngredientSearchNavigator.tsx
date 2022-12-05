@@ -2,9 +2,10 @@ import { createStackNavigator } from '@react-navigation/stack'
 import IngredientSearchResultScreen from '../../screens/IngredientSearchMenu/IngredientSearchResultScreen';
 import IngredientSearchScreen from '../../screens/IngredientSearchMenu/IngredientSearchScreen';
 import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
-import CreateReviewScreen from '../../screens/Recipe/CreateReviewScreen';
+import CreateReviewScreen from '../../screens/Reviews/CreateReviewScreen';
 import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types';
+import AllReviewsScreen from '../../screens/Reviews/AllReviewsScreen';
 
 
 
@@ -23,6 +24,8 @@ export default function IngredientSearchNavigator(){
             <stack.Screen name='SelectedRecipeScreen' component={SelectedRecipeScreen}/>
             <stack.Screen name="AddExtraIngredientAfterCreationScreen" component={AddExtraIngredientAfterCreationScreen}/>
             <stack.Screen name="CreateReviewScreen" component={CreateReviewScreen} />
+            <stack.Screen name='AllReviewsScreen' component={AllReviewsScreen}/>
+
 
         </stack.Navigator>
     ) 

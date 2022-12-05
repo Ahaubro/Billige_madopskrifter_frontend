@@ -313,6 +313,15 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             {
                 listOfReviews.length > 0 ?
                     <View>
+                        <TouchableOpacity
+                            onPress={ () => {
+                                navigation.navigate("AllReviewsScreen", {
+                                    reviews: listOfReviews
+                                })
+                            }}
+                        >
+                            <Text style={{fontStyle: 'italic', fontWeight: '700', textAlign: 'right'}}>Se alle</Text>
+                        </TouchableOpacity>
                         <>
                             <FlatList
                                 style={{ flexWrap: 'wrap' }}

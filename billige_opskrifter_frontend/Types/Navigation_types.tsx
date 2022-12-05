@@ -1,4 +1,5 @@
 import { Ingredient } from "../redux/services/IngredientAPI"
+import { Review } from "../redux/services/ReviewAPI"
 
 export type AuthNavigationParameters = {
     Login: undefined,
@@ -35,6 +36,9 @@ export type MyPageNavigationParameters = {
     AddAllergiScreen: undefined,
     AddExtraIngredientAfterCreationScreen:{
         recipeId: number
+    },
+    AllReviewsScreen: {
+        reviews: Review[]
     }
 }
 
@@ -62,6 +66,9 @@ export type RecipeNavigationParameters = {
     },
     AddExtraIngredientAfterCreationScreen: {
         recipeId: number
+    },
+    AllReviewsScreen: {
+        reviews: Review[]
     }
 }
 
@@ -88,6 +95,9 @@ export type HomeNavigationParameters = {
     RecipesScreen: {
         type: string
     },
+    AllReviewsScreen: {
+        reviews: Review[]
+    }
 }
 
 
@@ -113,6 +123,9 @@ export type IngredientSearchNavigationParameters = {
         id: number,
         userId: number
     },
+    AllReviewsScreen: {
+        reviews: Review[]
+    }
 }
 
 
