@@ -69,7 +69,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
 
       <AuthPressable 
         text='Find flere opskrifter nu!'
-        color='#86DB9D'
+        color='#86C3F7'
         onPress={ () => {
           navigation.navigate("ChooseRecipe")
         }}

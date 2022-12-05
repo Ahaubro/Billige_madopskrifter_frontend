@@ -71,19 +71,19 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Header for MyPage */}
-      <View style={{ paddingTop: -5 }}>
+      <View style={{ paddingTop: -15 }}>
         <Header
-          text='Min side'
+          text={'Velkommen ' + session.fullName}
         />
       </View>
 
       <View style={{ paddingVertical: 25 }}>
-        <Text style={{ textAlign: 'center', fontSize: 22, fontWeight: '600' }}>Velkommen {session.fullName}</Text>
+        {/* <Text style={{ textAlign: 'center', fontSize: 22, fontWeight: '600' }}>Velkommen {session.fullName}</Text> */}
       </View>
 
 
       {/* Allergies menu */}
-      <Text style={style.label}>Dine registrerede allergier.</Text>
+      <Text style={style.label}>Overblik over allergier.</Text>
       <View style={style.card}>
         {userAllergiesList.length > 0 ?
 
@@ -102,22 +102,26 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
                 </View>
               )
             })}
+
+
           </View>
 
           :
 
           <Text>Ingen allergi registreret</Text>
         }
-      </View>
 
-      <View style={{ paddingVertical: 10 }}>
-        <AuthPressable
-          text='Tilføj en allergi'
-          color='#86DB9D'
-          onPress={() => {
-            navigation.navigate("AddAllergiScreen")
-          }}
-        />
+        <View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity
+            style={style.addAllergi}
+            onPress={() => {
+              navigation.navigate("AddAllergiScreen")
+            }}
+
+          >
+            <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
 
@@ -131,7 +135,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
           <>
             <View>
 
-              <AuthoredRecipeCards 
+              <AuthoredRecipeCards
                 recipes={userRecipeList}
                 navigation={navigation}
               />
@@ -176,13 +180,18 @@ const style = StyleSheet.create({
     minHeight: 150,
     maxHeight: 150,
     overflowY: 'scroll',
-    padding: 10
+    padding: 10,
   },
   label: {
     fontSize: 16,
     fontWeight: '600',
     paddingVertical: 5
   },
+  addAllergi: {
+    backgroundColor: '#86C3F7',
+    borderRadius: 10,
+    maxWidth: Dimensions.get('window').width / 100 * 65
+  }
 })
 
 export default MyPageScreen
