@@ -59,7 +59,7 @@ const AllReviewsScreen: React.FC<AllReviewsScreenProps> = ({ navigation, route }
                                                 defaultRating={item.rating}
                                                 size={20}
                                                 isDisabled={true}
-                                                ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                                                ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }}
                                             />
                                         </View>
                                         <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>

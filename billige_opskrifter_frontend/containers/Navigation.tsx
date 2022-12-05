@@ -76,6 +76,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         {session.token == "guest" &&
           <>
             <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />
+            <Tab.Screen name="IngredientSearchNavigator" component={IngredientSearchNavigator} options={{title: "Ingrediens menu"}} />
           </>
         }
 

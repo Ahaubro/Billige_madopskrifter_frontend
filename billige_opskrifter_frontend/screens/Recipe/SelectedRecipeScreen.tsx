@@ -313,6 +313,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             {
                 listOfReviews.length > 0 ?
                     <View>
+                        {/* Navigation til AllReviewsScreen */}
                         <TouchableOpacity
                             onPress={ () => {
                                 navigation.navigate("AllReviewsScreen", {
@@ -320,7 +321,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 })
                             }}
                         >
-                            <Text style={{fontStyle: 'italic', fontWeight: '700', textAlign: 'right'}}>Se alle</Text>
+                            <Text style={{fontStyle: 'italic', fontWeight: '700', textAlign: 'right', paddingRight: 12, marginTop: -10}}>Se alle</Text>
                         </TouchableOpacity>
                         <>
                             <FlatList
@@ -340,7 +341,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                             defaultRating={item.rating}
                                                             size={20}
                                                             isDisabled={true}
-                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between' }}
+                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between', marginRight: 10  }}
                                                         />
                                                     </View>
                                                     <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>

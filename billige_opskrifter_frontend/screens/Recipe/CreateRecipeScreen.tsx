@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthPressable from '../../components/AuthPressable'
 import { Picker } from '@react-native-picker/picker';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
+import { placeholder } from 'i18n-js'
 
 
 type CreateRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'CreateRecipe'>
@@ -47,7 +48,10 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 text='Ny opskrift'
             />
 
+            <View style={{ paddingTop: 25, paddingBottom: 10 }}></View>
+
             <Text style={style.label}>Typen af opskrift:</Text>
+
             <Picker
                 selectedValue={selectedType}
                 onValueChange={(type: string) => {
@@ -65,7 +69,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </Picker>
 
             <Text style={style.label}>Navnet på opskrfiten:</Text>
-            <TextInput style={style.input}
+            <TextInput
+                placeholder='Eks. Kylling i karry'
+                style={style.input}
                 onChangeText={(name) => {
                     createAtr.name = name
                 }}
@@ -73,7 +79,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </TextInput>
 
             <Text style={style.label}>Tilberedningstid i mintuer:</Text>
-            <TextInput style={style.input}
+            <TextInput
+                placeholder='Eks. 45'
+                style={style.input}
                 onChangeText={(tb) => {
                     createAtr.prepTime = Number(tb)
                 }}
@@ -81,7 +89,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </TextInput>
 
             <Text style={style.label}>Antal personer:</Text>
-            <TextInput style={style.input}
+            <TextInput
+            placeholder='Eks. 2' 
+            style={style.input}
                 onChangeText={(persons) => {
                     createAtr.numberOfPersons = Number(persons)
                 }}
@@ -89,7 +99,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </TextInput>
 
             <Text style={style.label}>Ca. Pris:</Text>
-            <TextInput style={style.input}
+            <TextInput 
+            placeholder='Eks. 100'
+            style={style.input}
                 onChangeText={(price) => {
                     createAtr.estimatedPrice = Number(price)
                 }}
@@ -114,8 +126,8 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                     } else { console.log("Udfyld felterne") }
                 }}
             />
-            
-            <View style={{paddingTop: 50}}></View>
+
+            <View style={{ paddingTop: 50 }}></View>
 
         </ScrollViewContainer>
     )
