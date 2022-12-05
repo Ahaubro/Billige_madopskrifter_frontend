@@ -3,16 +3,15 @@ import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share,
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
-import ViewContainer from "../../components/ViewContainer"
 import { StackNavigationProp } from '@react-navigation/stack'
-import { MyPageNavigationParameters, RecipeNavigationParameters } from '../../Types/Navigation_types'
+import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import { RouteProp } from '@react-navigation/native'
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
 import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
-import { RecipeAPI, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
+import { useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
 import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
@@ -85,7 +84,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 ' kr' + '\n' + '\nFremgangsmåde: ' + description + '\n' + '\ningredinser: ' + ingrediens?.map((i) => {
                     return '\n' + i.name + " " + i.amount + " " + i.measurementUnit + " " + '(' + i.type + ')'
                 })
-            //url: 'http://localhost:19006/'
         }
         try {
             const ShareRes = await Share.share(options);
@@ -355,7 +353,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
 
             {/* Nyt review hvis man ikke er gæst og GØR SÅ MAN IKKE KAN SKRIVE REVIEW SOM FORFATTER*/}
-            {session.token != 'guest' && session.id != userId ?
+            {session.token != 'guest' ?
                 <>
                     <AuthPressable
                         text='Nyt review'
@@ -368,12 +366,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <View style={{ paddingVertical: 5 }}></View>
                 </>
                 :
-                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!-skift teksten</Text>
                 
+                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!-skift teksten</Text>                              
             }
-            
-            {/* Man skal ikke selv kunne lave reviews på sine egne opskrifter */}
-
 
 
 

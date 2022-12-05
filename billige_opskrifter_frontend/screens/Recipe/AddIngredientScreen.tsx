@@ -11,6 +11,7 @@ import { Ingredient, useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredie
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
+import { getType } from '@reduxjs/toolkit'
 
 
 type AddIngredientScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddIngredient'>
@@ -20,6 +21,7 @@ type CreateRecipeScreenProps = {
     navigation: AddIngredientScreenNavigationProps
     route: AddIngredientScreenRouteProps
 }
+
 
 
 const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, route }) => {
@@ -37,43 +39,45 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
         recipeId = thisRecipe.data.id
     }
 
-    
+
     //Add ingredient props
     const [addIngredient] = useCreateMutation();
     const [addIngredientAtr, setAddIngredientAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
-    ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
-    
+        ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
+
 
     //Getting ingredients that have been made for this recipe for the user to see
     const thisRecipesIngredients = useGetByRecipeIdQuery(recipeId);
     const [ingredientsList, setIngredientsList] = useState<Ingredient[]>([]);
-    
+
     useEffect(() => {
         if (thisRecipesIngredients.data) {
             setIngredientsList(thisRecipesIngredients.data.ingredients)
         }
     })
-    
+
 
     // Delete ingredient & recipe
     const [deleteIngredient] = useDeleteIngredientMutation();
     const [deleteRecipe] = useDeleteRecipeMutation();
 
 
+    // Clear textInputs når man tilføjer yderligere ingredienser
+    let [nameRef, setNameRef] = useState("");
+    let [typeRef, setTypeRef] = useState("");
+    let [measureUnitRef, setMeasureUnitRef] = useState("");
+    let [amountRef, setAmountRef] = useState("");
+    let [alerRef, setAlerRef] = useState("");
 
-    // const nameRef = useRef(null);
-    // const typeRef = useRef(null);
-    // const measureUnitRef = useRef(null);
-    // const amountRef = useRef(null);
-    // const alerRef = useRef(null);
+    const handleSubmit = () => {
+        setNameRef("");
+        setTypeRef("");
+        setMeasureUnitRef("");
+        setAmountRef("");
+        setAlerRef("")
+    }
 
-    // const handleSubmit = () => {
-    //     nameRef.current.value = ""
-    //     typeRef.current.value = ""
-    //     measureUnitRef.current.value = ""
-    //     amountRef.current.value = ""
-    //     alerRef.current.value = ""
-    // }
+
 
     return (
         <ScrollViewContainer>
@@ -117,9 +121,12 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
-                //ref={nameRef}
+                editable={true}
+                value={ nameRef }
+                placeholder="Ingrediens navn"
                 style={style.input}
                 onChangeText={(name) => {
+                    setNameRef(name)
                     addIngredientAtr.name = name
                 }}
             >
@@ -127,40 +134,48 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
             <Text style={style.label}>Ingrediens type:</Text>
             <TextInput
-                //ref={typeRef}
+                placeholder="Eks. Tilbehør"
+                value={typeRef}
                 style={style.input}
                 onChangeText={(type) => {
+                    setTypeRef(type)
                     addIngredientAtr.type = type
-                }}
-            >
-            </TextInput>
-
-            <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
-            <TextInput
-                //ref={measureUnitRef}
-                style={style.input}
-                onChangeText={(mu) => {
-                    addIngredientAtr.measurementUnit = mu
                 }}
             >
             </TextInput>
 
             <Text style={style.label}>Mængde:</Text>
             <TextInput
-                //ref={amountRef}
+                placeholder="Eks. 250"
+                value={amountRef}
                 style={style.input}
                 onChangeText={(amount) => {
+                    setAmountRef(amount)
                     addIngredientAtr.amount = Number(amount)
                 }}
 
             >
             </TextInput>
 
+            <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
+            <TextInput
+                placeholder='Eks. stk, gr, ml, tsk, spsk'
+                value={measureUnitRef}
+                style={style.input}
+                onChangeText={(mu) => {
+                    setMeasureUnitRef(mu)
+                    addIngredientAtr.measurementUnit = mu
+                }}
+            >
+            </TextInput>
+
             <Text style={style.label}>Alergener:</Text>
             <TextInput
-                //ref={alerRef}
+                placeholder="Eks. Laktose, Gluten"
+                value={alerRef}
                 style={style.input}
                 onChangeText={(alergene) => {
+                    setAlerRef(alergene)
                     addIngredientAtr.alergene = alergene
                 }}
             >
@@ -173,11 +188,12 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 color='#86DB9D'
                 onPress={() => {
                     if (recipeId != 0) {
+                        console.log(addIngredientAtr)
                         addIngredientAtr.recipeId = recipeId
                         addIngredient(addIngredientAtr).unwrap().then(res => {
                             //Refresh
                         })
-                        //handleSubmit();
+                        handleSubmit();
                     }
 
                 }}
@@ -205,8 +221,8 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 text='Afbryd'
                 color='#FF9C9C'
                 onPress={() => {
-                    if(recipeId != 0){
-                        deleteRecipe({recipeId: recipeId}).unwrap().then(res => {
+                    if (recipeId != 0) {
+                        deleteRecipe({ recipeId: recipeId }).unwrap().then(res => {
                             navigation.navigate('MyPage')
                         })
                     }

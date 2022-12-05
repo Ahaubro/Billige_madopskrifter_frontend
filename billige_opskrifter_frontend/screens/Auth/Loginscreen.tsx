@@ -46,6 +46,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
             <View style={{ paddingTop: 100 }}>
                 <Text style={style.label}>Mail:</Text>
                 <TextInput
+                    autoComplete='email'
                     blurOnSubmit={true}
                     style={style.input}
                     onChangeText={(m) => {

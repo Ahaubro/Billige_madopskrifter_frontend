@@ -22,20 +22,21 @@ const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr, navi
 
     const recipe = useGetRecipeByIdQuery(item.recipeId, { refetchOnMountOrArgChange: true })
 
-    const [thisRecipe, setThisRecipe] = useState<{id: number, name: string, type: string, prepTime: number, estimatedPrice: number, numberOfPersons: number, description: string, userId: number}>
-    ({id: 0, name: '', type: '', prepTime: 0, estimatedPrice: 0, numberOfPersons: 0, description: '', userId: 0})
+    const [thisRecipe, setThisRecipe] = useState<{ id: number, name: string, type: string, prepTime: number, estimatedPrice: number, numberOfPersons: number, description: string, userId: number }>
+        ({ id: 0, name: '', type: '', prepTime: 0, estimatedPrice: 0, numberOfPersons: 0, description: '', userId: 0 })
 
-    useEffect( () => {
-        if(recipe.data){
+    useEffect(() => {
+        if (recipe.data) {
             setThisRecipe({
-                id: recipe.data.id, 
-                name: recipe.data.name, 
-                type: recipe.data.type, 
-                prepTime: recipe.data.prepTime, 
-                estimatedPrice: recipe.data.estimatedPrice, 
-                numberOfPersons: recipe.data.numberOfPersons, 
-                description: recipe.data.description, 
-                userId: recipe.data.userId })
+                id: recipe.data.id,
+                name: recipe.data.name,
+                type: recipe.data.type,
+                prepTime: recipe.data.prepTime,
+                estimatedPrice: recipe.data.estimatedPrice,
+                numberOfPersons: recipe.data.numberOfPersons,
+                description: recipe.data.description,
+                userId: recipe.data.userId
+            })
         }
     }, [recipe.data])
 
@@ -44,7 +45,7 @@ const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr, navi
             {recipe.data &&
                 <>
                     <TouchableOpacity
-                        onPress={ () => {
+                        onPress={() => {
                             navigation.navigate("SelectedRecipeScreen", {
                                 id: thisRecipe.id,
                                 name: thisRecipe.name,
@@ -66,9 +67,16 @@ const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr, navi
 
                                 <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
                                     <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {thisRecipe.prepTime}</Text>
-                                    <IngredientsMatchComponent recItem={recipe.data} allIngr={allIngr} />
-                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -40 }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -15 }}>
                                         <Text style={[style.priceComponent]}> <PriceComponent price={thisRecipe.estimatedPrice} />  </Text>
+                                    </View>
+                                </View>
+
+                                <View style={{ marginTop: -35 }}>
+                                    <Text style={{ fontWeight: '700', paddingBottom: 5 }}>Matchende ingredienser:</Text>
+
+                                    <View style={{maxHeight: Dimensions.get("window").height / 100 * 4}}>
+                                            <IngredientsMatchComponent recItem={recipe.data} allIngr={allIngr} />                                      
                                     </View>
                                 </View>
 
@@ -86,8 +94,8 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 20,
-        maxHeight: Dimensions.get("window").height / 100 * 20,
+        minHeight: Dimensions.get("window").height / 100 * 25,
+        maxHeight: Dimensions.get("window").height / 100 * 25,
     },
     title: {
         fontSize: 18,
@@ -102,9 +110,9 @@ const style = StyleSheet.create({
         paddingTop: 15
     },
     priceComponent: {
-        marginTop: -40,
-        marginRight: 20
+        marginRight: 10
     },
+    
 })
 
 export default DisplayOneRecipe;

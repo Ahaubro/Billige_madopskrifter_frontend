@@ -1,5 +1,6 @@
-import React, {useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { View, StyleSheet, Text, Dimensions, ScrollView } from "react-native"
+import { FlatList } from "react-native-gesture-handler"
 import { Ingredient } from "../redux/services/IngredientAPI"
 import { useGetByRecipeIdQuery } from "../redux/services/IngredientAPI"
 import { Recipe } from "../redux/services/RecipeAPI"
@@ -15,11 +16,11 @@ const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ r
     //Jeg sætter en liste med useState og useEffect, så jeg kan lave en unik liste af ingredienser, for at undgå dobbelt resultater
     const [allIngrList, setAllIngrList] = useState<Ingredient[]>([]);
 
-    useEffect( ()  => {
-        if(allIngr.length > 0){
+    useEffect(() => {
+        if (allIngr.length > 0) {
             setAllIngrList(removeDuplicatesById(allIngr))
         }
-    }, [allIngr] )
+    }, [allIngr])
 
 
     //Fjerne duplikater så der kun bliver vist en ingredient en gang - da der læses direkte fra ingrediens tabellen
@@ -32,14 +33,13 @@ const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ r
 
 
     return (
-        <ScrollView>
-            <Text style={{fontWeight: '700', paddingTop: 15, paddingBottom: 5}}>Matchende ingredienser:</Text>
+        <View>
             {allIngrList.map((item, index) => {
-                if(item.recipeId === recItem.id){
+                if (item.recipeId === recItem.id) {
                     return (
-                        <View key={index}>
+                        <View key={index} style={{flexDirection: 'row'}}>
                             <View>
-                                <Text>{item.name}</Text>
+                                <Text> - {item.name} {item.amount}{item.measurementUnit}</Text>
                             </View>
                         </View>
                     )
@@ -47,7 +47,7 @@ const IngredientsMatchComponent: React.FC<IngredientsMatchComponentProps> = ({ r
             })
             }
 
-        </ScrollView>
+        </View>
     )
 }
 
