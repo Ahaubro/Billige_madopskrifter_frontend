@@ -43,6 +43,13 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
         }
     }, [ingredientSearch.data])
 
+    // Clear søge input
+    const [searchRef, setSearchRef] = useState("");
+
+    function clearSearch(){
+        setSearchRef("")
+    }
+
 
     return (
         <ViewContainer>
@@ -89,9 +96,11 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                         <Ionicons name="search-outline" size={28} color="black" />
                     </View>
                     <TextInput
+                        value={searchRef}
                         style={style.input}
                         placeholder="Tilføj de ingredienser du har i hjemmet"
                         onChangeText={(s) => {
+                            setSearchRef(s)
                             if (s != " ") {
                                 setSearchIngrAtr({ search: s })
                             }
@@ -124,6 +133,8 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                         }
 
                                         setChosenIngredients(removeDuplicatesByName([...chosenIngredients, ingr]))
+                                        setIngrList([]);
+                                        clearSearch();
 
                                     }}
                                 >
@@ -156,6 +167,8 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                             color='#FF9C9C'
                             onPress={() => {
                                 setChosenIngredients([]);
+                                setIngrList([])
+                                clearSearch();
                             }}
                         />
                     </View>

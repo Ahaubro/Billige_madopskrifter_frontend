@@ -78,7 +78,6 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     }
 
 
-
     return (
         <ScrollViewContainer>
 
