@@ -76,10 +76,23 @@ export const RecipeAPI = createApi({
             providesTags: ["Recipe"]
         }),
 
-        //Edit funktion der for nu opdatere beskrivelsen til en opskrift
-        edit: builder.mutation<
+        //Edit funktion til en opskrift
+        editDescription: builder.mutation<
         { statusText: string },
-        { description: string, id: number }
+        { id: number, description: string }
+        >({
+            query: body => ({
+                url: `api/recipe/description/${body.id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: ["Recipe"]
+        }),
+
+        //Edit funktion til en opskrift
+        editRecipe: builder.mutation<
+        { statusText: string },
+        { id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }
         >({
             query: body => ({
                 url: `api/recipe/${body.id}`,
@@ -112,4 +125,4 @@ export const RecipeAPI = createApi({
 })
 
 
-export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useEditMutation, useGetRecipesByTypeQuery, useDeleteRecipeMutation, useSearchRecipesQuery, useGetRecipeByIdQuery } = RecipeAPI
+export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useGetRecipesByTypeQuery, useDeleteRecipeMutation, useSearchRecipesQuery, useGetRecipeByIdQuery, useEditRecipeMutation, useEditDescriptionMutation } = RecipeAPI

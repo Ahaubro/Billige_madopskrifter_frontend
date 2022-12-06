@@ -7,7 +7,7 @@ import ViewContainer from "../../components/ViewContainer"
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { useEditMutation } from "../../redux/services/RecipeAPI"
+import { useEditDescriptionMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 
 type AddRecipeDescriptionScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddRecipeDescription'>
@@ -23,7 +23,7 @@ const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({
     const session = useSelector((state: RootState) => state.session)
     const { recipeId } = route.params;
 
-    const [edit] = useEditMutation();
+    const [edit] = useEditDescriptionMutation();
 
     const [editAtr] = useState<{ description: string, id: number }>({ description: "", id: recipeId })
 

@@ -11,11 +11,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
-import { useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
+import { Recipe, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
 import { AirbnbRating } from 'react-native-ratings'
 import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
 import ScrollViewContainer from '../../components/ScrollViewContainer'
+import { useEditRecipeMutation, useGetRecipeByIdQuery } from "../../redux/services/RecipeAPI"
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -37,7 +38,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
     const [deleteIngredient] = useDeleteIngredientMutation();
 
-
     //Edit recipes ingredients
     const [editIngrAtr, setEditIngrAtr] = useState<{ id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ id: 0, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' })
@@ -45,6 +45,21 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const [isEditing, setIsEditing] = useState(false)
     const [idForEdit, setIdForEdit] = useState(0);
 
+    //Edit recipe
+    const [editRecipeAtr, setEditRecipeAtr] = useState<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }>
+        ({ id: id, name: name, type: type, prepTime: prepTime, numberOfPersons: numberOfPersons, estimatedPrice: estimatedPrice, description: description, userId: userId })
+    const [editRecipe] = useEditRecipeMutation();
+    const [isEditingDescription, setIsEditingDesription] = useState(false)
+    const fetchedRecipe = useGetRecipeByIdQuery(id);
+    const [thisRecipe, setThisRecipe] = useState<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }>
+        ({ id: 0, name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, description: "", userId: 0 })
+
+    //Fecther opskriften for at kunne genopfriske redigerede elementer med state
+    useEffect(() => {
+        if (fetchedRecipe.data) {
+            setThisRecipe(fetchedRecipe.data)
+        }
+    }, [fetchedRecipe.data])
 
     //Delete recipe & ingredient
     const [deleteRecipe] = useDeleteRecipeMutation();
@@ -106,8 +121,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 text={name}
             />
 
-
-
             {/* Her kan man like / unlike et opslag (Hvis man har liket det vises hjerte med streg over) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
@@ -135,7 +148,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </>
                 }
 
-
                 <View style={{ paddingVertical: 25 }}>
                     <TouchableOpacity
                         onPress={() => {
@@ -147,8 +159,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </TouchableOpacity>
                 </View>
             </View>
-
-
 
             {/* Displayer først prepTime, personer og pris */}
             <View style={{ flexDirection: 'row', paddingTop: 20, paddingBottom: 5 }}>
@@ -181,7 +191,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                                             {/* Hvis isEditing er true og idForEdit er item.id kan man redigere i det enkelte objekt  */}
-                                            {isEditing == true && item.id === idForEdit ?
+                                            {isEditing === true && item.id === idForEdit ?
                                                 <>
                                                     <View style={{ paddingLeft: 30, flexDirection: 'row' }}>
                                                         <TextInput style={style.editInput} placeholder={item.name} editable={true}
@@ -275,35 +285,66 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 </View>
                             )
                         })}
+                        {/* Man kan tilføje ingredienser til opskriften hvis man er forfatter*/}
+                        {userId === session.id &&
+                            <View style={{ paddingVertical: 5 }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        navigation.navigate("AddExtraIngredientAfterCreationScreen", {
+                                            recipeId: id
+                                        })
+                                    }}
+                                >
+                                    <Text style={{fontWeight: '600', color: 'blue', textAlign: 'center' }}>Tilføj flere ingredienser</Text>
+                                </TouchableOpacity>
+                                    
+                            </View>
+                        }
 
                     </>
                 </View>
             </View>
-            
-            {/* Man kan tilføje ingredienser til opskriften hvis man er forfatter*/}
-            {userId === session.id &&
-                <View style={{ paddingVertical: 5 }}>
-                    <AuthPressable
-                        text='Tilføj yderligere ingrediens'
-                        color='#86DB9D'
-                        onPress={() => {
-                            navigation.navigate("AddExtraIngredientAfterCreationScreen", {
-                                recipeId: id
-                            })
-                        }}
-                    />
-                </View>
-            }
 
             <View style={{ paddingVertical: 5 }}></View>
 
+            {/* Læser opskriftens fremgangsmetode samt giver author mulighed for at redigere */}
+            {!isEditingDescription ?
+                <View style={style.card}>
+                    <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
+                    <Text style={style.description}>{thisRecipe.description}</Text>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setIsEditingDesription(true)
+                        }}
+                    >
+                        <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center' }}>Rediger fremgangsmåden</Text>
+                    </TouchableOpacity>
+                </View>
 
+                :
 
-            {/* Læser opskriftens fremgangsmetode */}
-            <View style={style.card}>
-                <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
-                <Text style={style.description}>{description}</Text>
-            </View>
+                <View style={style.card}>
+                    <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
+                    <TextInput
+                        multiline={true}
+                        placeholder={thisRecipe.description}
+                        style={{ height: Dimensions.get("window").height / 100 * 7 }}
+                        onChangeText={(des) => {
+                            editRecipeAtr.description = des
+                        }}
+                    >
+
+                    </TextInput>
+                    <TouchableOpacity
+                        onPress={() => {
+                            editRecipe(editRecipeAtr);
+                            setIsEditingDesription(false)
+                        }}
+                    >
+                        <Text style={{fontWeight: '600', color: 'blue', textAlign: 'center' }}>Gem</Text>
+                    </TouchableOpacity>
+                </View>
+            }
 
             <View style={{ paddingVertical: 5 }}></View>
 
@@ -315,13 +356,13 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <View>
                         {/* Navigation til AllReviewsScreen */}
                         <TouchableOpacity
-                            onPress={ () => {
+                            onPress={() => {
                                 navigation.navigate("AllReviewsScreen", {
                                     reviews: listOfReviews
                                 })
                             }}
                         >
-                            <Text style={{fontStyle: 'italic', fontWeight: '700', textAlign: 'right', paddingRight: 12, marginTop: -10}}>Se alle</Text>
+                            <Text style={{ fontStyle: 'italic', fontWeight: '700', textAlign: 'right', paddingRight: 12, marginTop: -10 }}>Se alle</Text>
                         </TouchableOpacity>
                         <>
                             <FlatList
@@ -341,7 +382,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                             defaultRating={item.rating}
                                                             size={20}
                                                             isDisabled={true}
-                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between', marginRight: 10  }}
+                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }}
                                                         />
                                                     </View>
                                                     <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
@@ -376,11 +417,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     <View style={{ paddingVertical: 5 }}></View>
                 </>
                 :
-                
-                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!-skift teksten</Text>                              
+
+                <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 10 }}>Opret en bruger idag og del din mening om opskriften!-skift teksten</Text>
             }
-
-
 
             {/* SLET OPSKRIFT HVIS USER ER AUTHOR */}
             {userId == session.id &&

@@ -221,7 +221,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 color='#FF9C9C'
                 onPress={() => {
                     if (recipeId != 0) {
-                        deleteRecipe({ recipeId: recipeId }).unwrap().then(res => {
+                        deleteRecipe({ recipeId: recipeId }).unwrap().then( () => {
                             navigation.navigate('MyPage')
                         })
                     }
