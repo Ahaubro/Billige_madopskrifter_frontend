@@ -7,8 +7,8 @@ import ChooseRecipePressable from '../../components/ChooseRecipePressable'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { RecipeNavigationParameters } from '../../Types/Navigation_types'
-import Header from '../../components/Header'
 import { endSession } from '../../redux/slices/sessionSlice'
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 
 type ChooseRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'ChooseRecipe'>
@@ -28,11 +28,9 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
   return (
     <ViewContainer>
 
-      <View style={{ paddingTop: 30 }}>
-        <Header
-          text='Opskrifter'
-        />
-      </View>
+      <HeaderWithoutBackcontainer
+        text='Vælg opskrift type'
+      />
 
 
       <View style={{ paddingTop: 100 }}></View>

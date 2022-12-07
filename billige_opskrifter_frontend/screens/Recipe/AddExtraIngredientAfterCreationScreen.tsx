@@ -37,14 +37,10 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
                 </Pressable>
             </BackArrowContainer>
 
-            <View style={{paddingVertical: 5, paddingBottom: 15}}>
-                <Header 
-                    text="Tilføj en ekstra ingrediens"
-                />
-            </View>
+            <Header
+                text="Tilføj en ekstra ingrediens"
+            />
 
-            
-            
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
                 style={style.input}

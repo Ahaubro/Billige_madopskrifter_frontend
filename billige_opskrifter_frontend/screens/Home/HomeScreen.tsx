@@ -12,6 +12,7 @@ import { RouteProp } from '@react-navigation/native'
 import { HomeNavigationParameters } from '../../Types/Navigation_types'
 import LikedRecipeCards from '../../components/LikedRecipeCards'
 import AuthPressable from '../../components/AuthPressable'
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
@@ -29,6 +30,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
   const fetchedLikedRecipes = useGetLikedRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   const [likedRecipeList, setLikedRecipeList] = useState<Recipe[]>([]);
 
+  //
+
   useEffect(() => {
     if (fetchedLikedRecipes.data) {
       setLikedRecipeList(fetchedLikedRecipes.data.recipes)
@@ -41,12 +44,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
   return (
     <ViewContainer>
 
-      <View style={{ paddingTop: 30 }}>
-        <Header
-          text='Hjem'
-        />
-      </View>
-
+      <HeaderWithoutBackcontainer 
+        text='Hjem'
+      />
 
       <Text style={{ paddingTop: 75, paddingBottom: 10, fontWeight: '700', fontSize: 18 }}> Opskrifter du følger.</Text>
 

@@ -59,7 +59,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     <ScrollViewContainer>
 
       {/* Navigate to settings */}
-      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingVertical: 10 }}>
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingTop: 25, paddingBottom: 5 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Settings")

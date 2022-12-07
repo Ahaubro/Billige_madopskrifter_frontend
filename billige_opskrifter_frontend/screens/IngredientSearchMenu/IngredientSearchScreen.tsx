@@ -7,10 +7,10 @@ import { RootState } from '../../redux/store'
 import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types'
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import Header from '../../components/Header'
 import ViewContainer from "../../components/ViewContainer"
 import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI"
 import AuthPressable from '../../components/AuthPressable'
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 
 
@@ -46,7 +46,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
     // Clear søge input
     const [searchRef, setSearchRef] = useState("");
 
-    function clearSearch(){
+    function clearSearch() {
         setSearchRef("")
     }
 
@@ -54,12 +54,9 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
     return (
         <ViewContainer>
 
-            <View style={{ paddingTop: 30 }}>
-                <Header
-                    text='Find opskrifter ud fra ingredienser du har i hjemmet!'
-                />
-            </View>
-
+            <HeaderWithoutBackcontainer
+                text='Find opskrifter ud fra ingredienser du har i hjemmet!'
+            />
 
             {/* Her vises ingredienser man har tilføjet fra search query */}
             <View style={{ paddingTop: 15 }}>
