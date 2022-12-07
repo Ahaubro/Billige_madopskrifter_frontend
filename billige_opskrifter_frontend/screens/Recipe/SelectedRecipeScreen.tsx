@@ -34,9 +34,11 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     const { id, name, type, prepTime, numberOfPersons, estimatedPrice, description, userId } = route.params
 
+
     //Getting the recipes ingrediens & setUp delete ingr and create ingr
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
     const [deleteIngredient] = useDeleteIngredientMutation();
+
 
     //Edit recipes ingredients
     const [editIngrAtr, setEditIngrAtr] = useState<{ id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
@@ -45,21 +47,25 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const [isEditing, setIsEditing] = useState(false)
     const [idForEdit, setIdForEdit] = useState(0);
 
+
     //Edit recipe
     const [editRecipeAtr, setEditRecipeAtr] = useState<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }>
         ({ id: id, name: name, type: type, prepTime: prepTime, numberOfPersons: numberOfPersons, estimatedPrice: estimatedPrice, description: description, userId: userId })
     const [editRecipe] = useEditRecipeMutation();
     const [isEditingDescription, setIsEditingDesription] = useState(false)
-    const fetchedRecipe = useGetRecipeByIdQuery(id);
     const [thisRecipe, setThisRecipe] = useState<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }>
         ({ id: 0, name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, description: "", userId: 0 })
+    const [isEditingRestOfRecipe, setIsEditingRestOfRecipe] = useState(false)
 
-    //Fecther opskriften for at kunne genopfriske redigerede elementer med state
+
+    //Fetcther denne opskrift for at kunne genopfriske redigerede elementer med state
+    const fetchedRecipe = useGetRecipeByIdQuery(id);
     useEffect(() => {
         if (fetchedRecipe.data) {
             setThisRecipe(fetchedRecipe.data)
         }
     }, [fetchedRecipe.data])
+
 
     //Delete recipe & ingredient
     const [deleteRecipe] = useDeleteRecipeMutation();
@@ -117,16 +123,54 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 </Pressable>
             </BackArrowContainer>
 
-            <Header
-                text={name}
-            />
+            {/* Opsætter en rediger knap ved siden af opskriftens header, som skal aktivere redigering på resten af opskriften(Name, preptime, price, persons) */}
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                {!isEditingRestOfRecipe ?
+                    <>
+                        <Header
+                            text={thisRecipe.name}
+                        />
 
-            {/* Her kan man like / unlike et opslag (Hvis man har liket det vises hjerte med streg over) */}
+                        <View style={{ paddingLeft: 10 }}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setIsEditingRestOfRecipe(true);
+                                }}
+                            >
+                                <Ionicons name="ios-pencil-outline" size={25} color="blue" />
+                            </TouchableOpacity>
+                        </View>
+
+                    </>
+                    :
+                    <>
+                        <TextInput
+                            style={{ fontSize: 25, textAlign: 'center', fontWeight: '700', width: 'fit-content', maxWidth: 'fit-content' }}
+                            placeholder={thisRecipe.name}
+                            onChangeText={(n) => {
+                                editRecipeAtr.name = n
+                            }}
+                        >
+                        </TextInput>
+                        <TouchableOpacity
+                            onPress={() => {
+                                editRecipe(editRecipeAtr)
+                                setIsEditingRestOfRecipe(false)
+                            }}
+                        >
+                            <Text>Gem</Text>
+                        </TouchableOpacity>
+                    </>
+                }
+            </View>
+
+
+            {/* Her kan man liker / unlike et opslag (Hvis man har liket det vises hjerte med streg over) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
                 {session.token != 'guest' &&
                     <>
-                        <View style={{ paddingVertical: 25 }}>
+                        <View style={{ paddingVertical: 20 }}>
                             <TouchableOpacity
                                 onPress={() => {
                                     likeRecipe(likeRecipeAtr).unwrap().then(res => {
@@ -148,7 +192,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </>
                 }
 
-                <View style={{ paddingVertical: 25 }}>
+                <View style={{ paddingVertical: 20 }}>
                     <TouchableOpacity
                         onPress={() => {
                             //Share btn
@@ -160,21 +204,54 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 </View>
             </View>
 
-            {/* Displayer først prepTime, personer og pris */}
-            <View style={{ flexDirection: 'row', paddingTop: 20, paddingBottom: 5 }}>
-                <Text style={style.label}>Tilberedningstid: </Text>
-                <Text style={style.field}>{prepTime} min</Text>
-            </View>
+            {/* Displayer først prepTime, personer og pris - og hvis isEditingRestOfRecipe er true vises redigerbare textinputs med værdien som placeholder */}
+            {!isEditingRestOfRecipe ?
+                <>
+                    <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
+                        <Text style={style.label}>Tilberedningstid: </Text>
+                        <Text style={style.field}>{prepTime} min</Text>
+                    </View>
 
-            <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
-                <Text style={style.label}>Personer: </Text>
-                <Text style={style.field}>{numberOfPersons}</Text>
-            </View>
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
+                        <Text style={style.label}>Antal personer: </Text>
+                        <Text style={style.field}>{numberOfPersons}</Text>
+                    </View>
 
-            <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
-                <Text style={style.label}>Estimeret pris: </Text>
-                <Text style={style.field}>{estimatedPrice} kr.</Text>
-            </View>
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
+                        <Text style={style.label}>Estimeret pris: </Text>
+                        <Text style={style.field}>{estimatedPrice} kr.</Text>
+                    </View>
+                </>
+                :
+                <>
+                    <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
+                        <Text style={style.label}>Tilberedningstid: </Text>
+                        <TextInput style={style.field} placeholder={String(thisRecipe.prepTime)} onChangeText={ (pt) => {
+                            editRecipeAtr.prepTime = Number(pt)
+                        }}>
+                        </TextInput>
+                        <Text style={style.field}>min.</Text>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
+                        <Text style={style.label}>Antal personer: </Text>
+                        <TextInput style={style.field} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={ (np) => {
+                            editRecipeAtr.numberOfPersons = Number(np)
+                        }}>
+                            
+                        </TextInput>
+                    </View>
+
+                    <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
+                        <Text style={style.label}>Estimeret pris: </Text>
+                        <TextInput style={style.field} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={ (ep) => {
+                            editRecipeAtr.estimatedPrice = Number(ep)
+                        }}> 
+                        </TextInput>
+                        <Text style={style.field}>kr.</Text>
+                    </View>
+                </>
+             }
 
             <View style={{ paddingVertical: 5 }}></View>
 
@@ -260,21 +337,19 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                     {userId == session.id &&
                                                         <View style={{ flexDirection: 'row' }}>
                                                             <TouchableOpacity
-                                                                style={style.editBtn}
                                                                 onPress={() => {
                                                                     setIdForEdit(item.id)
                                                                     setIsEditing(true)
                                                                 }}
                                                             >
-                                                                <Text style={{ color: 'white', textAlign: 'center' }}>Rediger <Ionicons name="ios-pencil-outline" size={18} color="blue" /></Text>
+                                                                <Text style={{ color: 'white', textAlign: 'center' }}> <Ionicons name="ios-pencil-outline" size={18} color="blue" /></Text>
                                                             </TouchableOpacity>
                                                             <TouchableOpacity
-                                                                style={style.deleteIngr}
                                                                 onPress={() => {
                                                                     deleteIngredient({ id: item.id })
                                                                 }}
                                                             >
-                                                                <Text style={{ color: 'white', textAlign: 'center' }}>Slet <Ionicons name="trash-outline" size={18} color="#FF9C9C" /></Text>
+                                                                <Text style={{ color: 'white', textAlign: 'center' }}> <Ionicons name="trash-outline" size={18} color="#FF9C9C" /></Text>
                                                             </TouchableOpacity>
                                                         </View>
                                                     }
@@ -295,9 +370,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                         })
                                     }}
                                 >
-                                    <Text style={{fontWeight: '600', color: 'blue', textAlign: 'center' }}>Tilføj flere ingredienser</Text>
+                                    <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Tilføj flere ingredienser</Text>
                                 </TouchableOpacity>
-                                    
+
                             </View>
                         }
 
@@ -317,7 +392,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             setIsEditingDesription(true)
                         }}
                     >
-                        <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center' }}>Rediger fremgangsmåden</Text>
+                        <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -341,7 +416,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             setIsEditingDesription(false)
                         }}
                     >
-                        <Text style={{fontWeight: '600', color: 'blue', textAlign: 'center' }}>Gem</Text>
+                        <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Gem</Text>
                     </TouchableOpacity>
                 </View>
             }
@@ -350,7 +425,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
 
             {/* Læser opskriftens reviews */}
-            <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>reviews:</Text>
+            <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Reviews:</Text>
             {
                 listOfReviews.length > 0 ?
                     <View>
@@ -362,7 +437,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 })
                             }}
                         >
-                            <Text style={{ fontStyle: 'italic', fontWeight: '700', textAlign: 'right', paddingRight: 12, marginTop: -10 }}>Se alle</Text>
+                            <Text style={{ fontStyle: 'italic', fontWeight: '700', textAlign: 'right', paddingRight: 12, marginTop: -30 }}>Se alle</Text>
                         </TouchableOpacity>
                         <>
                             <FlatList
@@ -462,16 +537,6 @@ const style = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'black',
 
-    },
-    editBtn: {
-        padding: 3,
-        backgroundColor: '#86C3F7',
-        borderRadius: 5,
-    },
-    deleteIngr: {
-        backgroundColor: '#FF9C9C',
-        padding: 3,
-        borderRadius: 5
     },
     saveEdit: {
         backgroundColor: '#86DB9D',
