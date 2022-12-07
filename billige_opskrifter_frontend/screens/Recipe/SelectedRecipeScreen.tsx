@@ -144,21 +144,23 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </>
                     :
                     <>
-                        <TextInput
-                            style={{ fontSize: 25, textAlign: 'center', fontWeight: '700', width: 'fit-content', maxWidth: 'fit-content' }}
-                            placeholder={thisRecipe.name}
-                            onChangeText={(n) => {
-                                editRecipeAtr.name = n
-                            }}
-                        >
-                        </TextInput>
+                        <View>
+                            <TextInput
+                                style={{ fontSize: 25, textAlign: 'center', fontWeight: '700', maxWidth: Dimensions.get("window").width / 100 * 50 }}
+                                placeholder={thisRecipe.name}
+                                onChangeText={(n) => {
+                                    editRecipeAtr.name = n
+                                }}
+                            >
+                            </TextInput>
+                        </View>
                         <TouchableOpacity
                             onPress={() => {
                                 editRecipe(editRecipeAtr)
                                 setIsEditingRestOfRecipe(false)
                             }}
                         >
-                            <Text>Gem</Text>
+                            <Text style={style.saveEdit}>Gem</Text>
                         </TouchableOpacity>
                     </>
                 }
@@ -209,24 +211,24 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 <>
                     <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
                         <Text style={style.label}>Tilberedningstid: </Text>
-                        <Text style={style.field}>{prepTime} min</Text>
+                        <Text style={style.field}>{thisRecipe.prepTime} min</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Antal personer: </Text>
-                        <Text style={style.field}>{numberOfPersons}</Text>
+                        <Text style={style.field}>{thisRecipe.numberOfPersons}</Text>
                     </View>
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Estimeret pris: </Text>
-                        <Text style={style.field}>{estimatedPrice} kr.</Text>
+                        <Text style={style.field}>{thisRecipe.estimatedPrice} kr.</Text>
                     </View>
                 </>
                 :
                 <>
                     <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
                         <Text style={style.label}>Tilberedningstid: </Text>
-                        <TextInput style={style.field} placeholder={String(thisRecipe.prepTime)} onChangeText={ (pt) => {
+                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.prepTime)} onChangeText={(pt) => {
                             editRecipeAtr.prepTime = Number(pt)
                         }}>
                         </TextInput>
@@ -235,23 +237,23 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Antal personer: </Text>
-                        <TextInput style={style.field} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={ (np) => {
+                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={(np) => {
                             editRecipeAtr.numberOfPersons = Number(np)
                         }}>
-                            
+
                         </TextInput>
                     </View>
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Estimeret pris: </Text>
-                        <TextInput style={style.field} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={ (ep) => {
+                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={(ep) => {
                             editRecipeAtr.estimatedPrice = Number(ep)
-                        }}> 
+                        }}>
                         </TextInput>
                         <Text style={style.field}>kr.</Text>
                     </View>
                 </>
-             }
+            }
 
             <View style={{ paddingVertical: 5 }}></View>
 
