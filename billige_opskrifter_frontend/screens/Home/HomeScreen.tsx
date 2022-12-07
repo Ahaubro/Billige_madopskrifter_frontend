@@ -26,6 +26,7 @@ type HomeScreenProps = {
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
 
   const session = useSelector((state: RootState) => state.session)
+  let userName: string | undefined = session.fullName
 
   const fetchedLikedRecipes = useGetLikedRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   const [likedRecipeList, setLikedRecipeList] = useState<Recipe[]>([]);
@@ -39,13 +40,20 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
 
   }, [fetchedLikedRecipes.data])
 
-
+  //Slicing the logged in users full for greeting
+  function getFirstName(fullName: string | undefined){
+    if(fullName == undefined){
+      return null
+    } else {
+      return fullName.substring(0, fullName.indexOf(" "));
+    }
+  }
 
   return (
     <ViewContainer>
 
       <HeaderWithoutBackcontainer 
-        text='Velkommen'
+        text={'Velkommen' + " " + getFirstName(userName)}
       />
 
       <Text style={{ paddingTop: 75, paddingBottom: 10, fontWeight: '700', fontSize: 18 }}> Opskrifter du følger.</Text>

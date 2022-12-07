@@ -8,7 +8,7 @@ import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import { RouteProp } from '@react-navigation/native'
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
-import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation } from "../../redux/services/IngredientAPI"
+import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation, Ingredient } from "../../redux/services/IngredientAPI"
 import { FlatList } from 'react-native-gesture-handler'
 import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
 import { Recipe, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
@@ -17,6 +17,8 @@ import { AirbnbRating } from 'react-native-ratings'
 import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 import { useEditRecipeMutation, useGetRecipeByIdQuery } from "../../redux/services/RecipeAPI"
+import { MaterialIcons } from '@expo/vector-icons';
+import DisplayIngrediens from '../../components/DisplayIngrediens'
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -37,16 +39,6 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
     //Getting the recipes ingrediens & setUp delete ingr and create ingr
     const thisRecipesIngrediens = useGetByRecipeIdQuery(id);
-    const [deleteIngredient] = useDeleteIngredientMutation();
-
-
-    //Edit recipes ingredients
-    const [editIngrAtr, setEditIngrAtr] = useState<{ id: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
-        ({ id: 0, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' })
-    const [editIngredient] = useEditMutation();
-    const [isEditing, setIsEditing] = useState(false)
-    const [idForEdit, setIdForEdit] = useState(0);
-
 
     //Edit recipe
     const [editRecipeAtr, setEditRecipeAtr] = useState<{ id: number, name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, description: string, userId: number }>
@@ -67,7 +59,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     }, [fetchedRecipe.data])
 
 
-    //Delete recipe & ingredient
+    //Delete recipe 
     const [deleteRecipe] = useDeleteRecipeMutation();
     const [deleteRecipeAtr] = useState<{ recipeId: number }>({ recipeId: id });
 
@@ -110,6 +102,19 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             const ShareRes = await Share.share(options);
         } catch (err) {
             console.log(err)
+        }
+    }
+
+    //Expanding ingrediens and description
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const [isIngredientsExpanded, SetIsIngredientsExpanded] = useState(false);
+
+    function sliceDescription(description: string) {
+        if (description.length > 75) {
+            return description.substring(0, 75) + " ..."
+        }
+        else {
+            return description
         }
     }
 
@@ -228,7 +233,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 <>
                     <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
                         <Text style={style.label}>Tilberedningstid: </Text>
-                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.prepTime)} onChangeText={(pt) => {
+                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.prepTime)} onChangeText={(pt) => {
                             editRecipeAtr.prepTime = Number(pt)
                         }}>
                         </TextInput>
@@ -237,7 +242,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Antal personer: </Text>
-                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={(np) => {
+                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={(np) => {
                             editRecipeAtr.numberOfPersons = Number(np)
                         }}>
 
@@ -246,7 +251,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Estimeret pris: </Text>
-                        <TextInput style={[style.field, {maxWidth: Dimensions.get("window").width / 100 * 8}]} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={(ep) => {
+                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={(ep) => {
                             editRecipeAtr.estimatedPrice = Number(ep)
                         }}>
                         </TextInput>
@@ -255,132 +260,16 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 </>
             }
 
-            <View style={{ paddingVertical: 5 }}></View>
-
-
-            {/* Displayer ingredienser til opskriften */}
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View style={style.card}>
-                    <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Ingredienser:</Text>
-                    <>
-                        {thisRecipesIngrediens.data?.ingredients.map((item, index) => {
-                            return (
-                                <View key={index}>
-                                    <View style={{ paddingBottom: 5 }}>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-
-                                            {/* Hvis isEditing er true og idForEdit er item.id kan man redigere i det enkelte objekt  */}
-                                            {isEditing === true && item.id === idForEdit ?
-                                                <>
-                                                    <View style={{ paddingLeft: 30, flexDirection: 'row' }}>
-                                                        <TextInput style={style.editInput} placeholder={item.name} editable={true}
-                                                            onChangeText={(name) => {
-                                                                editIngrAtr.name = name
-                                                            }}></TextInput>
-                                                        <TextInput style={style.editInput} placeholder={item.type} editable={true}
-                                                            onChangeText={(type) => {
-                                                                editIngrAtr.type = type
-                                                            }}>
-                                                        </TextInput>
-                                                        <TextInput style={style.editInput} placeholder={String(item.amount)} editable={true}
-                                                            onChangeText={(amount) => {
-                                                                editIngrAtr.amount = Number(amount)
-                                                            }}></TextInput>
-                                                        <TextInput style={style.editInput} placeholder={item.measurementUnit} editable={true}
-                                                            onChangeText={(mu) => {
-                                                                editIngrAtr.measurementUnit = mu
-                                                            }}></TextInput>
-                                                        <TextInput style={style.editInput} placeholder='Alergi' editable={true}
-                                                            onChangeText={(al) => {
-                                                                editIngrAtr.alergene = al
-                                                            }}></TextInput>
-                                                        <TouchableOpacity
-                                                            style={style.saveEdit}
-                                                            onPress={() => {
-                                                                //Sætter det redigerde objekts atr hvis de ikke bliver ændret af brugeren
-                                                                editIngrAtr.id = item.id
-                                                                if (editIngrAtr.name == "") {
-                                                                    editIngrAtr.name = item.name
-                                                                }
-                                                                if (editIngrAtr.type == "") {
-                                                                    editIngrAtr.type = item.type
-                                                                }
-                                                                if (editIngrAtr.amount == 0) {
-                                                                    editIngrAtr.amount = item.amount
-                                                                }
-                                                                if (editIngrAtr.measurementUnit == "") {
-                                                                    editIngrAtr.measurementUnit = item.measurementUnit
-                                                                }
-                                                                if (editIngrAtr.alergene == "") {
-                                                                    editIngrAtr.alergene = item.alergene
-                                                                }
-                                                                console.log(editIngrAtr)
-                                                                editIngredient(editIngrAtr).unwrap().then(res => {
-                                                                    console.log(res)
-                                                                })
-                                                                setIsEditing(false)
-                                                            }}
-                                                        >
-                                                            <Text style={{ color: 'white', textAlign: 'center' }}>Save</Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                </>
-
-                                                :
-
-                                                <>
-
-                                                    <Text style={{ paddingLeft: 30 }}>{index + 1}: {item.name}</Text>
-                                                    <Text> {item.amount}</Text>
-                                                    <Text>{item.measurementUnit}</Text>
-                                                    <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
-
-                                                    {/* Hvis man er forfatter til opskriften kan man redigere & slette ingredienserne */}
-                                                    {userId == session.id &&
-                                                        <View style={{ flexDirection: 'row' }}>
-                                                            <TouchableOpacity
-                                                                onPress={() => {
-                                                                    setIdForEdit(item.id)
-                                                                    setIsEditing(true)
-                                                                }}
-                                                            >
-                                                                <Text style={{ color: 'white', textAlign: 'center' }}> <Ionicons name="ios-pencil-outline" size={18} color="blue" /></Text>
-                                                            </TouchableOpacity>
-                                                            <TouchableOpacity
-                                                                onPress={() => {
-                                                                    deleteIngredient({ id: item.id })
-                                                                }}
-                                                            >
-                                                                <Text style={{ color: 'white', textAlign: 'center' }}> <Ionicons name="trash-outline" size={18} color="#FF9C9C" /></Text>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    }
-                                                </>
-                                            }
-                                        </View>
-                                    </View>
-                                </View>
-                            )
-                        })}
-                        {/* Man kan tilføje ingredienser til opskriften hvis man er forfatter*/}
-                        {userId === session.id &&
-                            <View style={{ paddingVertical: 5 }}>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        navigation.navigate("AddExtraIngredientAfterCreationScreen", {
-                                            recipeId: id
-                                        })
-                                    }}
-                                >
-                                    <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Tilføj flere ingredienser</Text>
-                                </TouchableOpacity>
-
-                            </View>
-                        }
-
-                    </>
-                </View>
+            <View style={{ paddingVertical: 5 }}>
+                {/* Display ingredisner komponent der samtidig giver CRUD operationer */}
+                <DisplayIngrediens
+                    items={thisRecipesIngrediens.data?.ingredients}
+                    userId={userId}
+                    recipeId={id}
+                    navigation={navigation}
+                />
             </View>
+
 
             <View style={{ paddingVertical: 5 }}></View>
 
@@ -388,14 +277,42 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             {!isEditingDescription ?
                 <View style={style.card}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
-                    <Text style={style.description}>{thisRecipe.description}</Text>
-                    <TouchableOpacity
-                        onPress={() => {
-                            setIsEditingDesription(true)
-                        }}
-                    >
-                        <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
-                    </TouchableOpacity>
+                    {/* Expand option */}
+                    {!isDescriptionExpanded &&
+                        <>
+                            <Text style={style.description}>{sliceDescription(thisRecipe.description)}</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setIsDescriptionExpanded(true)
+                                }}
+                            >
+                                <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                            </TouchableOpacity>
+                        </>
+                    }
+                    {/* Unexpand option */}
+                    {isDescriptionExpanded &&
+                        <>
+                            <Text style={style.description}>{thisRecipe.description}</Text>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setIsEditingDesription(true)
+                                }}
+                            >
+                                <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
+                            </TouchableOpacity>
+
+                            <View style={{ paddingTop: 5, paddingBottom: 5 }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setIsDescriptionExpanded(false)
+                                    }}
+                                >
+                                    <MaterialIcons style={{ textAlign: 'center' }} name="expand-less" size={24} color="grey" />
+                                </TouchableOpacity>
+                            </View>
+                        </>
+                    }
                 </View>
 
                 :
