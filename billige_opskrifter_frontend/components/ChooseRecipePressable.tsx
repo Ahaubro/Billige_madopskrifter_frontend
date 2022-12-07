@@ -5,14 +5,15 @@ import { View, StyleSheet, Text, TouchableOpacity,  } from "react-native"
 
 type ChooseRecipePressableProps = {
     text: string,
-    onPress: () => void
+    onPress: () => void,
+    color: string,
 }
 
-const ChooseRecipePressable: React.FC<ChooseRecipePressableProps> = ({ text, onPress }) => {
+const ChooseRecipePressable: React.FC<ChooseRecipePressableProps> = ({ text, onPress, color }) => {
 
     return (
         <View>
-            <TouchableOpacity style={[style.btn, {backgroundColor: '#86C3F7'}]}
+            <TouchableOpacity style={[style.btn, {backgroundColor: color}]}
             onPress={onPress}
             >
             <Text style={style.text}>{text}</Text>

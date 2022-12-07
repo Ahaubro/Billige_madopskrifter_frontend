@@ -62,11 +62,11 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
             <View style={{ paddingTop: 15 }}>
                 {chosenIngredients.length > 0 &&
                     <>
-                        <Text style={{ textAlign: 'center' }}>Du har valgt følgende ingredienser: </Text>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingBottom: 10 }}>Du har valgt følgende ingredienser: </Text>
                         {chosenIngredients.map((item, index) => {
                             return (
-                                <View key={index} style={{ flexDirection: 'row' }}>
-                                    <Text>{index + 1} {item.name}</Text>
+                                <View key={index} style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text>{index + 1}: {item.name}</Text>
 
                                     {/* Slet valgte ingredienser */}
                                     <TouchableOpacity
