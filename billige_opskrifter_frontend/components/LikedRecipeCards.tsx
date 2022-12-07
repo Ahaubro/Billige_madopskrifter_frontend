@@ -19,6 +19,7 @@ type LikedRecipeCardsProps = {
 const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation }) => {
 
     const [isExpanded, SetIsExpanded] = useState(false);
+    const [idForExpand, setIdForExpand] = useState(0);
 
     function sliceDescription(description: string) {
         if (description.length > 75) {
@@ -76,28 +77,42 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                                     <TouchableOpacity
                                                         onPress={() => {
                                                             SetIsExpanded(true)
+                                                            setIdForExpand(item.id)
                                                         }}
                                                     >
-                                                        <MaterialIcons style={{textAlign: 'center'}} name="expand-more" size={24} color="grey" />
+                                                        <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
                                                     </TouchableOpacity>
                                                 </>
-                                                :
+                                                : isExpanded && item.id === idForExpand &&
                                                 <>
                                                     <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
                                                     <Text style={{ lineHeight: 20 }}>{item.description}</Text>
+
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            SetIsExpanded(false)
+                                                        }}
+                                                    >
+                                                        <MaterialIcons style={{ textAlign: 'center', paddingBottom: 5 }} name="expand-less" size={24} color="grey" />
+                                                    </TouchableOpacity>
+                                                </>
+                                            }
+
+                                            {isExpanded && item.id != idForExpand &&
+                                                <>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            SetIsExpanded(true)
+                                                            setIdForExpand(item.id)
+                                                        }}
+                                                    >
+                                                        <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                    </TouchableOpacity>
                                                 </>
                                             }
                                         </View>
-
-                                        {isExpanded &&
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                                    SetIsExpanded(false)
-                                                }}
-                                            >
-                                                <MaterialIcons style={{textAlign: 'center', paddingBottom: 5}} name="expand-less" size={24} color="grey" />
-                                            </TouchableOpacity>
-                                        }
 
                                     </View>
                                 </View>
@@ -127,7 +142,7 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 30,
+        minHeight: Dimensions.get("window").height / 100 * 35,
         width: Dimensions.get("window").width / 100 * 95
     },
     title: {
