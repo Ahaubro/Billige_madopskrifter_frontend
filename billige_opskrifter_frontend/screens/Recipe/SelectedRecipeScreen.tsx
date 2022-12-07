@@ -294,13 +294,15 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     {isDescriptionExpanded &&
                         <>
                             <Text style={style.description}>{thisRecipe.description}</Text>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    setIsEditingDesription(true)
-                                }}
-                            >
-                                <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
-                            </TouchableOpacity>
+                            {userId === session.id &&
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setIsEditingDesription(true)
+                                    }}
+                                >
+                                    <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
+                                </TouchableOpacity>
+                            }
 
                             <View style={{ paddingTop: 5, paddingBottom: 5 }}>
                                 <TouchableOpacity
@@ -443,7 +445,7 @@ const style = StyleSheet.create({
         width: Dimensions.get("window").width / 100 * 94,
         borderRadius: 15,
         paddingVertical: 8,
-        minHeight: 100
+        maxHeight: Dimensions.get("window").height / 100 * 35
     },
     description: {
         textAlign: 'justify',

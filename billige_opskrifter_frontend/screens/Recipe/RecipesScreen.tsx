@@ -36,11 +36,11 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
         if (recipes.data) {
             setRecipeList(recipes.data.recipes)
         }
-        
-        
+
+
     }, [recipes.data]);
-    
-    
+
+
     //For search query
     const [searchQueryAtr, setSearchQueryAtr] = useState<{ type: string, query: string }>({ type: "", query: "" });
     const recipeSearch = useSearchRecipesQuery(searchQueryAtr, { refetchOnMountOrArgChange: true, skip: searchQueryAtr.query.length === 0 });
@@ -226,26 +226,25 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             {/* Her skal opskrifterne præsenteres i kort */}
             <View style={{ paddingTop: 30 }}></View>
 
-            <ScrollView style={{ maxHeight: Dimensions.get("window").height / 100 * 65, paddingBottom: 15 }}>
 
-                {/* HVIS SEARCH RESULT ER MINDRE END 0 SKAL ALLE OPSKRIFTER VISES*/}
-                {searchList.length == 0 ?
 
-                    <RecipeCard 
-                        recipes={recipeList} 
-                        navigation={navigation}                    
-                    />
+            {/* HVIS SEARCH RESULT ER MINDRE END 0 SKAL ALLE OPSKRIFTER VISES*/}
+            {searchList.length == 0 ?
 
-                    :
+                <RecipeCard
+                    recipes={recipeList}
+                    navigation={navigation}
+                />
 
-                    <RecipeCard 
-                        recipes={searchList} 
-                        navigation={navigation}                    
-                    />                   
-                }
+                :
 
-            </ScrollView>
-            
+                <RecipeCard
+                    recipes={searchList}
+                    navigation={navigation}
+                />
+            }
+
+
         </ViewContainer>
     )
 }

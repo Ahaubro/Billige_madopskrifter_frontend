@@ -18,7 +18,7 @@ type RecipeCardProps = {
 const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
 
     return (
-        <View>
+        <View style={{maxHeight: Dimensions.get("window").height / 100 * 57}}>
             <FlatList
                 data={recipes}
                 renderItem={({ item, index }) => {
