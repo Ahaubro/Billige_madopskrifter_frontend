@@ -45,7 +45,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
     <ViewContainer>
 
       <HeaderWithoutBackcontainer 
-        text='Hjem'
+        text='Velkommen'
       />
 
       <Text style={{ paddingTop: 75, paddingBottom: 10, fontWeight: '700', fontSize: 18 }}> Opskrifter du følger.</Text>

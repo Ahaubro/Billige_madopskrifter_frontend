@@ -125,7 +125,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             />
 
 
-            <View style={{ paddingTop: 10 }}></View>
+            <View style={{ paddingTop: 25 }}></View>
 
 
             {/* Her skal der være en search bar med sorteringsmuligheder */}
@@ -219,7 +219,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                     })
                 }}
             >
-                <Text style={{ textAlign: 'center', fontWeight: '700', fontStyle: 'italic', color: 'blue' }}> Prøv lykken </Text>
+                <Text style={{ textAlign: 'center', fontWeight: '700', fontStyle: 'italic', color: 'blue', fontSize: 16 }}> Prøv lykken </Text>
             </TouchableOpacity>
 
 
