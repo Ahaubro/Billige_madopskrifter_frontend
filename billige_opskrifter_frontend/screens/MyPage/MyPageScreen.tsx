@@ -44,23 +44,21 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     <ScrollViewContainer>
 
       {/* Navigate to settings */}
-      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingTop: 25, paddingBottom: 5, paddingRight: 10 }}>
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingTop: 30, paddingRight: 10 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Settings")
           }}
         >
-          <Ionicons name="settings-outline" size={28} color="black" />
+          <Ionicons name="settings-outline" size={30} color="black" />
         </TouchableOpacity>
       </View>
 
 
       {/* Header for MyPage */}
-      <View style={{ paddingTop: 2 }}>
-        <Header
-          text='Min side'
-        />
-      </View>
+      <Header 
+        text='Min side'
+      />
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
@@ -86,7 +84,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         {/* Opret ny opskrfit  */}
         <View style={{ paddingTop: 15 }}>
           <AuthPressable
-            text='Ny opskrift'
+            text='Tilføj en ny opskrift'
             color='#86DB9D'
             onPress={() => {
               navigation.navigate("CreateRecipe", { userId: session.id })

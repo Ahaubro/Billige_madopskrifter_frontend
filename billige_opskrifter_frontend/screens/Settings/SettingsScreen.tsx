@@ -11,7 +11,8 @@ import Header from '../../components/Header'
 import AuthPressable from '../../components/AuthPressable'
 import { endSession } from '../../redux/slices/sessionSlice'
 import ViewContainer from "../../components/ViewContainer"
-import { useCreateAllergiMutation, useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
+import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 type SettingsScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'Settings'>
@@ -40,6 +41,14 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) =>
 
   //Slet allergie
   const [deleteAllergi] = useDeleteAllergiMutation();
+
+  //Expand allergies
+  const [isExpanded, setIsExpanded] = useState(false);
+  let allergiListCopy = [...userAllergiesList]
+
+  while (allergiListCopy.length > 2) {
+    allergiListCopy.pop();
+  }
 
   return (
     <ViewContainer>
@@ -70,46 +79,114 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) =>
 
 
       {/* Allergies menu */}
-      <Text style={style.menuHeader}>Overblik over allergier.</Text>
+      <Text style={{ fontWeight: '600', fontStyle: 'italic', paddingTop: 15 }}>Mine allergier:</Text>
       <View style={style.card}>
-        {userAllergiesList.length > 0 ?
 
+        {userAllergiesList.length > 0 ?
           <View>
+            {!isExpanded &&
+              <>
+                {allergiListCopy.map((item, index) => {
+                  return (
+                    <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
+                      <Text style={{ paddingTop: 10, fontSize: 16 }}> - {item.allergi} </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          deleteAllergi({ id: item.id })
+                        }}
+                      >
+                        <Ionicons style={{ paddingTop: 10 }} name="trash-outline" size={20} color="#FF9C9C" />
+                      </TouchableOpacity>
+                    </View>
+                  )
+                })}
+
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsExpanded(true)
+                  }}
+                >
+                  {userAllergiesList.length > 2 &&
+                    <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                  }
+                </TouchableOpacity>
+
+                <View style={style.addAllergiView}>
+                  <TouchableOpacity
+                    style={style.addAllergi}
+                    onPress={() => {
+                      navigation.navigate("AddAllergiScreen")
+                    }}
+
+                  >
+                    <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            }
+
+          </View>
+          :
+
+          <>
+            <Text style={{ textAlign: 'center', paddingTop: 20, fontStyle: 'italic', fontWeight: '600' }}>Ingen allergi registreret</Text>
+
+            <View style={style.addAllergiView}>
+              <TouchableOpacity
+                style={style.addAllergi}
+                onPress={() => {
+                  navigation.navigate("AddAllergiScreen")
+                }}
+
+              >
+                <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        }
+
+
+        {isExpanded &&
+          <>
             {userAllergiesList.map((item, index) => {
               return (
-                <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                  <Text> #{index + 1} {item.allergi} allergiker</Text>
+                <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
+                  <Text style={{ paddingTop: 10, fontSize: 16 }}> - {item.allergi} </Text>
                   <TouchableOpacity
                     onPress={() => {
                       deleteAllergi({ id: item.id })
                     }}
                   >
-                    <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
+                    <Ionicons style={{ paddingTop: 10 }} name="trash-outline" size={20} color="#FF9C9C" />
                   </TouchableOpacity>
                 </View>
               )
             })}
+            <TouchableOpacity
+              onPress={() => {
+                setIsExpanded(false)
+              }}
+            >
+              <MaterialIcons style={{ textAlign: 'center' }} name="expand-less" size={24} color="grey" />
 
+            </TouchableOpacity>
 
-          </View>
+            <View style={style.addAllergiView}>
+              <TouchableOpacity
+                style={style.addAllergi}
+                onPress={() => {
+                  navigation.navigate("AddAllergiScreen")
+                }}
 
-          :
-
-          <Text>Ingen allergi registreret</Text>
+              >
+                <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
+              </TouchableOpacity>
+            </View>
+          </>
         }
 
-        <View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity
-            style={style.addAllergi}
-            onPress={() => {
-              navigation.navigate("AddAllergiScreen")
-            }}
-
-          >
-            <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
-          </TouchableOpacity>
-        </View>
       </View>
+
 
       <View style={{ paddingTop: 20 }}>
         <AuthPressable
@@ -136,8 +213,7 @@ const style = StyleSheet.create({
     width: Dimensions.get("window").width / 100 * 94,
     borderRadius: 15,
     paddingVertical: 8,
-    minHeight: 150,
-    maxHeight: 150,
+    minHeight: Dimensions.get("window").height / 100 * 10,
     overflowY: 'scroll',
     padding: 10,
   },
@@ -147,9 +223,15 @@ const style = StyleSheet.create({
     paddingVertical: 5
   },
   addAllergi: {
-    backgroundColor: '#86C3F7',
+    backgroundColor: '#86DB9D',
     borderRadius: 10,
     maxWidth: Dimensions.get('window').width / 100 * 65
+  },
+  addAllergiView: {
+    paddingTop: 15,
+    paddingBottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

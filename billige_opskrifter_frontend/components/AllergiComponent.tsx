@@ -21,6 +21,7 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
     const [userAllergiesList, setUsersAllergiesList] = useState<Allergi[]>([]);
 
     let isAllergic: boolean = false
+    let allergiString: string = ""
 
     useEffect(() => {
         if (fetchedUserAllergies.data) {
@@ -44,6 +45,7 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
         userAllergiesList.forEach( (userAl) => {
             if(ingr.alergene == userAl.allergi){
                 isAllergic = true
+                allergiString = ingr.alergene
             }
         })
     })
@@ -52,7 +54,7 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
     return (
         <View>
            {isAllergic ? 
-            <Text> <MaterialCommunityIcons name="allergy" size={30} color="red" /> </Text>   
+            <Text> <MaterialCommunityIcons name="allergy" size={30} color="red" /> {'('}{allergiString}{')'} </Text>   
         :
             <Text></Text>
         }

@@ -43,7 +43,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
 
             <Header text='Login' />
 
-            <View style={{ paddingTop: 100 }}>
+            <View style={{ paddingTop: 65 }}>
                 <Text style={style.label}>Mail:</Text>
                 <TextInput
                     autoComplete='email'
