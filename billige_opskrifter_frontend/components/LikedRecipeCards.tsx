@@ -15,7 +15,6 @@ type LikedRecipeCardsProps = {
     navigation: HomeScreenNavigationProps
 }
 
-
 const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation }) => {
 
     // For expanding description

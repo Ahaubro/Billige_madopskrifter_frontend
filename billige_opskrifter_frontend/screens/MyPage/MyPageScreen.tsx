@@ -56,13 +56,11 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
 
       {/* Header for MyPage */}
-      <View style={{ paddingTop: -15 }}>
+      <View style={{ paddingTop: 2 }}>
         <Header
           text='Min side'
         />
       </View>
-
- 
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
@@ -80,16 +78,13 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
             </View>
 
           </>
-
-          :
-          
+          :         
           <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Lav din første opskrift idag!</Text>
         }
 
 
         {/* Opret ny opskrfit  */}
-        <View style={{ paddingVertical: 10 }}>
-
+        <View style={{ paddingTop: 15 }}>
           <AuthPressable
             text='Ny opskrift'
             color='#86DB9D'
@@ -99,9 +94,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
           />
 
         </View>
-
       </View>
-
 
     </ScrollViewContainer >
   )
