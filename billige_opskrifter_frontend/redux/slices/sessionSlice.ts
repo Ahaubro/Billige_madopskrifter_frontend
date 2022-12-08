@@ -4,6 +4,7 @@ export interface SessionState {
   id: number
   token?: string
   fullName?: string
+  email?: string
   isLoading: boolean
 }
 
@@ -11,6 +12,7 @@ const initialState: SessionState = {
   token: undefined,
   id: 0,
   fullName: undefined,
+  email: undefined,
   isLoading: true,
 }
 
@@ -24,17 +26,20 @@ export const sessionSlice = createSlice({
         id: number
         token: string
         fullName: string
+        email: string
       }>
     ) => {
       state.id = action.payload.id
       state.token = action.payload.token
       state.fullName = action.payload.fullName
+      state.email = action.payload.email
       state.isLoading = false
     },
     endSession: (state: SessionState) => {
       state.id = initialState.id
       state.token = initialState.token
       state.fullName = initialState.fullName
+      state.email = initialState.email
     },
     setSessionLoading: (
       state: SessionState,

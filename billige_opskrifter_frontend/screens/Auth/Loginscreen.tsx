@@ -73,7 +73,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
                     if (loginAtr.email && loginAtr.password) {
                         login({ ...loginAtr }).unwrap().then(res => {
                             if (res.token != null) {
-                                dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName }))
+                                dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName, email: res.email }))
                             }
                         }).catch(err => {
                             console.log(err)

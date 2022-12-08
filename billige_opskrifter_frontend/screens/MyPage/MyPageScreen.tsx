@@ -59,7 +59,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
     <ScrollViewContainer>
 
       {/* Navigate to settings */}
-      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingTop: 25, paddingBottom: 5 }}>
+      <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', paddingTop: 25, paddingBottom: 5, paddingRight: 10 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Settings")
@@ -73,7 +73,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
       {/* Header for MyPage */}
       <View style={{ paddingTop: -15 }}>
         <Header
-          text={'Velkommen ' + session.fullName}
+          text='Min side'
         />
       </View>
 

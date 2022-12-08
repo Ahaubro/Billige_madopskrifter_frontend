@@ -36,7 +36,7 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
       <View style={{ paddingTop: 100 }}></View>
 
       <ChooseRecipePressable
-        color="#E1E165"
+        color="#E4E460"
         text='Morgenmad'
         onPress={() => {
           const type = "Morgenmad"
@@ -69,7 +69,7 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
       <View style={{ paddingTop: 15 }}></View>
 
       <ChooseRecipePressable
-        color="#64E990"
+        color="#62E88F"
         text='Snacks'
         onPress={() => {
           const type = "Snacks"

@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import React from 'react'
-import { Text, View, Pressable } from 'react-native'
+import { Text, View, Pressable, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import BackArrowContainer from '../../components/BackArrowContainer'
 import { RootState } from '../../redux/store'
@@ -41,7 +41,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) =>
         text='Indstillinger'
       />
 
-      <View style={{paddingTop: 20}}>
+      <Text style={style.menuHeader}>Mine informationer.</Text>
+      <View style={{ paddingTop: 15, flexDirection: 'row' }}>
+        <Text style={{fontWeight: '600', fontStyle: 'italic'}}>Fulde navn: </Text>
+        <Text>{session.fullName}</Text>
+
+      </View>
+
+      <View style={{ paddingTop: 15, flexDirection: 'row' }}>
+        <Text style={{fontWeight: '600', fontStyle: 'italic'}}>Email: </Text>
+        <Text>{session.email}</Text>
+      </View>
+
+      <View style={{ paddingTop: 20 }}>
         <AuthPressable
           text='Log ud'
           color='#FF9C9C'
@@ -54,5 +66,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) =>
     </ViewContainer>
   )
 }
+
+const style = StyleSheet.create({
+  menuHeader:{
+    paddingTop: 50, 
+    fontWeight: '700', 
+    fontSize: 18 
+  }
+})
 
 export default SettingsScreen

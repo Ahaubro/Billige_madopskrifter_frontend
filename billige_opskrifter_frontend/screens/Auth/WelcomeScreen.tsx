@@ -56,7 +56,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, route }) => {
 
       <TouchableOpacity
         onPress={ () => {
-          dispatch(startSession({id: 0, token: 'guest', fullName: 'guest'}))
+          dispatch(startSession({id: 0, token: 'guest', fullName: 'guest', email: 'guest'}))
         }}
       >
         <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingVertical: 15}}> Fortsæt som gæst</Text>

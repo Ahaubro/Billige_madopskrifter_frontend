@@ -22,7 +22,7 @@ export const UserAPI = createApi({
 
     //Login 
     login: builder.mutation<
-      { id: number, fullName: string, token: string, statusText: string },
+      { id: number, fullName: string, token: string, statusText: string, email: string },
       { email: string, password: string }
     >({
       query: body => ({
