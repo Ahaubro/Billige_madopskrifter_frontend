@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View, Pressable, TextInput, StyleSheet } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
+import { Text, View, Pressable, TextInput, StyleSheet, Dimensions, KeyboardAvoidingView, Platform } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { useCreateMutation } from '../../redux/services/RecipeAPI'
@@ -12,7 +12,6 @@ import { Ionicons } from '@expo/vector-icons';
 import AuthPressable from '../../components/AuthPressable'
 import { Picker } from '@react-native-picker/picker';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
-import { placeholder } from 'i18n-js'
 
 
 type CreateRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'CreateRecipe'>
@@ -32,6 +31,11 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
         ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
 
     const [selectedType, setSelectedType] = useState("");
+
+    const nameRef = useRef<TextInput>(null);
+    const timeRef = useRef<TextInput>(null);
+    const personsRef = useRef<TextInput>(null);
+    const priceRef = useRef<TextInput>(null);
 
     return (
         <ScrollViewContainer>
@@ -53,12 +57,13 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             <Text style={style.label}>Typen af opskrift:</Text>
 
             <Picker
+                style={{ height: Dimensions.get("window").height / 100 * 12 }}
+                itemStyle={{ height: Dimensions.get("window").height / 100 * 15, marginTop: -20, fontSize: 16 }}
                 selectedValue={selectedType}
                 onValueChange={(type: string) => {
                     if (type.length > 1) {
                         setSelectedType(type)
                         createAtr.type = type
-                        console.log("HERHEHREH", type)
                     }
                 }}
             >
@@ -69,7 +74,13 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </Picker>
 
             <Text style={style.label}>Navnet på opskrfiten:</Text>
+
             <TextInput
+                ref={nameRef}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                    timeRef.current?.focus();
+                }}
                 placeholder='Eks. Kylling i karry'
                 style={style.input}
                 onChangeText={(name) => {
@@ -80,6 +91,11 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <Text style={style.label}>Tilberedningstid i mintuer:</Text>
             <TextInput
+                ref={timeRef}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                    personsRef.current?.focus();
+                }}
                 placeholder='Eks. 45'
                 style={style.input}
                 onChangeText={(tb) => {
@@ -90,8 +106,13 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <Text style={style.label}>Antal personer:</Text>
             <TextInput
-            placeholder='Eks. 2' 
-            style={style.input}
+                ref={personsRef}
+                returnKeyType={"next"}
+                onSubmitEditing={() => {
+                    priceRef.current?.focus()
+                }}
+                placeholder='Eks. 2'
+                style={style.input}
                 onChangeText={(persons) => {
                     createAtr.numberOfPersons = Number(persons)
                 }}
@@ -99,14 +120,22 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             </TextInput>
 
             <Text style={style.label}>Ca. Pris:</Text>
-            <TextInput 
-            placeholder='Eks. 100'
-            style={style.input}
-                onChangeText={(price) => {
-                    createAtr.estimatedPrice = Number(price)
-                }}
-            >
-            </TextInput>
+            {/* <KeyboardAvoidingView
+                behavior='padding'
+                enabled
+                keyboardVerticalOffset={10}
+                style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
+                >
+            </KeyboardAvoidingView> */}
+                <TextInput
+                    ref={priceRef}
+                    placeholder='Eks. 100'
+                    style={style.input}
+                    onChangeText={(price) => {
+                        createAtr.estimatedPrice = Number(price)
+                    }}
+                >
+                </TextInput>
 
             <View style={{ paddingTop: 10 }}></View>
 
@@ -127,7 +156,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 }}
             />
 
-            <View style={{ paddingTop: 50 }}></View>
+            <View style={{ paddingTop: 130 }}></View>
 
         </ScrollViewContainer>
     )
@@ -137,7 +166,8 @@ const style = StyleSheet.create({
     label: {
         fontSize: 16,
         fontWeight: '600',
-        paddingVertical: 5
+        paddingTop: 10,
+        paddingBottom: 5
     },
     input: {
         borderRadius: 8,

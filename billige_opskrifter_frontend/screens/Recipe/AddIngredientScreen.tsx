@@ -69,6 +69,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     let [amountRef, setAmountRef] = useState("");
     let [alerRef, setAlerRef] = useState("");
 
+
     const handleSubmit = () => {
         setNameRef("");
         setTypeRef("");
@@ -158,7 +159,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
             <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
             <TextInput
-                placeholder='Eks. stk, gr, ml, tsk, spsk'
+                placeholder='Eks. stk'
                 value={measureUnitRef}
                 style={style.input}
                 onChangeText={(mu) => {
@@ -170,7 +171,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
             <Text style={style.label}>Alergener:</Text>
             <TextInput
-                placeholder="Eks. Laktose, Gluten"
+                placeholder="Eks. Laktose"
                 value={alerRef}
                 style={style.input}
                 onChangeText={(alergene) => {

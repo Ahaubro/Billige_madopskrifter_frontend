@@ -105,16 +105,17 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
         }
     }
 
-    //Expanding ingrediens and description
+    //Expanding description
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-    const [isIngredientsExpanded, SetIsIngredientsExpanded] = useState(false);
 
     function sliceDescription(description: string) {
-        if (description.length > 75) {
-            return description.substring(0, 75) + " ..."
-        }
-        else {
-            return description
+        if(description != null){
+            if (description.length > 75) {
+                return description.substring(0, 75) + " ..."
+            }
+            else {
+                return description
+            }
         }
     }
 

@@ -42,7 +42,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
 
             <Header text='Opret ny bruger' />
 
-            <View style={{ paddingTop: 100 }}>
+            <View style={{ paddingTop: 65 }}>
                 <Text style={style.label}>Fulde navn:</Text>
                 <TextInput style={style.input} onChangeText={ (fn) => {
                     registerAtr.fullName = fn
