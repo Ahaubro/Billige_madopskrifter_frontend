@@ -56,7 +56,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         text={'Velkommen' + " " + getFirstName(userName)}
       />
 
-      <Text style={style.menuHeader}> Likede opskrifter:</Text>
+      <Text style={style.menuHeader}> Opskrifter du har liket.</Text>
 
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&

@@ -158,9 +158,9 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                     </View>
 
                     {/* Clear listen */}
-                    <View style={{ paddingTop: 15 }}>
+                    <View style={{ paddingTop: 5 }}>
                         <AuthPressable
-                            text='Reset'
+                            text='Slet alt'
                             color='#FF9C9C'
                             onPress={() => {
                                 setChosenIngredients([]);

@@ -40,7 +40,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
                 </Pressable>
             </BackArrowContainer>
 
-            <Header text='Register' />
+            <Header text='Opret ny bruger' />
 
             <View style={{ paddingTop: 100 }}>
                 <Text style={style.label}>Fulde navn:</Text>
