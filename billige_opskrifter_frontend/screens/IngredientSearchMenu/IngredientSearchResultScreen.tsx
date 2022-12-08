@@ -75,7 +75,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
 
 
       {/* Der bliver displayet en opskrift for hver af de ingredienser med et unikt RecipeId med komponenten displayOneRecipe */}
-      <ScrollView style={{ maxHeight: Dimensions.get("window").height / 100 * 70, paddingBottom: 15 }}>
+      <ScrollView style={{ maxHeight: Dimensions.get("window").height / 100 * 67, paddingBottom: 15 }}>
         {clonedForMapNoDuplicates.map((item, index) => {
           return (
             <View key={index}>

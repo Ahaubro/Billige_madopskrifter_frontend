@@ -56,7 +56,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
         text={'Velkommen' + " " + getFirstName(userName)}
       />
 
-      <Text style={{ paddingTop: 75, paddingBottom: 10, fontWeight: '700', fontSize: 18 }}> Opskrifter du følger.</Text>
+      <Text style={style.menuHeader}> Likede opskrifter:</Text>
 
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&
@@ -95,6 +95,12 @@ const style = StyleSheet.create({
     padding: 12,
     minHeight: Dimensions.get("window").height / 100 * 14,
     maxHeight: Dimensions.get("window").height / 100 * 14,
+  },
+  menuHeader:{
+    paddingTop: 75, 
+    paddingBottom: 10, 
+    fontWeight: '700', 
+    fontSize: 18 
   }
 })
 

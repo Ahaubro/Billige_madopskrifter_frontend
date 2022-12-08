@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
 import { Recipe } from "../redux/services/RecipeAPI"
 import { HomeNavigationParameters } from "../Types/Navigation_types"
@@ -18,8 +18,10 @@ type LikedRecipeCardsProps = {
 
 const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation }) => {
 
+    // For expanding description
     const [isExpanded, SetIsExpanded] = useState(false);
     const [idForExpand, setIdForExpand] = useState(0);
+    const activeIndex = useRef(0);
 
     function sliceDescription(description: string) {
         if (description.length > 75) {
@@ -29,6 +31,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
             return description
         }
     }
+
 
     return (
         <View>
@@ -65,7 +68,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                             <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -20 }}>
-                                            <Text style={[style.priceComponent]}><PriceComponent price={item.estimatedPrice} />  </Text>
+                                            <Text style={[style.priceComponent]}><PriceComponent price={item.estimatedPrice} /></Text>
                                         </View>
 
 
