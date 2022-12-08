@@ -5,7 +5,7 @@ import { Recipe } from "../redux/services/RecipeAPI"
 import { MyPageNavigationParameters, RecipeNavigationParameters } from "../Types/Navigation_types"
 import PriceComponent from "./PriceComponent"
 import AllergiComponent from "./AllergiComponent"
-
+import { MaterialIcons } from '@expo/vector-icons';
 
 type MyPgeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 
@@ -14,13 +14,25 @@ type AuthoredRecipeCardsProps = {
     navigation: MyPgeScreenNavigationProps
 }
 
-
 const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navigation }) => {
+
+    // For expanding description
+    const [isExpanded, SetIsExpanded] = useState(false);
+    const [idForExpand, setIdForExpand] = useState(0);
+
+    function sliceDescription(description: string) {
+        if (description.length > 75) {
+            return description.substring(0, 55) + " ..."
+        }
+        else {
+            return description
+        }
+    }
 
     return (
         <View>
             <FlatList
-            horizontal={true}
+                horizontal={true}
                 data={recipes}
                 renderItem={({ item, index }) => {
                     return (
@@ -48,11 +60,61 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
                                         <View style={{ borderBottomWidth: 0.5, borderBottomColor: 'grey' }}></View>
 
                                         <View style={{ flexDirection: 'column', justifyContent: 'space-around' }}>
-                                            <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
-                                            <Text style={style.prepTime}> <Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
+                                            <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Antal personer:</Text> {item.numberOfPersons}</Text>
+                                            <Text style={style.prepTime}><Text style={{ fontWeight: '700' }}>Tilberredningstid:</Text> {item.prepTime}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -20 }}>
-                                            <Text style={[style.priceComponent]}> <PriceComponent price={item.estimatedPrice} />  </Text>
+                                            <Text style={[style.priceComponent]}><PriceComponent price={item.estimatedPrice} /></Text>
+                                        </View>
+
+
+                                        <View>
+                                            {!isExpanded ?
+                                                <>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            SetIsExpanded(true)
+                                                            setIdForExpand(item.id)
+                                                        }}
+                                                    >
+                                                        {item.description.length > 65 &&
+                                                            <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        }
+                                                    </TouchableOpacity>
+                                                </>
+                                                : isExpanded && item.id === idForExpand &&
+                                                <>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ lineHeight: 20 }}>{item.description}</Text>
+
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            SetIsExpanded(false)
+                                                        }}
+                                                    >
+                                                        <MaterialIcons style={{ textAlign: 'center', paddingBottom: 5 }} name="expand-less" size={24} color="grey" />
+                                                    </TouchableOpacity>
+                                                </>
+                                            }
+
+                                            {isExpanded && item.id != idForExpand &&
+                                                <>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            SetIsExpanded(true)
+                                                            setIdForExpand(item.id)
+                                                        }}
+                                                    >
+                                                        {item.description.length > 65 &&
+                                                            <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        }
+                                                    </TouchableOpacity>
+                                                </>
+                                            }
                                         </View>
 
                                     </View>
@@ -83,8 +145,7 @@ const style = StyleSheet.create({
         backgroundColor: 'rgb(247,247,255)',
         borderRadius: 15,
         padding: 12,
-        minHeight: Dimensions.get("window").height / 100 * 20,
-        maxHeight: Dimensions.get("window").height / 100 * 20,
+        minHeight: Dimensions.get("window").height / 100 * 35,
         width: Dimensions.get("window").width / 100 * 95
     },
     title: {

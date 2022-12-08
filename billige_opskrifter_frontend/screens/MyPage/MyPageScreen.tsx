@@ -11,7 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
-import { useCreateAllergiMutation, useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
+import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 import RecipeCard from '../../components/RecipeCard'
 import AuthoredRecipeCards from '../../components/AuthoredRecipeCards'
@@ -40,21 +40,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   }, [fetchedRecipesByUserId.data])
 
 
-  // Fetcher brugerens allergier
-  const fetchedUserAllergies = useGetAllergiesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
-  const [userAllergiesList, setUsersAllergiesList] = useState<Allergi[]>([]);
-
-  useEffect(() => {
-    if (fetchedUserAllergies.data) {
-      setUsersAllergiesList(fetchedUserAllergies.data.allergies)
-    }
-  }, [fetchedUserAllergies.data])
-
-
-  //Slet allergie
-  const [deleteAllergi] = useDeleteAllergiMutation();
-
-
   return (
     <ScrollViewContainer>
 
@@ -77,60 +62,12 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         />
       </View>
 
-      <View style={{ paddingVertical: 25 }}>
-        {/* <Text style={{ textAlign: 'center', fontSize: 22, fontWeight: '600' }}>Velkommen {session.fullName}</Text> */}
-      </View>
-
-
-      {/* Allergies menu */}
-      <Text style={style.label}>Overblik over allergier.</Text>
-      <View style={style.card}>
-        {userAllergiesList.length > 0 ?
-
-          <View>
-            {userAllergiesList.map((item, index) => {
-              return (
-                <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                  <Text> #{index + 1} {item.allergi} allergiker</Text>
-                  <TouchableOpacity
-                    onPress={() => {
-                      deleteAllergi({ id: item.id })
-                    }}
-                  >
-                    <Ionicons name="trash-outline" size={22} color="#FF9C9C" />
-                  </TouchableOpacity>
-                </View>
-              )
-            })}
-
-
-          </View>
-
-          :
-
-          <Text>Ingen allergi registreret</Text>
-        }
-
-        <View style={{ paddingTop: 50, justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity
-            style={style.addAllergi}
-            onPress={() => {
-              navigation.navigate("AddAllergiScreen")
-            }}
-
-          >
-            <Text style={{ textAlign: 'center', paddingHorizontal: 15, paddingVertical: 10, color: 'white', fontWeight: '600' }}> Tilføj en allergi</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-
-
-      <View style={{ paddingVertical: 20 }}></View>
+ 
 
 
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
       <View>
-        <Text style={style.label}>Opskrifter lavet af dig.</Text>
+        <Text style={style.menuHeader}>Opskrifter skrevet af dig.</Text>
         {userRecipeList.length > 0 ?
           <>
             <View>
@@ -145,7 +82,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
           </>
 
           :
-
+          
           <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Lav din første opskrift idag!</Text>
         }
 
@@ -163,34 +100,24 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
 
         </View>
 
-
-
       </View>
+
 
     </ScrollViewContainer >
   )
 }
 
 const style = StyleSheet.create({
-  card: {
-    backgroundColor: "rgb(247,247,255)",
-    width: Dimensions.get("window").width / 100 * 94,
-    borderRadius: 15,
-    paddingVertical: 8,
-    minHeight: 150,
-    maxHeight: 150,
-    overflowY: 'scroll',
-    padding: 10,
-  },
   label: {
     fontSize: 16,
     fontWeight: '600',
     paddingVertical: 5
   },
-  addAllergi: {
-    backgroundColor: '#86C3F7',
-    borderRadius: 10,
-    maxWidth: Dimensions.get('window').width / 100 * 65
+  menuHeader:{
+    paddingTop: 75, 
+    paddingBottom: 10, 
+    fontWeight: '700', 
+    fontSize: 18 
   }
 })
 

@@ -21,7 +21,6 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
     // For expanding description
     const [isExpanded, SetIsExpanded] = useState(false);
     const [idForExpand, setIdForExpand] = useState(0);
-    const activeIndex = useRef(0);
 
     function sliceDescription(description: string) {
         if (description.length > 75) {
@@ -83,7 +82,9 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                                             setIdForExpand(item.id)
                                                         }}
                                                     >
-                                                        <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        {item.description.length > 65 &&
+                                                            <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        }
                                                     </TouchableOpacity>
                                                 </>
                                                 : isExpanded && item.id === idForExpand &&
@@ -111,7 +112,9 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                                             setIdForExpand(item.id)
                                                         }}
                                                     >
-                                                        <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        {item.description.length > 65 &&
+                                                            <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
+                                                        }
                                                     </TouchableOpacity>
                                                 </>
                                             }
