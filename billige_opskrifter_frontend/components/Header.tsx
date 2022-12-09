@@ -9,7 +9,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ text}) => {
 
     return (
-        <View>
+        <View style={{paddingBottom: 10}}>
             <Text style={style.header}>{text}</Text>
         </View>
     )

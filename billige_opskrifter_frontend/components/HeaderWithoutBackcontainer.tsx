@@ -9,7 +9,7 @@ type HeaderWithoutBackcontainerProps = {
 const HeaderWithoutBackcontainer: React.FC<HeaderWithoutBackcontainerProps> = ({ text}) => {
 
     return (
-        <View style={{paddingTop: 62}}>
+        <View style={{paddingTop: 62, paddingBottom: 10}}>
             <Text style={style.header}>{text}</Text>
         </View>
     )

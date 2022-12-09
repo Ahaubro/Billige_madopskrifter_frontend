@@ -121,7 +121,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             >
             </TextInput>
 
-            <Text style={style.label}>Ca. Pris:</Text>
+            <Text style={style.label}>Ca. Pris i kr.:</Text>
             {/* <KeyboardAvoidingView
                 behavior='padding'
                 enabled

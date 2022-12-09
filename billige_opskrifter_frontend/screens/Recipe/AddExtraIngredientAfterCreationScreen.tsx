@@ -48,6 +48,8 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
             <Header
                 text="Tilføj en ekstra ingrediens"
             />
+            
+            <View style={{paddingVertical: 10}}></View>
 
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput

@@ -217,10 +217,17 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 onPress={() => {
                     if (recipeId != 0) {
                         addIngredientAtr.recipeId = recipeId
-                        addIngredient(addIngredientAtr).unwrap().then(res => {
-                            console.log(res)
+                        ingredientsList.map( (item) => {
+                            //Hvis ingrediensen allerede er tilføjet sendes vi videre, ellers tilføjes den nye ingrediens først
+                            if(item.name === addIngredientAtr.name){
+                                navigation.navigate("AddRecipeDescription", { recipeId })
+                            } else {
+                                addIngredient(addIngredientAtr).unwrap().then(res => {
+                                    console.log(res)
+                                })
+                                navigation.navigate("AddRecipeDescription", { recipeId })
+                            }
                         })
-                        navigation.navigate("AddRecipeDescription", { recipeId })
                     }
                 }}
             />

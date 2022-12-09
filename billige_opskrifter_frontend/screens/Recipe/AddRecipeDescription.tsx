@@ -9,6 +9,7 @@ import { RouteProp } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import { useEditDescriptionMutation } from "../../redux/services/RecipeAPI"
 import AuthPressable from '../../components/AuthPressable'
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 type AddRecipeDescriptionScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddRecipeDescription'>
 type AddRecipeDescriptionScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddRecipeDescription'>
@@ -31,9 +32,11 @@ const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({
     return (
         <ViewContainer>
 
-            <Header
+            <HeaderWithoutBackcontainer
                 text="Tilføj beskrivelse"
             />
+
+            <View style={{paddingVertical: 10}}></View>
 
             <Text style={style.label}>Beskriv fremgangs metoden:</Text>
             <TextInput 
