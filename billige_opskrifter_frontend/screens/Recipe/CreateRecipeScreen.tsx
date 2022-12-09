@@ -91,8 +91,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <Text style={style.label}>Tilberedningstid i mintuer:</Text>
             <TextInput
+                keyboardType="number-pad"
                 ref={timeRef}
-                returnKeyType={"next"}
+                returnKeyType={"done"}
                 onSubmitEditing={() => {
                     personsRef.current?.focus();
                 }}
@@ -107,10 +108,11 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             <Text style={style.label}>Antal personer:</Text>
             <TextInput
                 ref={personsRef}
-                returnKeyType={"next"}
+                returnKeyType={"done"}
                 onSubmitEditing={() => {
                     priceRef.current?.focus()
                 }}
+                keyboardType="number-pad"
                 placeholder='Eks. 2'
                 style={style.input}
                 onChangeText={(persons) => {
@@ -127,15 +129,20 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
                 >
             </KeyboardAvoidingView> */}
-                <TextInput
-                    ref={priceRef}
-                    placeholder='Eks. 100'
-                    style={style.input}
-                    onChangeText={(price) => {
-                        createAtr.estimatedPrice = Number(price)
-                    }}
-                >
-                </TextInput>
+            <TextInput
+                keyboardType='number-pad'
+                returnKeyType={'done'}
+                ref={priceRef}
+                placeholder='Eks. 100'
+                style={style.input}
+                onChangeText={(price) => {
+                    createAtr.estimatedPrice = Number(price)
+                }}
+                onSubmitEditing={ () => {
+                    priceRef.current?.blur();
+                }}
+            >
+            </TextInput>
 
             <View style={{ paddingTop: 10 }}></View>
 

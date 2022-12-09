@@ -151,7 +151,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) =>
             {userAllergiesList.map((item, index) => {
               return (
                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'flex-start', }}>
-                  <Text style={{ paddingTop: 10, fontSize: 16 }}> - {item.allergi} </Text>
+                  <Text style={{ paddingTop: 10, fontWeight: '500' }}> - {item.allergi} </Text>
                   <TouchableOpacity
                     onPress={() => {
                       deleteAllergi({ id: item.id })
