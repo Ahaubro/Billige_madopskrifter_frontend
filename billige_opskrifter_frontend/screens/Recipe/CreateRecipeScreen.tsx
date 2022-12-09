@@ -125,11 +125,13 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
             {/* <KeyboardAvoidingView
                 behavior='padding'
                 enabled
-                keyboardVerticalOffset={10}
-                style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}
-                >
+                keyboardVerticalOffset={-10}
+                style={{ alignItems: 'flex-start' }}
+            >
             </KeyboardAvoidingView> */}
             <TextInput
+
+                onFocus={() => { priceRef.current?.focus() }}
                 keyboardType='number-pad'
                 returnKeyType={'done'}
                 ref={priceRef}
@@ -138,7 +140,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                 onChangeText={(price) => {
                     createAtr.estimatedPrice = Number(price)
                 }}
-                onSubmitEditing={ () => {
+                onSubmitEditing={() => {
                     priceRef.current?.blur();
                 }}
             >

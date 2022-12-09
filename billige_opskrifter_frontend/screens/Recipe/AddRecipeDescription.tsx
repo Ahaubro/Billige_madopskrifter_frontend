@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
@@ -76,7 +76,7 @@ const style = StyleSheet.create({
         borderWidth: 1,
         paddingVertical: 10,
         paddingHorizontal: 5,
-        minHeight: 250,
+        minHeight: Dimensions.get("window").height / 100 * 20,
         borderColor: 'rgb(240,240,240)',
     }
 })

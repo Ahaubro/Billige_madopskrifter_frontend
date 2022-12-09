@@ -12,6 +12,7 @@ import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 import { getType } from '@reduxjs/toolkit'
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 
 type AddIngredientScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddIngredient'>
@@ -66,7 +67,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     const nameRef = useRef<TextInput>(null);
     const typeRef = useRef<TextInput>(null);
     const measureUnitRef = useRef<TextInput>(null);
-    const amountRef= useRef<TextInput>(null);
+    const amountRef = useRef<TextInput>(null);
     const alerRef = useRef<TextInput>(null);
 
 
@@ -82,12 +83,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     return (
         <ScrollViewContainer>
 
-            <View style={{ paddingTop: 30 }}>
-                <Header
-                    text="Tilføj ingredienser"
-                />
-            </View>
-
+            <HeaderWithoutBackcontainer
+                text="Tilføj ingredienser"
+            />
 
             <View>
                 {ingredientsList.length != 0 ?
@@ -122,7 +120,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
                 editable={true}
-                ref={ nameRef }
+                ref={nameRef}
                 placeholder="Ingrediens navn"
                 style={style.input}
                 returnKeyType='next'
@@ -234,7 +232,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 color='#FF9C9C'
                 onPress={() => {
                     if (recipeId != 0) {
-                        deleteRecipe({ recipeId: recipeId }).unwrap().then( () => {
+                        deleteRecipe({ recipeId: recipeId }).unwrap().then(() => {
                             navigation.navigate('MyPage')
                         })
                     }

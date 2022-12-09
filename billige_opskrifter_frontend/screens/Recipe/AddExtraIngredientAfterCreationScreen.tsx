@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
 import { useCreateMutation } from "../../redux/services/IngredientAPI"
 import { MyPageNavigationParameters } from "../../Types/Navigation_types"
@@ -9,6 +9,7 @@ import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
 import Header from "../../components/Header"
 import ViewContainer from "../../components/ViewContainer"
+import ScrollViewContainer from "../../components/ScrollViewContainer"
 
 type AddIngredientComponentNavigationProps = StackNavigationProp<MyPageNavigationParameters, "AddExtraIngredientAfterCreationScreen">
 type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddExtraIngredientAfterCreationScreen'>
@@ -26,8 +27,15 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
         ({ recipeId: recipeId, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' });
     const [addIngredient] = useCreateMutation();
 
+    const nameRef = useRef<TextInput>(null);
+    const typeRef = useRef<TextInput>(null);
+    const muRef = useRef<TextInput>(null);
+    const amountRef = useRef<TextInput>(null);
+    const alerRef = useRef<TextInput>(null);
+
+
     return (
-        <ViewContainer>
+        <ScrollViewContainer>
 
             <BackArrowContainer>
                 <Pressable onPress={() => {
@@ -43,6 +51,11 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
+                ref={nameRef}
+                returnKeyType='next'
+                onSubmitEditing={ () => {
+                    typeRef.current?.focus();
+                }}
                 style={style.input}
                 onChangeText={(name) => {
                     newIngrAtr.name = name
@@ -52,6 +65,11 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Ingrediens type:</Text>
             <TextInput
+                ref={typeRef}
+                returnKeyType='next'
+                onSubmitEditing={ () => {
+                    muRef.current?.focus();
+                }}
                 style={style.input}
                 onChangeText={(type) => {
                     newIngrAtr.type = type
@@ -61,6 +79,11 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
             <TextInput
+                ref={muRef}
+                returnKeyType='next'
+                onSubmitEditing={ () => {
+                    amountRef.current?.focus();
+                }}
                 style={style.input}
                 onChangeText={(mu) => {
                     newIngrAtr.measurementUnit = mu
@@ -70,6 +93,12 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Mængde:</Text>
             <TextInput
+                ref={amountRef}
+                keyboardType='number-pad'
+                returnKeyType='done'
+                onSubmitEditing={ () => {
+                    alerRef.current?.focus();
+                }}
                 style={style.input}
                 onChangeText={(amount) => {
                     newIngrAtr.amount = Number(amount)
@@ -80,6 +109,11 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Alergener:</Text>
             <TextInput
+                ref={alerRef}
+                returnKeyType='next'
+                onSubmitEditing={ () => {
+                    alerRef.current?.clear();
+                }}
                 style={style.input}
                 onChangeText={(alergene) => {
                     newIngrAtr.alergene = alergene
@@ -99,7 +133,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
                     navigation.pop();
                 }}
             />
-        </ViewContainer>
+        </ScrollViewContainer>
     )
 }
 
