@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
-import { Pressable, Text, View, TextInput, StyleSheet } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Pressable, Text, View, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { AuthNavigationParameters } from '../../Types/Navigation_types'
@@ -27,61 +27,80 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
     const session = useSelector((state: RootState) => state.session)
     const dispatch = useDispatch();
 
+    //Login muatation and atr
     const [login, { isLoading }] = useLoginMutation();
     const [loginAtr, setLoginAtr] = useState<{ email: string, password: string }>({ email: "", password: "" })
 
+    //TextINput refs
+    const mailRef = useRef<TextInput>(null);
+    const pasRef = useRef<TextInput>(null);
+
+
     return (
         <ViewContainer>
+            <KeyboardAvoidingView
+                behavior='position'
+                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
+                style={{ height: Dimensions.get("window").height / 100 * 60, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
+            >
 
-            <BackArrowContainer>
-                <Pressable onPress={() => {
-                    navigation.pop();
-                }}>
-                    <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
-                </Pressable>
-            </BackArrowContainer>
 
-            <Header text='Login' />
+                <BackArrowContainer>
+                    <Pressable onPress={() => {
+                        navigation.pop();
+                    }}>
+                        <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
+                    </Pressable>
+                </BackArrowContainer>
 
-            <View style={{ paddingTop: 65 }}>
-                <Text style={style.label}>Mail:</Text>
-                <TextInput
-                    autoComplete='email'
-                    blurOnSubmit={true}
-                    style={style.input}
-                    onChangeText={(m) => {
-                        loginAtr.email = m
-                    }}></TextInput>
-            </View>
+                <Header text='Login' />
 
-            <View style={{ paddingTop: 5, paddingBottom: 20 }}>
-                <Text style={style.label}>Kodeord:</Text>
-                <TextInput
-                    blurOnSubmit={true}
-                    secureTextEntry={true}
-                    style={style.input}
-                    onChangeText={(p) => {
-                        loginAtr.password = p
-                    }}></TextInput>
-            </View>
+                <View style={{ paddingTop: 50 }}>
+                    <Text style={style.label}>Mail:</Text>
+                    <TextInput
+                        ref={mailRef}
+                        returnKeyType='next'
+                        blurOnSubmit={false}
+                        onSubmitEditing={() => {
+                            pasRef.current?.focus();
+                        }}
+                        style={style.input}
+                        onChangeText={(m) => {
+                            loginAtr.email = m
+                        }}></TextInput>
+                </View>
 
-            <AuthPressable
-                text='Login'
-                color='#86C3F7'
-                onPress={() => {
-                    console.log({ ...loginAtr })
-                    if (loginAtr.email && loginAtr.password) {
-                        login({ ...loginAtr }).unwrap().then(res => {
-                            if (res.token != null) {
-                                dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName, email: res.email }))
-                            }
-                        }).catch(err => {
-                            console.log(err)
-                        })
-                    }
-                }}
-            />
+                <View style={{ paddingTop: 5, paddingBottom: 20 }}>
+                    <Text style={style.label}>Kodeord:</Text>
+                    <TextInput
+                        ref={pasRef}
+                        returnKeyType='next'
+                        blurOnSubmit={true}
+                        secureTextEntry={true}
+                        style={style.input}
+                        onChangeText={(p) => {
+                            loginAtr.password = p
+                        }}></TextInput>
+                </View>
 
+                <AuthPressable
+                    text='Login'
+                    color='#86C3F7'
+                    onPress={() => {
+                        console.log({ ...loginAtr })
+                        if (loginAtr.email && loginAtr.password) {
+                            login({ ...loginAtr }).unwrap().then(res => {
+                                if (res.token != null) {
+                                    dispatch(startSession({ token: res.token, id: res.id, fullName: res.fullName, email: res.email }))
+                                }
+                            }).catch(err => {
+                                console.log(err)
+                            })
+                        }
+                    }}
+                />
+
+            </KeyboardAvoidingView>
         </ViewContainer>
     )
 }

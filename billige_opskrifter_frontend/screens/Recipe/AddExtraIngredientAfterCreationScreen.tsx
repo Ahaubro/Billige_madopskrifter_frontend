@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { useState, useEffect, useRef } from "react"
-import { View, StyleSheet, Text, TextInput, Pressable } from "react-native"
+import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Dimensions } from "react-native"
 import { useCreateMutation } from "../../redux/services/IngredientAPI"
 import { MyPageNavigationParameters } from "../../Types/Navigation_types"
 import AuthPressable from "../../components/AuthPressable"
@@ -8,7 +8,6 @@ import { RouteProp } from "@react-navigation/native"
 import BackArrowContainer from "../../components/BackArrowContainer"
 import { Ionicons } from '@expo/vector-icons';
 import Header from "../../components/Header"
-import ViewContainer from "../../components/ViewContainer"
 import ScrollViewContainer from "../../components/ScrollViewContainer"
 
 type AddIngredientComponentNavigationProps = StackNavigationProp<MyPageNavigationParameters, "AddExtraIngredientAfterCreationScreen">
@@ -37,7 +36,12 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
     return (
         <ScrollViewContainer>
 
-            <BackArrowContainer>
+            <KeyboardAvoidingView
+                behavior='position'
+                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
+                style={{ height: Dimensions.get("window").height / 100 * 84, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
+            >
+                <BackArrowContainer>
                 <Pressable onPress={() => {
                     navigation.pop();
                 }}>
@@ -49,11 +53,12 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
                 text="Tilføj en ekstra ingrediens"
             />
             
-            <View style={{paddingVertical: 10}}></View>
+            <View style={{paddingVertical: 15}}></View>
 
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
                 ref={nameRef}
+                blurOnSubmit={false}
                 returnKeyType='next'
                 onSubmitEditing={ () => {
                     typeRef.current?.focus();
@@ -67,6 +72,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Ingrediens type:</Text>
             <TextInput
+                blurOnSubmit={false}
                 ref={typeRef}
                 returnKeyType='next'
                 onSubmitEditing={ () => {
@@ -81,6 +87,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
             <TextInput
+                blurOnSubmit={false}
                 ref={muRef}
                 returnKeyType='next'
                 onSubmitEditing={ () => {
@@ -95,6 +102,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Mængde:</Text>
             <TextInput
+                blurOnSubmit={false}
                 ref={amountRef}
                 keyboardType='number-pad'
                 returnKeyType='done'
@@ -111,10 +119,11 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <Text style={style.label}>Alergener:</Text>
             <TextInput
+                blurOnSubmit={true}
                 ref={alerRef}
                 returnKeyType='next'
                 onSubmitEditing={ () => {
-                    alerRef.current?.clear();
+                    alerRef.current?.blur();
                 }}
                 style={style.input}
                 onChangeText={(alergene) => {
@@ -135,6 +144,9 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
                     navigation.pop();
                 }}
             />
+
+            </KeyboardAvoidingView>
+
         </ScrollViewContainer>
     )
 }
