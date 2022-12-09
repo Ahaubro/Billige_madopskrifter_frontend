@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Text, View, Pressable, TextInput, StyleSheet, Dimensions, KeyboardAvoidingView, Platform } from 'react-native'
+import { Text, View, Pressable, TextInput, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { useCreateMutation } from '../../redux/services/RecipeAPI'
@@ -40,132 +40,137 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
     return (
         <ScrollViewContainer>
 
-            <BackArrowContainer>
-                <Pressable onPress={() => {
-                    navigation.pop();
-                }}>
-                    <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
-                </Pressable>
-            </BackArrowContainer>
-
-            <Header
-                text='Ny opskrift'
-            />
-
-            <View style={{ paddingTop: 25, paddingBottom: 10 }}></View>
-
-            <Text style={style.label}>Typen af opskrift:</Text>
-
-            <Picker
-                style={{ height: Dimensions.get("window").height / 100 * 12 }}
-                itemStyle={{ height: Dimensions.get("window").height / 100 * 15, marginTop: -20, fontSize: 16 }}
-                selectedValue={selectedType}
-                onValueChange={(type: string) => {
-                    if (type.length > 1) {
-                        setSelectedType(type)
-                        createAtr.type = type
-                    }
-                }}
+            <KeyboardAvoidingView
+                behavior='position'
+                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
+                style={{ height: Dimensions.get("window").height / 100 * 93, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
             >
-                <Picker.Item label='Morgenmad' value="Morgenmad" />
-                <Picker.Item label='Aftensmad' value="Aftensmad" />
-                <Picker.Item label='Dessert' value="Dessert" />
-                <Picker.Item label='Snacks' value="Snacks" />
-            </Picker>
 
-            <Text style={style.label}>Navnet på opskrfiten:</Text>
+                <BackArrowContainer>
+                    <Pressable onPress={() => {
+                        navigation.pop();
+                    }}>
+                        <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
+                    </Pressable>
+                </BackArrowContainer>
 
-            <TextInput
-                ref={nameRef}
-                returnKeyType={"next"}
-                onSubmitEditing={() => {
-                    timeRef.current?.focus();
-                }}
-                placeholder='Eks. Kylling i karry'
-                style={style.input}
-                onChangeText={(name) => {
-                    createAtr.name = name
-                }}
-            >
-            </TextInput>
+                <Header
+                    text='Ny opskrift'
+                />
 
-            <Text style={style.label}>Tilberedningstid i mintuer:</Text>
-            <TextInput
-                keyboardType="number-pad"
-                ref={timeRef}
-                returnKeyType={"done"}
-                onSubmitEditing={() => {
-                    personsRef.current?.focus();
-                }}
-                placeholder='Eks. 45'
-                style={style.input}
-                onChangeText={(tb) => {
-                    createAtr.prepTime = Number(tb)
-                }}
-            >
-            </TextInput>
+                <View style={{ paddingTop: 20, paddingBottom: 10 }}></View>
 
-            <Text style={style.label}>Antal personer:</Text>
-            <TextInput
-                ref={personsRef}
-                returnKeyType={"done"}
-                onSubmitEditing={() => {
-                    priceRef.current?.focus()
-                }}
-                keyboardType="number-pad"
-                placeholder='Eks. 2'
-                style={style.input}
-                onChangeText={(persons) => {
-                    createAtr.numberOfPersons = Number(persons)
-                }}
-            >
-            </TextInput>
 
-            <Text style={style.label}>Ca. Pris i kr.:</Text>
-            {/* <KeyboardAvoidingView
-                behavior='padding'
-                enabled
-                keyboardVerticalOffset={-10}
-                style={{ alignItems: 'flex-start' }}
-            >
-            </KeyboardAvoidingView> */}
-            <TextInput
+                <Text style={style.label}>Typen af opskrift:</Text>
 
-                onFocus={() => { priceRef.current?.focus() }}
-                keyboardType='number-pad'
-                returnKeyType={'done'}
-                ref={priceRef}
-                placeholder='Eks. 100'
-                style={style.input}
-                onChangeText={(price) => {
-                    createAtr.estimatedPrice = Number(price)
-                }}
-                onSubmitEditing={() => {
-                    priceRef.current?.blur();
-                }}
-            >
-            </TextInput>
+                <Picker
+                    style={{ height: Dimensions.get("window").height / 100 * 12 }}
+                    itemStyle={{ height: Dimensions.get("window").height / 100 * 15, marginTop: -20, fontSize: 16 }}
+                    selectedValue={selectedType}
+                    onValueChange={(type: string) => {
+                        if (type.length > 1) {
+                            setSelectedType(type)
+                            createAtr.type = type
+                        }
+                    }}
+                >
+                    <Picker.Item label='Morgenmad' value="Morgenmad" />
+                    <Picker.Item label='Aftensmad' value="Aftensmad" />
+                    <Picker.Item label='Dessert' value="Dessert" />
+                    <Picker.Item label='Snacks' value="Snacks" />
+                </Picker>
 
-            <View style={{ paddingTop: 10 }}></View>
 
-            <AuthPressable
-                text='Tilføj ingredienser'
-                color='#86DB9D'
-                onPress={() => {
-                    let name: string = createAtr.name
-                    if (createAtr.type == "") {
-                        createAtr.type = "Morgenmad"
-                    }
-                    if (createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "") {
-                        create(createAtr).unwrap().then(res => {
-                            console.log(res)
-                        })
-                        navigation.navigate("AddIngredient", { name });
-                    } else { console.log("Udfyld felterne") }
-                }}
-            />
+                <Text style={style.label}>Navnet på opskrfiten:</Text>
 
-            <View style={{ paddingTop: 130 }}></View>
+                <TextInput
+                    blurOnSubmit={false}
+                    ref={nameRef}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => {
+                        timeRef.current?.focus();
+                    }}
+                    placeholder='Eks. Kylling i karry'
+                    style={style.input}
+                    onChangeText={(name) => {
+                        createAtr.name = name
+                    }}
+                >
+                </TextInput>
+
+                <Text style={style.label}>Tilberedningstid i mintuer:</Text>
+                <TextInput
+                    blurOnSubmit={false}
+                    keyboardType="number-pad"
+                    ref={timeRef}
+                    returnKeyType={"done"}
+                    onSubmitEditing={() => {
+                        personsRef.current?.focus();
+                    }}
+                    placeholder='Eks. 45'
+                    style={style.input}
+                    onChangeText={(tb) => {
+                        createAtr.prepTime = Number(tb)
+                    }}
+                >
+                </TextInput>
+
+                <Text style={style.label}>Antal personer:</Text>
+                <TextInput
+                    blurOnSubmit={false}
+                    ref={personsRef}
+                    returnKeyType={"done"}
+                    onSubmitEditing={() => {
+                        priceRef.current?.focus()
+                    }}
+                    keyboardType="number-pad"
+                    placeholder='Eks. 2'
+                    style={style.input}
+                    onChangeText={(persons) => {
+                        createAtr.numberOfPersons = Number(persons)
+                    }}
+                >
+                </TextInput>
+
+                <Text style={style.label}>Ca. Pris i kr.:</Text>
+                <TextInput
+                    blurOnSubmit={false}
+                    onFocus={() => { priceRef.current?.focus() }}
+                    keyboardType='number-pad'
+                    returnKeyType={'done'}
+                    ref={priceRef}
+                    placeholder='Eks. 100'
+                    style={style.input}
+                    onChangeText={(price) => {
+                        createAtr.estimatedPrice = Number(price)
+                    }}
+                    onSubmitEditing={() => {
+                        priceRef.current?.blur();
+                    }}
+                >
+                </TextInput>
+
+                <View style={{ paddingTop: 10 }}></View>
+
+
+                <AuthPressable
+                    text='Tilføj ingredienser'
+                    color='#86DB9D'
+                    onPress={() => {
+                        let name: string = createAtr.name
+                        if (createAtr.type == "") {
+                            createAtr.type = "Morgenmad"
+                        }
+                        if (createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "") {
+                            create(createAtr).unwrap().then(res => {
+                                console.log(res)
+                            })
+                            navigation.navigate("AddIngredient", { name });
+                        } else { console.log("Udfyld felterne") }
+                    }}
+                />
+            </KeyboardAvoidingView>
+
 
         </ScrollViewContainer>
     )
