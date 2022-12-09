@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import Header from '../../components/Header'
@@ -81,18 +81,17 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
 
     return (
-        <ScrollViewContainer>
 
-            <HeaderWithoutBackcontainer
-                text="Tilføj ingredienser"
-            />
+        <KeyboardAvoidingView
+            behavior='position'
+            keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
+            style={{ height: Dimensions.get("window").height / 100 * 80 }}
+        >
+            <ScrollViewContainer>
 
-            <KeyboardAvoidingView
-                behavior='position'
-                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
-                style={{ height: Dimensions.get("window").height / 100 * 80, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
-            >
-
+                <HeaderWithoutBackcontainer
+                    text="Tilføj ingredienser"
+                />
 
                 <View>
                     {ingredientsList.length != 0 ?
@@ -253,11 +252,12 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                     }}
                 />
 
-            </KeyboardAvoidingView>
-            
-            <View style={{ paddingTop: 50 }}></View>
+                <View style={{ paddingTop: 50 }}><Text>HE</Text></View>
 
-        </ScrollViewContainer>
+            </ScrollViewContainer>
+        </KeyboardAvoidingView>
+
+
 
     )
 }
