@@ -47,8 +47,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
             {/* Tilføjer KeyboardAvoidingView for at textInputs ikke kan blive gemt bag tastaturet */}
             <KeyboardAvoidingView
                 behavior='position'
-                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
-                style={{ height: Dimensions.get("window").height / 100 * 85, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
+                style={{ height: Dimensions.get("window").height / 100 * 85 }}
             >
 
 

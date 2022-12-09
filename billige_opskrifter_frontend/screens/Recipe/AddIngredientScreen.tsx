@@ -84,7 +84,6 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
         <KeyboardAvoidingView
             behavior='position'
-            keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
             style={{ height: Dimensions.get("window").height / 100 * 80 }}
         >
             <ScrollViewContainer>

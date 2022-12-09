@@ -42,8 +42,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
             <KeyboardAvoidingView
                 behavior='position'
-                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
-                style={{ height: Dimensions.get("window").height / 100 * 93, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
+                style={{ height: Dimensions.get("window").height / 100 * 93 }}
             >
 
                 <BackArrowContainer>

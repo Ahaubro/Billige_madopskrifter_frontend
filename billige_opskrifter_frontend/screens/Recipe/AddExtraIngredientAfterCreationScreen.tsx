@@ -38,7 +38,6 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <KeyboardAvoidingView
                 behavior='position'
-                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
                 style={{ height: Dimensions.get("window").height / 100 * 84, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
             >
                 <BackArrowContainer>

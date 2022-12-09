@@ -429,6 +429,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     }}
                 />
             }
+
+            <View style={{paddingTop: 35}}></View>
         </ScrollViewContainer >
     )
 }

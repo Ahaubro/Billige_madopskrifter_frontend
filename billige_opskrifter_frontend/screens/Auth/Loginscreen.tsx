@@ -40,8 +40,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
         <ViewContainer>
             <KeyboardAvoidingView
                 behavior='position'
-                keyboardVerticalOffset={Dimensions.get("window").height / 100 * 1}
-                style={{ height: Dimensions.get("window").height / 100 * 60, width: Dimensions.get("window").width / 100 * 94, minWidth: Dimensions.get("window").width / 100 * 94 }}
+                style={{ height: Dimensions.get("window").height / 100 * 60 }}
             >
 
 
