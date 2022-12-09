@@ -21,11 +21,13 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
     const [idForExpand, setIdForExpand] = useState(0);
 
     function sliceDescription(description: string) {
-        if (description.length > 75) {
-            return description.substring(0, 55) + " ..."
-        }
-        else {
-            return description
+        if(description != null){
+            if (description.length > 75) {
+                return description.substring(0, 55) + " ..."
+            }
+            else {
+                return description
+            }
         }
     }
 
@@ -76,10 +78,12 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
                                                     <TouchableOpacity
                                                         onPress={() => {
                                                             SetIsExpanded(true)
-                                                            setIdForExpand(item.id)
+                                                            if(item.id != null){
+                                                                setIdForExpand(item.id)
+                                                            }
                                                         }}
                                                     >
-                                                        {item.description.length > 65 &&
+                                                        {item.description != null && item.description.length > 65 &&
                                                             <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
                                                         }
                                                     </TouchableOpacity>
@@ -109,7 +113,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
                                                             setIdForExpand(item.id)
                                                         }}
                                                     >
-                                                        {item.description.length > 65 &&
+                                                        {item.description != null && item.description.length > 65 &&
                                                             <MaterialIcons style={{ textAlign: 'center' }} name="expand-more" size={24} color="grey" />
                                                         }
                                                     </TouchableOpacity>

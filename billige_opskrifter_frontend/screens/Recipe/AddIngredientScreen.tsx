@@ -63,19 +63,19 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
 
     // Clear textInputs når man tilføjer yderligere ingredienser
-    let [nameRef, setNameRef] = useState("");
-    let [typeRef, setTypeRef] = useState("");
-    let [measureUnitRef, setMeasureUnitRef] = useState("");
-    let [amountRef, setAmountRef] = useState("");
-    let [alerRef, setAlerRef] = useState("");
+    const nameRef = useRef<TextInput>(null);
+    const typeRef = useRef<TextInput>(null);
+    const measureUnitRef = useRef<TextInput>(null);
+    const amountRef= useRef<TextInput>(null);
+    const alerRef = useRef<TextInput>(null);
 
 
     const handleSubmit = () => {
-        setNameRef("");
-        setTypeRef("");
-        setMeasureUnitRef("");
-        setAmountRef("");
-        setAlerRef("")
+        nameRef.current?.clear();
+        typeRef.current?.clear();
+        measureUnitRef.current?.clear();
+        amountRef.current?.clear();
+        alerRef.current?.clear();
     }
 
 
@@ -122,11 +122,14 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
                 editable={true}
-                value={ nameRef }
+                ref={ nameRef }
                 placeholder="Ingrediens navn"
                 style={style.input}
+                returnKeyType='next'
+                onSubmitEditing={() => {
+                    typeRef.current?.focus();
+                }}
                 onChangeText={(name) => {
-                    setNameRef(name)
                     addIngredientAtr.name = name
                 }}
             >
@@ -135,10 +138,13 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Ingrediens type:</Text>
             <TextInput
                 placeholder="Eks. Tilbehør"
-                value={typeRef}
+                ref={typeRef}
                 style={style.input}
+                returnKeyType='next'
+                onSubmitEditing={() => {
+                    amountRef.current?.focus();
+                }}
                 onChangeText={(type) => {
-                    setTypeRef(type)
                     addIngredientAtr.type = type
                 }}
             >
@@ -147,10 +153,14 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Mængde:</Text>
             <TextInput
                 placeholder="Eks. 250"
-                value={amountRef}
+                ref={amountRef}
+                keyboardType="number-pad"
                 style={style.input}
+                returnKeyType='done'
+                onSubmitEditing={() => {
+                    measureUnitRef.current?.focus();
+                }}
                 onChangeText={(amount) => {
-                    setAmountRef(amount)
                     addIngredientAtr.amount = Number(amount)
                 }}
 
@@ -160,10 +170,13 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Måle enhed (gr, kg,  ml, l):</Text>
             <TextInput
                 placeholder='Eks. stk'
-                value={measureUnitRef}
+                ref={measureUnitRef}
                 style={style.input}
+                returnKeyType='next'
+                onSubmitEditing={() => {
+                    alerRef.current?.focus();
+                }}
                 onChangeText={(mu) => {
-                    setMeasureUnitRef(mu)
                     addIngredientAtr.measurementUnit = mu
                 }}
             >
@@ -172,10 +185,9 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
             <Text style={style.label}>Alergener:</Text>
             <TextInput
                 placeholder="Eks. Laktose"
-                value={alerRef}
+                ref={alerRef}
                 style={style.input}
                 onChangeText={(alergene) => {
-                    setAlerRef(alergene)
                     addIngredientAtr.alergene = alergene
                 }}
             >
