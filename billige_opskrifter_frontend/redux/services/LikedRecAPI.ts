@@ -4,7 +4,7 @@ import { RootState } from '../store'
 import { Recipe } from './RecipeAPI'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: "http://192.168.1.226:5001/",
+    baseUrl: process.env.API_URL,
     prepareHeaders: (headers, api) => {
         const state = api.getState() as RootState
         const token = state.session.token
