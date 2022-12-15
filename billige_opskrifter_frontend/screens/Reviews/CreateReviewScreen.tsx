@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { Dimensions, KeyboardAvoidingView, Pressable, StyleSheet, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import ViewContainer from "../../components/ViewContainer"
@@ -13,6 +13,7 @@ import { TextInput } from 'react-native-gesture-handler'
 import { useCreateMutation } from "../../redux/services/ReviewAPI"
 import AuthPressable from '../../components/AuthPressable'
 import Header from '../../components/Header'
+import ScrollViewContainer from '../../components/ScrollViewContainer'
 
 
 type CreateReviewScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "CreateReviewScreen">
@@ -28,86 +29,113 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
 
     const session = useSelector((state: RootState) => state.session)
 
-    const { id, userId } = route.params
+    const { id, userId, recipeName } = route.params
 
     const [createReview] = useCreateMutation();
+    const [createreviewAtr, setCreatereviewAtr] = useState<{ recipeId: number, userId: number, content: string, rating: number }>({ recipeId: id, userId: userId, content: "", rating: 0 })
 
-    const [createreviewAtr, setCreatereviewAtr] = useState<{recipeId: number, userId: number, content: string, rating: number}>({recipeId: id, userId: userId, content: "", rating: 0})
-
-
+    const inputRef = useRef<TextInput>(null);
 
     return (
-        <ViewContainer>
-            <BackArrowContainer>
-                <Pressable onPress={() => {
-                    navigation.pop();
-                }}>
-                    <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
-                </Pressable>
-            </BackArrowContainer>
+        <ScrollViewContainer>
+            <KeyboardAvoidingView
+                behavior='position'
+                style={{ height: Dimensions.get("window").height / 100 * 80 }}
+            >
 
-            <Header
-                text='Skriv et review'
-            />
+                <BackArrowContainer>
+                    <Pressable onPress={() => {
+                        navigation.pop();
+                    }}>
+                        <Text> <Ionicons name="chevron-back-sharp" size={28} color="black" /> </Text>
+                    </Pressable>
+                </BackArrowContainer>
 
-            {/* React native conmponent react-native-ratings bruges her til at lave en flot repræsentation af review rating */}
-            <View style={{ paddingHorizontal: 25, paddingVertical: 35 }}>
-                <AirbnbRating
-                    reviewSize={16}
-                    reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
-                    reviewColor={'black'}
-                    defaultRating={3}
-                    size={20}
-                    ratingContainerStyle={{ backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between' }}
-                    onFinishRating={ (rating) => {
-                        if(rating != 0){
-                            createreviewAtr.rating = rating
-                        } else {
-                            createreviewAtr.rating = 3
+                <Header
+                    text='Nyt review'
+                />
+
+                <View style={{ paddingTop: 15, paddingBottom: 10 }}>
+                    <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: '600' }}>Del din mening om opskriften {recipeName}. Vælg hvor mange stjerner opskriften fortjener og skriv hvad du synes om den!</Text>
+                </View>
+
+                {/* Ekstern react native conmponent react-native-ratings bruges her til at lave en flot repræsentation af mine reviews. 
+                Hentet her -> https://www.npmjs.com/package/react-native-ratings*/}
+                <View style={{ paddingHorizontal: 25, paddingVertical: 15 }}>
+                    <AirbnbRating
+                        reviewSize={22}
+                        reviews={["Dårlig", "Okay", "God", "Virkelig god", "Elsker den!"]}
+                        reviewColor={'black'}
+                        defaultRating={3}
+                        size={20}
+                        ratingContainerStyle={{ backgroundColor: 'white', flexDirection: 'column', justifyContent: 'space-around' }}
+                        onFinishRating={(rating) => {
+                            if (rating != 0) {
+                                createreviewAtr.rating = rating
+                            } else {
+                                createreviewAtr.rating = 3
+                            }
+                        }}
+                    />
+                </View>
+
+
+                <View>
+                    <Text style={style.label}>Hvordan var maden?</Text>
+                    <TextInput
+                        ref={inputRef}
+                        style={style.input}
+                        multiline={true}
+                        onChangeText={(content) => {
+                            createreviewAtr.content = content
+                        }}
+                        onSubmitEditing={ () => {
+                            inputRef.current?.blur();
+                        }}
+                    >
+
+                    </TextInput>
+                </View>
+
+                <View style={{ paddingVertical: 5 }}></View>
+
+                <AuthPressable
+                    text='Gem review'
+                    color='#86DB9D'
+                    onPress={() => {
+                        if (createreviewAtr.content != "" && createreviewAtr.rating != 0) {
+                            console.log(createreviewAtr)
+                            createReview(createreviewAtr).unwrap().then(res => {
+                                console.log(res)
+                            })
+                            navigation.pop();
                         }
                     }}
                 />
-            </View>
-
-            
-            <View>
-                <Text>Hvordan var maden?</Text>
-                <TextInput
-                    onChangeText={ (content) => {
-                        createreviewAtr.content = content
-                    }}
-                >
-
-                </TextInput>
-            </View>
-
-            <View style={{paddingVertical: 5}}></View>
-
-            <AuthPressable 
-                text='Gem review'
-                color='#86DB9D'
-                onPress={ () => {
-                    if(createreviewAtr.content != "" && createreviewAtr.rating != 0){
-                        console.log(createreviewAtr)
-                        createReview(createreviewAtr).unwrap().then( res => {
-                            console.log(res)
-                        })
-                        navigation.pop();
-                    }
-                }}
-            />
 
 
 
 
 
-
-        </ViewContainer>
+            </KeyboardAvoidingView>
+        </ScrollViewContainer>
     )
 }
 
 const style = StyleSheet.create({
-
+    input: {
+        borderRadius: 8,
+        borderWidth: 1,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+        minHeight: Dimensions.get("window").height / 100 * 20,
+        borderColor: 'rgb(240,240,240)',
+    },
+    label: {
+        paddingVertical: 10,
+        fontSize: 16,
+        fontWeight: '600'
+    }
 })
 
 export default CreateReviewScreen

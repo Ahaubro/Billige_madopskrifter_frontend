@@ -150,9 +150,9 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </>
                     :
                     <>
-                        <View>
+                        <View style={{paddingEnd: 5}}>
                             <TextInput
-                                style={{ fontSize: 25, textAlign: 'center', fontWeight: '700', maxWidth: Dimensions.get("window").width / 100 * 50 }}
+                                style={[style.input, { fontSize: 25, textAlign: 'center', fontWeight: '700', maxWidth: Dimensions.get("window").width / 100 * 50, padding: 4}]}
                                 placeholder={thisRecipe.name}
                                 onChangeText={(n) => {
                                     editRecipeAtr.name = n
@@ -161,12 +161,13 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             </TextInput>
                         </View>
                         <TouchableOpacity
+                            style={style.saveEdit}
                             onPress={() => {
                                 editRecipe(editRecipeAtr)
                                 setIsEditingRestOfRecipe(false)
                             }}
                         >
-                            <Text style={style.saveEdit}>Gem</Text>
+                            <Text style={ {padding: 2, color: 'white'} }>Gem</Text>
                         </TouchableOpacity>
                     </>
                 }
@@ -234,7 +235,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 <>
                     <View style={{ flexDirection: 'row', paddingTop: 5, paddingBottom: 5 }}>
                         <Text style={style.label}>Tilberedningstid: </Text>
-                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.prepTime)} onChangeText={(pt) => {
+                        <TextInput style={[style.input, { maxWidth: Dimensions.get("window").width / 100 * 8, minWidth: Dimensions.get("window").width / 100 * 8, paddingHorizontal: 5 }]} placeholder={String(thisRecipe.prepTime)} onChangeText={(pt) => {
                             editRecipeAtr.prepTime = Number(pt)
                         }}>
                         </TextInput>
@@ -243,7 +244,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Antal personer: </Text>
-                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={(np) => {
+                        <TextInput style={[style.input, { maxWidth: Dimensions.get("window").width / 100 * 8, minWidth: Dimensions.get("window").width / 100 * 8, paddingHorizontal: 5 }]} placeholder={String(thisRecipe.numberOfPersons)} onChangeText={(np) => {
                             editRecipeAtr.numberOfPersons = Number(np)
                         }}>
 
@@ -252,7 +253,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
                     <View style={{ flexDirection: 'row', paddingVertical: 5 }}>
                         <Text style={style.label}>Estimeret pris: </Text>
-                        <TextInput style={[style.field, { maxWidth: Dimensions.get("window").width / 100 * 8 }]} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={(ep) => {
+                        <TextInput style={[style.input, { maxWidth: Dimensions.get("window").width / 100 * 8, minWidth: Dimensions.get("window").width / 100 * 8, paddingHorizontal: 5 }]} placeholder={String(thisRecipe.estimatedPrice)} onChangeText={(ep) => {
                             editRecipeAtr.estimatedPrice = Number(ep)
                         }}>
                         </TextInput>
@@ -407,7 +408,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                         text='Nyt review'
                         color='#86DB9D'
                         onPress={() => {
-                            navigation.navigate("CreateReviewScreen", { id, userId })
+                            navigation.navigate("CreateReviewScreen", { id, userId, recipeName: name})
                         }}
                     />
 
@@ -465,6 +466,11 @@ const style = StyleSheet.create({
     saveEdit: {
         backgroundColor: '#86DB9D',
         padding: 3,
+        borderRadius: 5
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: "black",
         borderRadius: 5
     }
 

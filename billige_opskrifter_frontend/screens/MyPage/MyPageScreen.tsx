@@ -11,11 +11,10 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
-import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
 import ScrollViewContainer from '../../components/ScrollViewContainer'
 import RecipeCard from '../../components/RecipeCard'
 import AuthoredRecipeCards from '../../components/AuthoredRecipeCards'
-
+import { AntDesign } from '@expo/vector-icons';
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
@@ -30,14 +29,14 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
   const session = useSelector((state: RootState) => state.session)
 
   //Fetcher brugerens opskrifter og gemmer dem på en liste
-  const fetchedRecipesByUserId = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
+  const { data: fetchedRecipesByUserId, isLoading } = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   const [userRecipeList, setUserRecipeList] = useState<Recipe[]>([]);
 
   useEffect(() => {
-    if (fetchedRecipesByUserId.data) {
-      setUserRecipeList(fetchedRecipesByUserId.data?.recipes)
+    if (fetchedRecipesByUserId?.recipes) {
+      setUserRecipeList(fetchedRecipesByUserId.recipes)
     }
-  }, [fetchedRecipesByUserId.data])
+  }, [fetchedRecipesByUserId])
 
 
   return (
@@ -54,9 +53,15 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
 
+      {/* {isLoading &&
+        <View style={{zIndex: 1, backgroundColor: 'grey', height: Dimensions.get("window").height, width: Dimensions.get("window").width}}>
+          <AntDesign name="loading1" size={24} color="black" />
+        </View>
+      } */}
+
 
       {/* Header for MyPage */}
-      <Header 
+      <Header
         text='Min side'
       />
 
@@ -64,10 +69,10 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
       {/* Her displayes opskrifter der er skrevet af brugeren, som også fungere som et link til SelectedReciopeScreen */}
       <View>
         <Text style={style.menuHeader}>Opskrifter skrevet af dig.</Text>
+
         {userRecipeList.length > 0 ?
           <>
             <View>
-
               <AuthoredRecipeCards
                 recipes={userRecipeList}
                 navigation={navigation}
@@ -76,7 +81,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
             </View>
 
           </>
-          :         
+          :
           <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Lav din første opskrift idag!</Text>
         }
 
@@ -104,11 +109,11 @@ const style = StyleSheet.create({
     fontWeight: '600',
     paddingVertical: 5
   },
-  menuHeader:{
-    paddingTop: 75, 
-    paddingBottom: 10, 
-    fontWeight: '700', 
-    fontSize: 18 
+  menuHeader: {
+    paddingTop: 75,
+    paddingBottom: 10,
+    fontWeight: '700',
+    fontSize: 18
   }
 })
 

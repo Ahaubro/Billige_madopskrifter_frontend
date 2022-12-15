@@ -77,8 +77,8 @@ const style = StyleSheet.create({
     input: {
         borderRadius: 8,
         borderWidth: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
         minHeight: Dimensions.get("window").height / 100 * 20,
         borderColor: 'rgb(240,240,240)',
     }

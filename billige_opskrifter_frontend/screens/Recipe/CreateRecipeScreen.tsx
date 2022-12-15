@@ -165,7 +165,10 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                                 console.log(res)
                             })
                             navigation.navigate("AddIngredient", { name });
-                        } else { console.log("Udfyld felterne") }
+                        } else { 
+                            // Prøv evt. at opsæt så styling omkring input bliver rødt hvis feltet ikek er udfyldt
+                            console.log("Udfyld felterne") 
+                        }
                     }}
                 />
             </KeyboardAvoidingView>

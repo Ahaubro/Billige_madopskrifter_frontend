@@ -31,7 +31,8 @@ export type MyPageNavigationParameters = {
     },
     CreateReviewScreen:{
         id: number,
-        userId: number
+        userId: number,
+        recipeName: string,
     },
     AddAllergiScreen: undefined,
     AddExtraIngredientAfterCreationScreen:{
@@ -59,7 +60,8 @@ export type RecipeNavigationParameters = {
     },
     CreateReviewScreen:{
         id: number,
-        userId: number
+        userId: number,
+        recipeName: string,
     },
     AddIngredient: {
         name: string
@@ -89,7 +91,8 @@ export type HomeNavigationParameters = {
     },
     CreateReviewScreen:{
         id: number,
-        userId: number
+        userId: number,
+        recipeName: string,
     },
     ChooseRecipe: undefined,
     RecipesScreen: {
@@ -121,7 +124,8 @@ export type IngredientSearchNavigationParameters = {
     },
     CreateReviewScreen:{
         id: number,
-        userId: number
+        userId: number,
+        recipeName: string,
     },
     AllReviewsScreen: {
         reviews: Review[]
