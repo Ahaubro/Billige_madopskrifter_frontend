@@ -32,33 +32,6 @@ const PriceComponent: React.FC<PriceComponentProps> = ({ price }) => {
                     price >= 151 && index === 5 ? style.largeDot : undefined
                     ]} key={`${dot}_${index}`}>
 
-                        {/* SKAL FIXES PÅ MOBIL DEVICE */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 30}}>
-                            {price <= 50 && index === 0 &&
-                                <Text> {price}kr. </Text>
-                            }
-
-                            {price >= 51 && price <= 75 && index === 1 &&
-                                <Text> {price}kr. </Text>
-                            }
-
-                            {price >= 76 && price <= 100 && index === 2 &&
-                                <Text> {price}kr. </Text>
-                            }
-
-                            {price >= 101 && price <= 125 && index === 3 &&
-                                <Text> {price}kr. </Text>
-                            }
-
-                            {price >= 126 && price <= 150 && index === 4 &&
-                                <Text> {price}kr. </Text>
-                            }
-
-                            {price >= 151 && index === 5 &&
-                                <Text> {price} kr. </Text>
-                            }
-                        </View>
-
                     </View>
                 })}
             </View>

@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Text, View, Pressable, TextInput, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
 import { useCreateMutation } from '../../redux/services/RecipeAPI'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp, TabActions } from '@react-navigation/native'
+import { RouteProp } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
 import Header from '../../components/Header'
 import BackArrowContainer from '../../components/BackArrowContainer'
@@ -59,9 +59,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
                 <View style={{ paddingTop: 20, paddingBottom: 10 }}></View>
 
-
                 <Text style={style.label}>Typen af opskrift:</Text>
-
+                {/* Ekstern React native component react-native-picker 
+                hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
                 <Picker
                     style={{ height: Dimensions.get("window").height / 100 * 12 }}
                     itemStyle={{ height: Dimensions.get("window").height / 100 * 15, marginTop: -20, fontSize: 16 }}
@@ -165,9 +165,9 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                                 console.log(res)
                             })
                             navigation.navigate("AddIngredient", { name });
-                        } else { 
+                        } else {
                             // Prøv evt. at opsæt så styling omkring input bliver rødt hvis feltet ikek er udfyldt
-                            console.log("Udfyld felterne") 
+                            console.log("Udfyld felterne")
                         }
                     }}
                 />

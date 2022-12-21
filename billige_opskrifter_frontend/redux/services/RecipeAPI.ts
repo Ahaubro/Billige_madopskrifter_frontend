@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { API_URL } from '../../constants'
 import { RootState } from '../store'
 
 const baseQuery = fetchBaseQuery({
@@ -14,7 +13,6 @@ const baseQuery = fetchBaseQuery({
     },
 })
 
-
 export type Recipe = {
     id: number,
     name: string,
@@ -25,7 +23,6 @@ export type Recipe = {
     description: string,
     userId: number
 }
-
 
 export const RecipeAPI = createApi({
     reducerPath: 'RecipeAPI',

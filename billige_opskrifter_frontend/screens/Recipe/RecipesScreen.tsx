@@ -167,6 +167,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                             <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Sorteringsmuligheder</Text>
 
                             <View style={{ marginTop: -40 }}>
+                                {/* Ekstern React native component react-native-picker hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
                                 <Picker
                                     selectedValue={selectedSort}
                                     onValueChange={(sort: string) => {

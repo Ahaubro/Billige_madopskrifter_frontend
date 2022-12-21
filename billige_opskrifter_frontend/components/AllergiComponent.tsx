@@ -40,16 +40,15 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
         }
     }, [fetchedRecipeIngredients.data])
 
-    //Prøver at finde et match
+    //Tjekker efter et match
     recipeIngredientsList.forEach( (ingr) => {
         userAllergiesList.forEach( (userAl) => {
-            if(ingr.alergene == userAl.allergi){
+            if(ingr.alergene === userAl.allergi){
                 isAllergic = true
                 allergiString = ingr.alergene
             }
         })
     })
-
 
     return (
         <View>

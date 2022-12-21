@@ -109,7 +109,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
     function sliceDescription(description: string) {
-        if(description != null){
+        if (description != null) {
             if (description.length > 75) {
                 return description.substring(0, 75) + " ..."
             }
@@ -136,23 +136,24 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                         <Header
                             text={thisRecipe.name}
                         />
-
-                        <View style={{ paddingLeft: 10 }}>
-                            <TouchableOpacity
-                                onPress={() => {
-                                    setIsEditingRestOfRecipe(true);
-                                }}
-                            >
-                                <Ionicons name="ios-pencil-outline" size={25} color="blue" />
-                            </TouchableOpacity>
-                        </View>
+                        {userId === session.id &&
+                            <View style={{ paddingLeft: 10 }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setIsEditingRestOfRecipe(true);
+                                    }}
+                                >
+                                    <Ionicons name="ios-pencil-outline" size={25} color="blue" />
+                                </TouchableOpacity>
+                            </View>
+                        }
 
                     </>
                     :
                     <>
-                        <View style={{paddingEnd: 5}}>
+                        <View style={{ paddingEnd: 5 }}>
                             <TextInput
-                                style={[style.input, { fontSize: 25, textAlign: 'center', fontWeight: '700', maxWidth: Dimensions.get("window").width / 100 * 50, padding: 4}]}
+                                style={[style.input, { fontSize: 25, textAlign: 'center', fontWeight: '700', maxWidth: Dimensions.get("window").width / 100 * 50, padding: 4 }]}
                                 placeholder={thisRecipe.name}
                                 onChangeText={(n) => {
                                     editRecipeAtr.name = n
@@ -167,7 +168,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                 setIsEditingRestOfRecipe(false)
                             }}
                         >
-                            <Text style={ {padding: 2, color: 'white'} }>Gem</Text>
+                            <Text style={{ padding: 2, color: 'white' }}>Gem</Text>
                         </TouchableOpacity>
                     </>
                 }
@@ -277,7 +278,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             {/* Læser opskriftens fremgangsmetode samt giver author mulighed for at redigere */}
             {!isEditingDescription ?
-                <View style={style.card}>
+                <View style={[style.card, {maxHeight: '100%'}]}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
                     {/* Expand option */}
                     {!isDescriptionExpanded &&
@@ -408,7 +409,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                         text='Nyt review'
                         color='#86DB9D'
                         onPress={() => {
-                            navigation.navigate("CreateReviewScreen", { id, userId, recipeName: name})
+                            navigation.navigate("CreateReviewScreen", { id, userId, recipeName: name })
                         }}
                     />
 
@@ -431,7 +432,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 />
             }
 
-            <View style={{paddingTop: 35}}></View>
+            <View style={{ paddingTop: 35 }}></View>
         </ScrollViewContainer >
     )
 }

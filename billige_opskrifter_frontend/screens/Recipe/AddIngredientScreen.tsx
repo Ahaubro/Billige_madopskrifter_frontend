@@ -84,7 +84,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
         <KeyboardAvoidingView
             behavior='position'
-            style={{ height: Dimensions.get("window").height / 100 * 80 }}
+            style={{ height: Dimensions.get("window").height / 100 * 85 }}
         >
             <ScrollViewContainer>
 
@@ -251,7 +251,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                     }}
                 />
 
-                <View style={{ paddingTop: 50 }}><Text>HE</Text></View>
+                <View style={{paddingTop: 100}}></View>
 
             </ScrollViewContainer>
         </KeyboardAvoidingView>
