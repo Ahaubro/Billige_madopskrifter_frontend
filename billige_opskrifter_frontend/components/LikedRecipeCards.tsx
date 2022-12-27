@@ -1,13 +1,13 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect, useRef, useState } from "react"
-import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
-import { Recipe } from "../redux/services/RecipeAPI"
-import { HomeNavigationParameters } from "../Types/Navigation_types"
-import PriceComponent from "./PriceComponent"
-import AllergiComponent from "./AllergiComponent"
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react" // Import af funktionelle komponenter fra React
+import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native" // Import af react-native komponenter
+import { StackNavigationProp } from "@react-navigation/stack" // Import af navigation (Del af template projektet) 
+import { Recipe } from "../redux/services/RecipeAPI" // Import af min Recipe type fra RecipeAPI
+import { HomeNavigationParameters } from "../Types/Navigation_types" // Import af mine navigations typer
+import PriceComponent from "./PriceComponent" // Import af min pris komponent
+import AllergiComponent from "./AllergiComponent" // Import af min allergi komponent
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
 
-
+// Props
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
 
 type LikedRecipeCardsProps = {

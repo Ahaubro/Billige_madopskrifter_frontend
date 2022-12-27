@@ -1,18 +1,18 @@
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState } from 'react'
-import { Text, View, Pressable, TextInput, StyleSheet } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import BackArrowContainer from '../../components/BackArrowContainer'
-import { RootState } from '../../redux/store'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { Ionicons } from '@expo/vector-icons';
-import ViewContainer from "../../components/ViewContainer"
-import Header from '../../components/Header'
-import { useCreateAllergiMutation } from '../../redux/services/AllergiAPI'
-import AuthPressable from '../../components/AuthPressable'
+import { RouteProp } from '@react-navigation/native' // Rouite import (Del af template projektet)
+import { StackNavigationProp } from '@react-navigation/stack' // Navigation import (Del af template projektet)
+import React, { useState } from 'react' // Import af funktionelle komponenter fra React
+import { Text, View, Pressable, TextInput, StyleSheet } from 'react-native' // Import af komponenter fra react native
+import { RootState } from '../../redux/store' // Bruges til session (Del af template projektet)
+import { useSelector } from 'react-redux' // Bruges til session (Del af template projektet)
+import BackArrowContainer from '../../components/BackArrowContainer' // Import af min backArrowContainer komponent
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af mine navigations typer
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import ViewContainer from "../../components/ViewContainer" // Import af min komponent ViewContainer
+import Header from '../../components/Header' // Imnport af min header komponent
+import { useCreateAllergiMutation } from '../../redux/services/AllergiAPI' // Import fra mit AllegiAPI
+import AuthPressable from '../../components/AuthPressable' // Import af min btn komponent
 
-
+// Sætter navigations & route props
 type AddAllergiScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 type AddAllergiScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
 
@@ -23,6 +23,7 @@ type AddAllergiScreenProps = {
 
 const AddAllergiScreen: React.FC<AddAllergiScreenProps> = ({ navigation, route }) => {
 
+    // Instantiere et session objekt
     const session = useSelector((state: RootState) => state.session)
 
     //Create allergie

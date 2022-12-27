@@ -1,5 +1,5 @@
-import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import React from "react" // Import af React
+import { View, StyleSheet, Text } from "react-native" // Import af komponenter fra react-native
 
 
 type HeaderWithoutBackcontainerProps = {

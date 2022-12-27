@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react"
-import { View, StyleSheet, Dimensions } from "react-native"
+import React, { ReactNode } from "react" // Import af React samt ReactNode
+import { View, StyleSheet, Dimensions } from "react-native" // Import af react-native komponetner
 
-
+// Props
 interface ViewContainerProps {
     children: ReactNode
 }

@@ -1,14 +1,15 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState, useEffect } from "react"
-import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native"
-import { Ingredient } from "../redux/services/IngredientAPI"
-import { Recipe, useGetRecipeByIdQuery } from "../redux/services/RecipeAPI"
-import { IngredientSearchNavigationParameters } from "../Types/Navigation_types"
-import AllergiComponent from "./AllergiComponent"
-import IngredientsMatchComponent from "./IngredientsMatchComponent"
-import PriceComponent from "./PriceComponent"
+import React, { useState, useEffect } from "react" // Import af funktionelle komponenter
+import { StackNavigationProp } from "@react-navigation/stack" // Import af navigation (Del af template projektet)
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from "react-native" // Import af react-native komponenter
+import { Ingredient } from "../redux/services/IngredientAPI" // Import af Ingredient typen fra mit IngredientAPI
+import { useGetRecipeByIdQuery } from "../redux/services/RecipeAPI" // Import af getRecipesById fra mit RecipeAPI
+import { IngredientSearchNavigationParameters } from "../Types/Navigation_types" // Import af min navigations type 
+import AllergiComponent from "./AllergiComponent" // Import af min Allergi komponent
+import IngredientsMatchComponent from "./IngredientsMatchComponent" // Import af min Ingredient match komponent
+import PriceComponent from "./PriceComponent" // Import af min pris komponent
 
 
+// Props
 type SearchIngrScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchResultScreen'>
 
 type DisplayOneRecipeProps = {
@@ -20,8 +21,8 @@ type DisplayOneRecipeProps = {
 
 const DisplayOneRecipe: React.FC<DisplayOneRecipeProps> = ({ item, allIngr, navigation }) => {
 
+    // Fetcher opskrift ud fra recipeId på en ingrediens
     const recipe = useGetRecipeByIdQuery(item.recipeId, { refetchOnMountOrArgChange: true })
-
     const [thisRecipe, setThisRecipe] = useState<{ id: number, name: string, type: string, prepTime: number, estimatedPrice: number, numberOfPersons: number, description: string, userId: number }>
         ({ id: 0, name: '', type: '', prepTime: 0, estimatedPrice: 0, numberOfPersons: 0, description: '', userId: 0 })
 

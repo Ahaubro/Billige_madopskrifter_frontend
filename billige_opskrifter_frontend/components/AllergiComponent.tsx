@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react"
-import { View, StyleSheet, Text } from "react-native"
-import { useSelector } from "react-redux"
-import { Allergi, useGetAllergiesByUserIdQuery } from "../redux/services/AllergiAPI"
-import { Ingredient, useGetByRecipeIdQuery } from "../redux/services/IngredientAPI"
-import { Recipe } from "../redux/services/RecipeAPI"
-import { RootState } from "../redux/store"
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useEffect, useState } from "react" // Import af funktionelle komponenter fra react
+import { View, StyleSheet, Text } from "react-native" // Import af react native komponenter
+import { useSelector } from "react-redux" // Del af template projektet
+import { Allergi, useGetAllergiesByUserIdQuery } from "../redux/services/AllergiAPI" // Import fra mit personlige API
+import { Ingredient, useGetByRecipeIdQuery } from "../redux/services/IngredientAPI" // Import fra mit personlige API
+import { Recipe } from "../redux/services/RecipeAPI" // Import fra mit personlige API
+import { RootState } from "../redux/store" // Del af template projektet
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // Importeret fra expo icons
 
 
+// Denne komponent skal bruge et enkelt opskrifts objekt
 type AllergiComponentProps = {
     item: Recipe
 }
@@ -50,6 +51,7 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
         })
     })
 
+    // Visuel præsentation af advarselsikon hvis isAllergic === true
     return (
         <View>
            {isAllergic ? 

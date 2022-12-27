@@ -1,13 +1,15 @@
-import React, { useState } from "react"
-import { View, StyleSheet, Text, Dimensions, TouchableOpacity, TextInput } from "react-native"
-import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { useEditMutation, Ingredient, useDeleteIngredientMutation } from "../redux/services/IngredientAPI"
-import { StackNavigationProp } from "@react-navigation/stack";
-import { MyPageNavigationParameters } from "../Types/Navigation_types";
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react" // Import af funktionelle komponenter fra React
+import { View, StyleSheet, Text, Dimensions, TouchableOpacity, TextInput } from "react-native" // Import af react-native komponetner
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import { useSelector } from "react-redux"; // Bruges til session (Del af template projektet)
+import { RootState } from "../redux/store"; // Bruges til session (Del af template projektet)
+import { useEditMutation, Ingredient, useDeleteIngredientMutation } from "../redux/services/IngredientAPI" // Import af mine funktionelle komponenter fra IngredientAPI
+import { StackNavigationProp } from "@react-navigation/stack"; // Import af navigation (Del af template projekt)
+import { MyPageNavigationParameters } from "../Types/Navigation_types"; // Import af mine navigations typer
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
 
+
+// Props
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
 
 type DisplayIngrediensProps = {
@@ -19,6 +21,7 @@ type DisplayIngrediensProps = {
 
 const DisplayIngrediens: React.FC<DisplayIngrediensProps> = ({ items, userId, recipeId, navigation }) => {
 
+    // Session objekt
     const session = useSelector((state: RootState) => state.session)
 
     //Edit recipes ingredients
@@ -30,7 +33,7 @@ const DisplayIngrediens: React.FC<DisplayIngrediensProps> = ({ items, userId, re
 
     const [deleteIngredient] = useDeleteIngredientMutation();
 
-    //Funktion der sætter de atributer der ikke er redigeret og laver selve kaldet
+    //Funktion der sætter de atributer der ikke er redigeret og laver selve edit kaldet
     function setIngrEditArt(item: Ingredient) {
         editIngrAtr.id = item.id
         if (editIngrAtr.name == "") {
@@ -200,7 +203,7 @@ const DisplayIngrediens: React.FC<DisplayIngrediensProps> = ({ items, userId, re
                                                     <Text style={{ paddingLeft: 30 }}>{index + 1}: {item.name}</Text>
                                                     <Text> {item.amount}</Text>
                                                     <Text>{item.measurementUnit}</Text>
-                                                    <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>                       
+                                                    <Text style={{ paddingRight: 20 }}> ({item.type}) </Text>
                                                 </View>
                                             </View>
                                         </View>

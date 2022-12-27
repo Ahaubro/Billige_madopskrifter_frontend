@@ -1,12 +1,12 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
-import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
-import { Recipe } from "../redux/services/RecipeAPI"
-import { MyPageNavigationParameters, RecipeNavigationParameters } from "../Types/Navigation_types"
-import PriceComponent from "./PriceComponent"
-import AllergiComponent from "./AllergiComponent"
+import React from "react" // Import af React
+import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native" // Import af react-native komponetner
+import { StackNavigationProp } from "@react-navigation/stack" // Import af navigationn (Del af template projektet)
+import { Recipe } from "../redux/services/RecipeAPI" // Import af Recipe typen fra RecipeAPI
+import { RecipeNavigationParameters } from "../Types/Navigation_types" // Import af mine navigations typer fra types
+import PriceComponent from "./PriceComponent" // Import af min pris komponent
+import AllergiComponent from "./AllergiComponent" // Import af min allergi komponent
 
-
+// Props
 type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
 
 type RecipeCardProps = {
@@ -21,7 +21,7 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipes, navigation }) => {
         <View style={{maxHeight: Dimensions.get("window").height / 100 * 57}}>
             <FlatList
                 data={recipes}
-                renderItem={({ item, index }) => {
+                renderItem={({ item }) => {
                     return (
                         <>
                             <TouchableOpacity

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, Text, View, StyleSheet, Dimensions, TouchableOpacity, TextInput } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import ViewContainer from "../../components/ViewContainer"
 import Header from "../../components/Header"
 import { useGetRecipesByUserIdQuery } from '../../redux/services/RecipeAPI'
 import { Recipe } from "../../redux/services/RecipeAPI"
@@ -12,9 +11,8 @@ import { RouteProp } from '@react-navigation/native'
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
-import RecipeCard from '../../components/RecipeCard'
 import AuthoredRecipeCards from '../../components/AuthoredRecipeCards'
-import { AntDesign } from '@expo/vector-icons';
+//import { AntDesign } from '@expo/vector-icons';
 
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>

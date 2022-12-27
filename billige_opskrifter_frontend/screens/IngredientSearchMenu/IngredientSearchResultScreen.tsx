@@ -40,7 +40,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
   const [allIngredientsList, setAllIngredientsList] = useState<Ingredient[]>([])
 
 
-  // Function der fjerner elementer på id, for at fjerne duplikater
+  // Function der fjerner duplikater på id
   function removeDuplicatesA(arr: Ingredient[]) {
     return arr.filter((v, i, a) => a.findIndex(v2 => (v2.recipeId === v.recipeId)) === i)
   }

@@ -1,13 +1,14 @@
-import React from "react"
-import { View, StyleSheet, Text } from "react-native"
+import React from "react" // Import af React 
+import { View, StyleSheet, Text } from "react-native" // Import af react native komponenter
 
-
+// Props
 type PriceComponentProps = {
     price: number
 }
 
 const PriceComponent: React.FC<PriceComponentProps> = ({ price }) => {
 
+    // Hard coded array der definerer antallet af prikker på pris komponenten
     const numberOfDots: number[] = [1, 2, 3, 4, 5, 6]
 
     return (
@@ -36,7 +37,6 @@ const PriceComponent: React.FC<PriceComponentProps> = ({ price }) => {
                 })}
             </View>
         </View>
-
     )
 }
 

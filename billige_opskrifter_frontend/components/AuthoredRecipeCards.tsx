@@ -1,14 +1,16 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useEffect, useState } from "react"
-import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native"
-import { Recipe } from "../redux/services/RecipeAPI"
-import { MyPageNavigationParameters, RecipeNavigationParameters } from "../Types/Navigation_types"
-import PriceComponent from "./PriceComponent"
-import AllergiComponent from "./AllergiComponent"
-import { MaterialIcons } from '@expo/vector-icons';
+import { StackNavigationProp } from "@react-navigation/stack" // Del af template projektet
+import React, { useState } from "react" // Import af funktionelle komponenter fra react
+import { View, StyleSheet, Text, FlatList, TouchableOpacity, Dimensions } from "react-native" // import af react-native komponenter
+import { Recipe } from "../redux/services/RecipeAPI" // Import fra mit personlige API
+import { MyPageNavigationParameters } from "../Types/Navigation_types" // Import af mine navigations typer
+import PriceComponent from "./PriceComponent" // Import af min pris komponent
+import AllergiComponent from "./AllergiComponent" // Import af min Allergi komponent
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
 
+// Navigations objekt
 type MyPgeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 
+// Denne komponent medtager et array af opsrkfiter samt et MyPageNavigations objekt
 type AuthoredRecipeCardsProps = {
     recipes: Recipe[]
     navigation: MyPgeScreenNavigationProps
@@ -16,7 +18,7 @@ type AuthoredRecipeCardsProps = {
 
 const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navigation }) => {
 
-    // For expanding description
+    // Expanding description
     const [isExpanded, SetIsExpanded] = useState(false);
     const [idForExpand, setIdForExpand] = useState(0);
 
@@ -31,6 +33,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
         }
     }
 
+    // Visuel præsentation af komponenten
     return (
         <View>
             <FlatList

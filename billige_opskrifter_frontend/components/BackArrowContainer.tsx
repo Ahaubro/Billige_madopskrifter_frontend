@@ -1,6 +1,8 @@
-import React, { ReactNode } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import React, { ReactNode } from 'react' // Import af React til brug af FC - functionComponent
+import { View, StyleSheet } from 'react-native' // Import af react native komponenter
 
+
+//props - denne komponent skal kunne indholde diverse React elementer
 interface BackArrowContainerProps {
   children: ReactNode
 }

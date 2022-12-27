@@ -1,8 +1,7 @@
-import React, { ReactNode } from "react"
-import { View, StyleSheet, Dimensions } from "react-native"
-import { ScrollView } from "react-native-gesture-handler"
-
-
+import React, { ReactNode } from "react" // Import af React
+import { StyleSheet, Dimensions, ScrollView } from "react-native" // Import af react-native komponenter
+ 
+//Props
 interface ViewContainerProps {
     children: ReactNode
 }

@@ -1,8 +1,8 @@
-import { FontDisplay } from "expo-font"
-import React from "react"
-import { View, StyleSheet, Text, TouchableOpacity,  } from "react-native"
+import React from "react" // Import af React til brug af FC - functionComponent
+import { View, StyleSheet, Text, TouchableOpacity,  } from "react-native" // Import af react native komponenter
 
 
+// Props
 type ChooseRecipePressableProps = {
     text: string,
     onPress: () => void,

@@ -199,7 +199,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 <View style={{ paddingTop: 10 }}></View>
 
                 <AuthPressable
-                    text='Ny ingrediens'
+                    text='Tilføj ingrediens'
                     color='#86DB9D'
                     onPress={() => {
                         if (recipeId != 0) {
