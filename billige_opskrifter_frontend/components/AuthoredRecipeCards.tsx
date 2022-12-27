@@ -76,7 +76,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
                                         <View>
                                             {!isExpanded ?
                                                 <>
-                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Fremgangsmetode:</Text>
                                                     <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
                                                     <TouchableOpacity
                                                         onPress={() => {
@@ -93,7 +93,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
                                                 </>
                                                 : isExpanded && item.id === idForExpand &&
                                                 <>
-                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Fremgangsmetode:</Text>
                                                     <Text style={{ lineHeight: 20 }}>{item.description}</Text>
 
                                                     <TouchableOpacity
@@ -108,7 +108,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
 
                                             {isExpanded && item.id != idForExpand &&
                                                 <>
-                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Fremgangsmetode:</Text>
                                                     <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
                                                     <TouchableOpacity
                                                         onPress={() => {

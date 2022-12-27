@@ -21,6 +21,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
     const [isExpanded, SetIsExpanded] = useState(false);
     const [idForExpand, setIdForExpand] = useState(0);
 
+    // Slicing description
     function sliceDescription(description: string) {
         if(description != null){
             if (description.length > 75) {
@@ -75,7 +76,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                         <View>
                                             {!isExpanded ?
                                                 <>
-                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Fremgangsmetode:</Text>
                                                     <Text style={{ lineHeight: 20, maxHeight: Dimensions.get("window").height / 100 * 7 }}>{sliceDescription(item.description)}</Text>
                                                     <TouchableOpacity
                                                         onPress={() => {
@@ -90,7 +91,7 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
                                                 </>
                                                 : isExpanded && item.id === idForExpand &&
                                                 <>
-                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Hurtig guide:</Text>
+                                                    <Text style={{ fontWeight: '700', paddingTop: 15, paddingBottom: 5 }}>Fremgangsmetode:</Text>
                                                     <Text style={{ lineHeight: 20 }}>{item.description}</Text>
 
                                                     <TouchableOpacity

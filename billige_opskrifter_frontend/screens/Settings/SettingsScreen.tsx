@@ -224,7 +224,7 @@ const style = StyleSheet.create({
     paddingVertical: 5
   },
   addAllergi: {
-    backgroundColor: '#86DB9D',
+    backgroundColor: '#86C3F7',
     borderRadius: 10,
     maxWidth: Dimensions.get('window').width / 100 * 65
   },

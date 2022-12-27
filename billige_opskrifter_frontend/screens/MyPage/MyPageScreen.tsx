@@ -88,7 +88,7 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
         <View style={{ paddingTop: 15 }}>
           <AuthPressable
             text='Tilføj en ny opskrift'
-            color='#86DB9D'
+            color='#86C3F7'
             onPress={() => {
               navigation.navigate("CreateRecipe", { userId: session.id })
             }}
