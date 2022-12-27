@@ -1,14 +1,14 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import ViewContainer from "../../components/ViewContainer"
-import ChooseRecipePressable from '../../components/ChooseRecipePressable'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { RecipeNavigationParameters } from '../../Types/Navigation_types'
-import { endSession } from '../../redux/slices/sessionSlice'
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React from 'react' // Import af React
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native' // Import af react-native komponenter
+import { useDispatch, useSelector } from 'react-redux' // Import af useDispatch & useSelector (Del af template projektet)
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import ChooseRecipePressable from '../../components/ChooseRecipePressable' // Import af min choose recipe knap komponent
+import { RecipeNavigationParameters } from '../../Types/Navigation_types' // Import af min recipe navigations parameter type
+import { endSession } from '../../redux/slices/sessionSlice' // Import af endSession (Del af template projektet)
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af min header without back arrow container komponent 
 
 
 type ChooseRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'ChooseRecipe'>
@@ -21,6 +21,7 @@ type ChooseRecipeScreenProps = {
 
 const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, route }) => {
 
+  //Instantiere et session objekt
   const session = useSelector((state: RootState) => state.session)
   const dispatch = useDispatch();
 
@@ -91,9 +92,5 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
     </ViewContainer>
   )
 }
-
-const styles = StyleSheet.create({
-
-})
 
 export default ChooseRecipeScreen

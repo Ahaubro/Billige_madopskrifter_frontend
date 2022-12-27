@@ -1,15 +1,16 @@
-import { StackNavigationProp } from "@react-navigation/stack"
-import React, { useState, useEffect, useRef } from "react"
-import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Dimensions } from "react-native"
-import { useCreateMutation } from "../../redux/services/IngredientAPI"
-import { MyPageNavigationParameters } from "../../Types/Navigation_types"
-import AuthPressable from "../../components/AuthPressable"
-import { RouteProp } from "@react-navigation/native"
-import BackArrowContainer from "../../components/BackArrowContainer"
-import { Ionicons } from '@expo/vector-icons';
-import Header from "../../components/Header"
-import ScrollViewContainer from "../../components/ScrollViewContainer"
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React, { useState, useRef } from "react" // Import af funktionelle komponenter fras react
+import { View, StyleSheet, Text, TextInput, Pressable, KeyboardAvoidingView, Dimensions } from "react-native" // Import af react-native komponenter
+import { useCreateMutation } from "../../redux/services/IngredientAPI" // Import af min funktionelle komponent fra IngredientAPI
+import { MyPageNavigationParameters } from "../../Types/Navigation_types" // Import af min mypage navigations parametre type 
+import AuthPressable from "../../components/AuthPressable" // Import af min knap komponent
+import BackArrowContainer from "../../components/BackArrowContainer" // Import af min back arrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import Header from "../../components/Header" // Import af min header komponent 
+import ScrollViewContainer from "../../components/ScrollViewContainer" // Import af min scroll view container komponent
 
+// Sætter navigations & route props
 type AddIngredientComponentNavigationProps = StackNavigationProp<MyPageNavigationParameters, "AddExtraIngredientAfterCreationScreen">
 type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddExtraIngredientAfterCreationScreen'>
 
@@ -22,7 +23,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
     const { recipeId } = route.params;
 
-    const [newIngrAtr, setNewIngrAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
+    const [newIngrAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ recipeId: recipeId, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' });
     const [addIngredient] = useCreateMutation();
 
@@ -31,7 +32,6 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
     const muRef = useRef<TextInput>(null);
     const amountRef = useRef<TextInput>(null);
     const alerRef = useRef<TextInput>(null);
-
 
     return (
         <ScrollViewContainer>

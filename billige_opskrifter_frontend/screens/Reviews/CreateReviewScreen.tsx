@@ -1,21 +1,17 @@
-import React, { useRef, useState } from 'react'
-import { Dimensions, KeyboardAvoidingView, Pressable, StyleSheet, Text, View } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import ViewContainer from "../../components/ViewContainer"
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import BackArrowContainer from '../../components/BackArrowContainer'
-import { Ionicons } from '@expo/vector-icons';
-import { AirbnbRating } from 'react-native-ratings';
-import { TextInput } from 'react-native-gesture-handler'
-import { useCreateMutation } from "../../redux/services/ReviewAPI"
-import AuthPressable from '../../components/AuthPressable'
-import Header from '../../components/Header'
-import ScrollViewContainer from '../../components/ScrollViewContainer'
+import React, { useRef, useState } from 'react' // Import af funktionelle komponenter fra react
+import { Dimensions, KeyboardAvoidingView, Pressable, StyleSheet, Text, View, TextInput } from 'react-native' // import af react-native komponenter
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af templatye projektet)
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min mypage navigations parametre type
+import BackArrowContainer from '../../components/BackArrowContainer' // Import af min back arrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import { AirbnbRating } from 'react-native-ratings'; // Import af AirbnbRating fra react-native-ratings Hentet her -> https://www.npmjs.com/package/react-native-ratings og installeret med yarn
+import { useCreateMutation } from "../../redux/services/ReviewAPI" // Import af useCreateMutation fra mit ReviewAPI
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import Header from '../../components/Header' // IMport af min header komponent
+import ScrollViewContainer from '../../components/ScrollViewContainer' // Import af min scroll view container komponent
 
-
+// Sætter navigations & route props
 type CreateReviewScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "CreateReviewScreen">
 type CreateReviewScreenRouteProps = RouteProp<MyPageNavigationParameters, 'CreateReviewScreen'>
 
@@ -27,12 +23,11 @@ type CreateReviewScreenProps = {
 
 const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
-
+    // Descructuring parametre fra route
     const { id, userId, recipeName } = route.params
 
     const [createReview] = useCreateMutation();
-    const [createreviewAtr, setCreatereviewAtr] = useState<{ recipeId: number, userId: number, content: string, rating: number }>({ recipeId: id, userId: userId, content: "", rating: 0 })
+    const [createreviewAtr] = useState<{ recipeId: number, userId: number, content: string, rating: number }>({ recipeId: id, userId: userId, content: "", rating: 0 })
 
     const inputRef = useRef<TextInput>(null);
 
@@ -59,8 +54,8 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                     <Text style={{ textAlign: 'center', fontSize: 16, fontWeight: '600' }}>Del din mening om opskriften {recipeName}. Vælg hvor mange stjerner opskriften fortjener og skriv hvad du synes om den!</Text>
                 </View>
 
-                {/* Ekstern react native conmponent react-native-ratings bruges her til at lave en flot repræsentation af mine reviews. 
-                Hentet her -> https://www.npmjs.com/package/react-native-ratings*/}
+                {/* Ekstern react native conmponent AirbnbRating bruges her til at lave en flot repræsentation af mine reviews. 
+                Hentet fra -> https://www.npmjs.com/package/react-native-ratings*/}
                 <View style={{ paddingHorizontal: 25, paddingVertical: 15 }}>
                     <AirbnbRating
                         reviewSize={22}

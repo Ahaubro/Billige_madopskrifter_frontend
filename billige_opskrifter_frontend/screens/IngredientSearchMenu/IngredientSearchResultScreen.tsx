@@ -1,18 +1,16 @@
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useState, useEffect } from 'react'
-import { Text, View, Pressable, Dimensions, ScrollView } from 'react-native'
-import { useSelector } from 'react-redux'
-import BackArrowContainer from '../../components/BackArrowContainer'
-import { RootState } from '../../redux/store'
-import { Ionicons } from '@expo/vector-icons';
-import Header from '../../components/Header'
-import ViewContainer from "../../components/ViewContainer"
-import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types'
-import { Ingredient, useSearchIngredientByMultipleNamesQuery } from "../../redux/services/IngredientAPI"
-import DisplayOneRecipe from '../../components/DisplayOneRecipe'
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import React, { useState, useEffect } from 'react' // Import af funktionelle komponenter fra React
+import { Text, View, Pressable, Dimensions, ScrollView } from 'react-native' // Import af react-native komponenter
+import BackArrowContainer from '../../components/BackArrowContainer' // Import af min back arrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import Header from '../../components/Header' // Import af min header komponent
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types' // Import af min IngredientSearchNavigationParameters type
+import { Ingredient, useSearchIngredientByMultipleNamesQuery } from "../../redux/services/IngredientAPI" // Import af funktionel komponent og Ingredient typen fra mit IngredientAPI
+import DisplayOneRecipe from '../../components/DisplayOneRecipe' // Import af min display one recipe komponent
 
-
+// Sætter navigations & route props
 type IngredientSearchResultScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchResultScreen'>
 type IngredientSearchResultScreenRouteProps = RouteProp<IngredientSearchNavigationParameters, 'IngredientSearchResultScreen'>
 
@@ -23,10 +21,7 @@ type IngredientSearchResultScreenProps = {
 
 const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> = ({ navigation, route }) => {
 
-  const session = useSelector((state: RootState) => state.session)
-
   const { ingredients } = route.params;
-
 
   //Laver en string der skal indeholde de navne der skal bruges til at søge efter opskrifter
   let ingredientNames = ""
@@ -35,6 +30,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
   })
 
   
+  // Fetcher på den string der er instantieret ovenfor
   const [multipleIngrAtr] = useState<{ searchList: string }>({ searchList: ingredientNames })
   const allIngredients = useSearchIngredientByMultipleNamesQuery(multipleIngrAtr, { refetchOnMountOrArgChange: true })
   const [allIngredientsList, setAllIngredientsList] = useState<Ingredient[]>([])

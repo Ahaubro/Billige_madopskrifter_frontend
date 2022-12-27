@@ -1,19 +1,18 @@
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useRef, useState } from 'react'
-import { Pressable, Text, View, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { AuthNavigationParameters } from '../../Types/Navigation_types'
-import ViewContainer from "../../components/ViewContainer"
-import Header from "../../components/Header"
-import BackArrowContainer from "../../components/BackArrowContainer"
-import { Ionicons } from '@expo/vector-icons';
-import AuthPressable from "../../components/AuthPressable"
-import { useLoginMutation } from "../../redux/services/UserAPI"
-import { startSession } from '../../redux/slices/sessionSlice'
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProps (Del af template projektet)
+import React, { useRef, useState } from 'react' // Import af funktionelle komponentere fra React
+import { Pressable, Text, View, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native' // Import af react-native komponenter
+import { useDispatch } from 'react-redux' // Import af useDispatch (Del af template projeketet)
+import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af AuthNavigstionParameters type
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import Header from "../../components/Header" // Import af min header komponent
+import BackArrowContainer from "../../components/BackArrowContainer" // Import af min backarrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import AuthPressable from "../../components/AuthPressable" // Import af min auth knap komponent
+import { useLoginMutation } from "../../redux/services/UserAPI" // Import af min funktionelle komponent login
+import { startSession } from '../../redux/slices/sessionSlice' // Import af startSession (Del af template projektet)
 
-
+// Sætter navigations & route props
 type LoginScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Login'>
 type LoginScreenRouteProps = RouteProp<AuthNavigationParameters, 'Login'>
 
@@ -24,12 +23,11 @@ type LoginScreenProps = {
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
     const dispatch = useDispatch();
 
     //Login muatation and atr
-    const [login, { isLoading }] = useLoginMutation();
-    const [loginAtr, setLoginAtr] = useState<{ email: string, password: string }>({ email: "", password: "" })
+    const [login] = useLoginMutation();
+    const [loginAtr] = useState<{ email: string, password: string }>({ email: "", password: "" })
 
     //TextINput refs
     const mailRef = useRef<TextInput>(null);
@@ -42,7 +40,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
                 behavior='position'
                 style={{ height: Dimensions.get("window").height / 100 * 60 }}
             >
-
 
                 <BackArrowContainer>
                     <Pressable onPress={() => {

@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Text, Dimensions } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import Header from '../../components/Header'
-import ViewContainer from "../../components/ViewContainer"
-import { useGetLikedRecipesByUserIdQuery, useAddLikedRecipeMutation } from "../../redux/services/LikedRecAPI"
-import { Recipe } from '../../redux/services/RecipeAPI'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { HomeNavigationParameters } from '../../Types/Navigation_types'
-import LikedRecipeCards from '../../components/LikedRecipeCards'
-import AuthPressable from '../../components/AuthPressable'
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
+import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React
+import { StyleSheet, View, Text, Dimensions } from 'react-native' // Import af react-native komponenter
+import { StackNavigationProp } from '@react-navigation/stack' // Import af stackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import { useGetLikedRecipesByUserIdQuery } from "../../redux/services/LikedRecAPI" // Import af min funktionelle komponent useGetLikedRecipesByUserIdQuery
+import { Recipe } from '../../redux/services/RecipeAPI' // Import af Recipe typen
+import { HomeNavigationParameters } from '../../Types/Navigation_types' // Import af min homeNavigationParameters type
+import LikedRecipeCards from '../../components/LikedRecipeCards' // Import af min liked recipes komponent
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af header without back arrow komponent
 
-
+// Sætter navigations & route props
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
 type HomeScreenRouteProps = RouteProp<HomeNavigationParameters, 'HomeScreen'>
 
@@ -23,15 +21,14 @@ type HomeScreenProps = {
   route: HomeScreenRouteProps
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const session = useSelector((state: RootState) => state.session)
   let userName: string | undefined = session.fullName
 
+  // Fetcher likedRecipes og bruger refetchonmountorargchange & useEffect til at opdatere 
   const fetchedLikedRecipes = useGetLikedRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   const [likedRecipeList, setLikedRecipeList] = useState<Recipe[]>([]);
-
-  //
 
   useEffect(() => {
     if (fetchedLikedRecipes.data) {
@@ -40,7 +37,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation, route }) => {
 
   }, [fetchedLikedRecipes.data])
 
-  //Slicing the logged in users full for greeting
+  //Slicer fulde navn ved mellemrum
   function getFirstName(fullName: string | undefined){
     if(fullName == undefined){
       return null

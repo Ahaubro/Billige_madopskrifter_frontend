@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, View, Modal, ScrollView, TouchableOpacity } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import ViewContainer from "../../components/ViewContainer"
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { RecipeNavigationParameters } from '../../Types/Navigation_types'
-import BackArrowContainer from '../../components/BackArrowContainer'
-import { Ionicons } from '@expo/vector-icons';
-import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../redux/services/RecipeAPI"
-import Header from '../../components/Header'
-import { Picker } from '@react-native-picker/picker'
-import RecipeCard from '../../components/RecipeCard'
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra react
+import { Dimensions, Pressable, StyleSheet, Text, TextInput, View, Modal, TouchableOpacity } from 'react-native' // Import af react-native komponenter
+import ViewContainer from "../../components/ViewContainer" // Import af min view conatiner komponent
+import { RecipeNavigationParameters } from '../../Types/Navigation_types' // Import af min recipe navigations parameter type
+import BackArrowContainer from '../../components/BackArrowContainer' // Import af min back arrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import { Recipe, useGetRecipesByTypeQuery, useSearchRecipesQuery } from "../../redux/services/RecipeAPI" // Import af funktionelle komponenter fra RecipeAPI
+import Header from '../../components/Header' // Import af min header komponent
+import { Picker } from '@react-native-picker/picker' // Import af Picker komponent hentet eksternt fra -> -> https://www.npmjs.com/package/@react-native-picker/picker og installeret med yarn package manager
+import RecipeCard from '../../components/RecipeCard' // import af min recipeCards komponent
 
 
 type RecipesScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'RecipesScreen'>
@@ -25,7 +23,6 @@ type RecipesScreenProps = {
 
 const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
     const { type } = route.params
 
     //Forming first selection of recipes by type
@@ -167,7 +164,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
                             <Text style={{ textAlign: 'center', fontSize: 18, fontWeight: '600' }}>Sorteringsmuligheder</Text>
 
                             <View style={{ marginTop: -40 }}>
-                                {/* Ekstern React native component react-native-picker hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
+                                {/* Ekstern React native component Picker hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
                                 <Picker
                                     selectedValue={selectedSort}
                                     onValueChange={(sort: string) => {

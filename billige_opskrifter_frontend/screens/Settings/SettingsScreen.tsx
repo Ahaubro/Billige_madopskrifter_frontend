@@ -1,20 +1,20 @@
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState } from 'react'
-import { Text, View, Pressable, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import BackArrowContainer from '../../components/BackArrowContainer'
-import { RootState } from '../../redux/store'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { Ionicons } from '@expo/vector-icons';
-import Header from '../../components/Header'
-import AuthPressable from '../../components/AuthPressable'
-import { endSession } from '../../redux/slices/sessionSlice'
-import ViewContainer from "../../components/ViewContainer"
-import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI"
-import { MaterialIcons } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af templatye projektet)
+import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React 
+import { Text, View, Pressable, StyleSheet, TouchableOpacity, Dimensions } from 'react-native' // Import af react-native komponenter
+import { useDispatch, useSelector } from 'react-redux' // Import af useDispatch & useSelector (Del af template projektet)
+import BackArrowContainer from '../../components/BackArrowContainer' // Import af min back arrow container komponent
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min my page navigations parameters type
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import Header from '../../components/Header' // Import af min header komponent
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import { endSession } from '../../redux/slices/sessionSlice' // Import af endSession (Del af template projektet)
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI" // Import af funktionalitet og type fra mit AllergiAPI
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 
-
+// Sætter navigations & route props
 type SettingsScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'Settings'>
 type SettingsScreenRouteProps = RouteProp<MyPageNavigationParameters, 'Settings'>
 
@@ -23,8 +23,9 @@ type SettingsScreenProps = {
   route: SettingsScreenRouteProps
 }
 
-const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation, route }) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
+  // Instantiere et session objekt
   const session = useSelector((state: RootState) => state.session)
   const dispatch = useDispatch();
 

@@ -5,7 +5,7 @@ import { Recipe } from "../redux/services/RecipeAPI" // Import fra mit personlig
 import { MyPageNavigationParameters } from "../Types/Navigation_types" // Import af mine navigations typer
 import PriceComponent from "./PriceComponent" // Import af min pris komponent
 import AllergiComponent from "./AllergiComponent" // Import af min Allergi komponent
-import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 
 // Navigations objekt
 type MyPgeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>

@@ -1,17 +1,16 @@
-import React, { useRef, useState } from 'react'
-import { Pressable, Text, View, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import Header from "../../components/Header"
-import ViewContainer from '../../components/ViewContainer'
-import BackArrowContainer from "../../components/BackArrowContainer"
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { AuthNavigationParameters } from '../../Types/Navigation_types'
-import { Ionicons } from '@expo/vector-icons';
-import AuthPressable from '../../components/AuthPressable'
-import { useRegisterMutation } from "../../redux/services/UserAPI"
+import React, { useRef, useState } from 'react' // Import af funktionelle komponenter fra React
+import { Pressable, Text, View, TextInput, StyleSheet, KeyboardAvoidingView, Dimensions } from 'react-native' // Import af react-native komponenter
+import Header from "../../components/Header" // Import af min header komponent
+import ViewContainer from '../../components/ViewContainer' // Import af min view container komponent
+import BackArrowContainer from "../../components/BackArrowContainer" // Import af min back arrow container komponent
+import { StackNavigationProp } from '@react-navigation/stack' // Import af stackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af route prop (Del af template projektet)
+import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af min authNavigationParameter type
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import AuthPressable from '../../components/AuthPressable' // Import af min auth knap komponent
+import { useRegisterMutation } from "../../redux/services/UserAPI" // Import af min funktionelle komponent useRegisterMutation
 
+// Sætter navigations & route props
 type RegisterScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Register'>
 type RegisterScreenRouteProps = RouteProp<AuthNavigationParameters, 'Register'>
 
@@ -22,24 +21,19 @@ type RegisterScreenProps = {
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
-
     //Strings used for confirming password
     let pw1 = ""
     let pw2 = ""
 
-
-    //Register mutatino and atr
+    //Register mutation & atr
     const [register] = useRegisterMutation();
     const [registerAtr, setRegisterStr] = useState<{ fullName: string, email: string, password: string }>({ fullName: "", email: "", password: "" });
 
-
-    //Refs for textInputs (Next btn on keyboard)
+    //Refs for textInputs (Videre til næste input når man trykker næste)
     const fullNameRef = useRef<TextInput>(null);
     const mailRef = useRef<TextInput>(null);
     const passwordRef = useRef<TextInput>(null);
     const confPasswordRef = useRef<TextInput>(null);
-
 
     return (
         <ViewContainer>
@@ -121,7 +115,6 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) =>
                         if (registerAtr.fullName && registerAtr.email && registerAtr.password) {
                             if (pw1 == pw2) {
                                 register(registerAtr).unwrap().then(res => {
-                                    //console.log(res.statusText)
                                     if (res.statusText == "User Created") {
                                         navigation.navigate("Login")
                                     }

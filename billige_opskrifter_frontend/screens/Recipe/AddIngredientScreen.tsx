@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { useGetRecipesByNameAndUserIdQuery, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
-import { Ingredient, useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation } from '../../redux/services/IngredientAPI'
-import AuthPressable from '../../components/AuthPressable'
-import { Ionicons } from '@expo/vector-icons';
-import ScrollViewContainer from '../../components/ScrollViewContainer'
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React, { useState, useEffect, useRef } from 'react' // Import af funktionelle komponenter fra react
+import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native' // Import af react-native komponenter
+import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min mypage navigations parametre type 
+import { useGetRecipesByNameAndUserIdQuery, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI" // Import af mine funktionelle komponenter fra RecipeAPI
+import { Ingredient, useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredientMutation } from '../../redux/services/IngredientAPI' // Import af mine funktionelle komponenter fra IngredientAPI
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import ScrollViewContainer from '../../components/ScrollViewContainer' // Import af min scroll view container komponent
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af min header without back container komponent
 
 
 type AddIngredientScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddIngredient'>
@@ -39,7 +39,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
     //Add ingredient props
     const [addIngredient] = useCreateMutation();
-    const [addIngredientAtr, setAddIngredientAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
+    const [addIngredientAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ recipeId: 0, name: "", type: "", measurementUnit: "", amount: 0, alergene: "" });
 
 

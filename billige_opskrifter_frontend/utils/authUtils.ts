@@ -1,3 +1,4 @@
+// Denne fil var en del af template projektet
 export function tryLoginFromStorageAsync(): Promise<void> {
   console.debug('Trying to log in')
 

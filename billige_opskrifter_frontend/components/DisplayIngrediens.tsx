@@ -1,12 +1,12 @@
 import React, { useState } from "react" // Import af funktionelle komponenter fra React
 import { View, StyleSheet, Text, Dimensions, TouchableOpacity, TextInput } from "react-native" // Import af react-native komponetner
-import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 import { useSelector } from "react-redux"; // Bruges til session (Del af template projektet)
 import { RootState } from "../redux/store"; // Bruges til session (Del af template projektet)
 import { useEditMutation, Ingredient, useDeleteIngredientMutation } from "../redux/services/IngredientAPI" // Import af mine funktionelle komponenter fra IngredientAPI
 import { StackNavigationProp } from "@react-navigation/stack"; // Import af navigation (Del af template projekt)
 import { MyPageNavigationParameters } from "../Types/Navigation_types"; // Import af mine navigations typer
-import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 
 
 // Props

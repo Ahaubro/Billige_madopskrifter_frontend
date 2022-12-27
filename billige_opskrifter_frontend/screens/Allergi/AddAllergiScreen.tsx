@@ -1,4 +1,4 @@
-import { RouteProp } from '@react-navigation/native' // Rouite import (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Route prop import (Del af template projektet)
 import { StackNavigationProp } from '@react-navigation/stack' // Navigation import (Del af template projektet)
 import React, { useState } from 'react' // Import af funktionelle komponenter fra React
 import { Text, View, Pressable, TextInput, StyleSheet } from 'react-native' // Import af komponenter fra react native
@@ -6,7 +6,7 @@ import { RootState } from '../../redux/store' // Bruges til session (Del af temp
 import { useSelector } from 'react-redux' // Bruges til session (Del af template projektet)
 import BackArrowContainer from '../../components/BackArrowContainer' // Import af min backArrowContainer komponent
 import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af mine navigations typer
-import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 import ViewContainer from "../../components/ViewContainer" // Import af min komponent ViewContainer
 import Header from '../../components/Header' // Imnport af min header komponent
 import { useCreateAllergiMutation } from '../../redux/services/AllergiAPI' // Import fra mit AllegiAPI

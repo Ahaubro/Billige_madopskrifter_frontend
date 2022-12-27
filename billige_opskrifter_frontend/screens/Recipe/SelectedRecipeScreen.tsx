@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share, TextInput } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import Header from '../../components/Header'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { RouteProp } from '@react-navigation/native'
-import BackArrowContainer from "../../components/BackArrowContainer"
-import { Ionicons } from '@expo/vector-icons';
-import { useGetByRecipeIdQuery, useEditMutation, useDeleteIngredientMutation, Ingredient } from "../../redux/services/IngredientAPI"
-import { FlatList } from 'react-native-gesture-handler'
-import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI"
-import { Recipe, useDeleteRecipeMutation } from "../../redux/services/RecipeAPI"
-import AuthPressable from '../../components/AuthPressable'
-import { AirbnbRating } from 'react-native-ratings'
-import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI"
-import ScrollViewContainer from '../../components/ScrollViewContainer'
-import { useEditRecipeMutation, useGetRecipeByIdQuery } from "../../redux/services/RecipeAPI"
-import { MaterialIcons } from '@expo/vector-icons';
-import DisplayIngrediens from '../../components/DisplayIngrediens'
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React, { useEffect, useState } from 'react' // Import af funktionele komponenter fra react
+import { StyleSheet, Pressable, Text, View, Dimensions, TouchableOpacity, Share, TextInput, FlatList } from 'react-native' // Import af react-native komponenter
+import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import Header from '../../components/Header' // Import af min header komponent
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min mypage navigations parametre type 
+import BackArrowContainer from "../../components/BackArrowContainer" // Import af min back arrow container komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import { useGetByRecipeIdQuery } from "../../redux/services/IngredientAPI" // Import af min funktionelle komponent useGetByRecipeIdQuery fra IngredientAPI
+import { Review, useGetReviewsByRecipeIdQuery } from "../../redux/services/ReviewAPI" // Import af review typen samt en funktionel komponent fra mit ReviewAPI
+import { useDeleteRecipeMutation } from "../../redux/services/RecipeAPI" // Import af funktionel komponent fra mit RecipeAPI
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import { AirbnbRating } from 'react-native-ratings' // Import af AirbnbRating komponent fra react-native-ratings Hentet her -> https://www.npmjs.com/package/react-native-ratings og installeret med yarn
+import { useAddLikedRecipeMutation, useLikeCheckQuery } from "../../redux/services/LikedRecAPI" // Import af mine funktionelle komponenter fra LikedRecAPI
+import ScrollViewContainer from '../../components/ScrollViewContainer' // Import af min scroll view container komponent
+import { useEditRecipeMutation, useGetRecipeByIdQuery } from "../../redux/services/RecipeAPI" // Import af mine funktionelle komponenter fra RecipeAPI
+import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import DisplayIngrediens from '../../components/DisplayIngrediens' // Import af min displayIngrediens komponent
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -374,6 +373,8 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                             <View style={{ paddingEnd: Dimensions.get("window").width / 100 * 2 }}>
                                                 <View style={style.card}>
                                                     <View style={{ flexDirection: 'column', justifyContent: 'space-between', marginLeft: 10, paddingVertical: 10, paddingHorizontal: 10 }}>
+                                                        {/* Ekstern react native conmponent AirbnbRating bruges her til at lave en flot repræsentation af mine reviews. 
+                                                        Hentet fra -> https://www.npmjs.com/package/react-native-ratings*/}
                                                         <AirbnbRating
                                                             reviewSize={16}
                                                             reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}

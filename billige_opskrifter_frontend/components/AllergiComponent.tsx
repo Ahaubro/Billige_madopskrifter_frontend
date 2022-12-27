@@ -5,7 +5,7 @@ import { Allergi, useGetAllergiesByUserIdQuery } from "../redux/services/Allergi
 import { Ingredient, useGetByRecipeIdQuery } from "../redux/services/IngredientAPI" // Import fra mit personlige API
 import { Recipe } from "../redux/services/RecipeAPI" // Import fra mit personlige API
 import { RootState } from "../redux/store" // Del af template projektet
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Importeret fra expo icons
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 
 
 // Denne komponent skal bruge et enkelt opskrifts objekt

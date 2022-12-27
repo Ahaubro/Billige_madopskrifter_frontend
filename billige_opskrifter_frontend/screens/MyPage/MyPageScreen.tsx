@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import Header from "../../components/Header"
-import { useGetRecipesByUserIdQuery } from '../../redux/services/RecipeAPI'
-import { Recipe } from "../../redux/services/RecipeAPI"
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import AuthPressable from '../../components/AuthPressable'
-import { Ionicons } from '@expo/vector-icons';
-import ScrollViewContainer from '../../components/ScrollViewContainer'
-import AuthoredRecipeCards from '../../components/AuthoredRecipeCards'
+import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native' // IMport af react-native komponenter
+import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
+import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
+import Header from "../../components/Header" // Import af min header komponent
+import { useGetRecipesByUserIdQuery, Recipe } from '../../redux/services/RecipeAPI' // Import af funktionel komponent og type fra mit RecipeAPI
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min my page navigation parameters type
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af templatye projektet)
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import ScrollViewContainer from '../../components/ScrollViewContainer' // Import af min Scroll view container komponent
+import AuthoredRecipeCards from '../../components/AuthoredRecipeCards' // Import af min Authored recipe cards komponent
 //import { AntDesign } from '@expo/vector-icons';
 
+// Sætter navigations & route props
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
 type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
 

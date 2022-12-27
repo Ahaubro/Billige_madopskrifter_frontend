@@ -1,19 +1,16 @@
-import { RouteProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
-import React, { useEffect, useState, useRef } from 'react'
-import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types'
-import { Ionicons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import ViewContainer from "../../components/ViewContainer"
-import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI"
-import AuthPressable from '../../components/AuthPressable'
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React
+import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native' // Import af react-native komponenter
+import { IngredientSearchNavigationParameters } from '../../Types/Navigation_types' // Import af min IngredientSearchNavigationParameters type
+import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import { AntDesign } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI" // Import af funktionel komponent og Ingredient typen fra mit IngredientAPI
+import AuthPressable from '../../components/AuthPressable' // IMport af min knap komponent
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // IMport af min header without back arrow komponent
 
-
-
+// Sætter navigations & route props
 type IngredientSearchScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
 type IngredientSearchScreenRouteProps = RouteProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
 
@@ -22,9 +19,8 @@ type IngredientSearchScreenProps = {
     route: IngredientSearchScreenRouteProps
 }
 
-const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
+const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigation, route }) => {
 
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });

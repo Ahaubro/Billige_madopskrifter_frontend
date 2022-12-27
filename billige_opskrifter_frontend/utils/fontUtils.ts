@@ -1,3 +1,4 @@
+// Denne fil var en del af template projektet
 import * as Font from 'expo-font'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import Entypo from '@expo/vector-icons/Entypo'

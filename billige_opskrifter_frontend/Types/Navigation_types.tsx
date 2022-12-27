@@ -1,12 +1,16 @@
-import { Ingredient } from "../redux/services/IngredientAPI"
-import { Review } from "../redux/services/ReviewAPI"
+import { Ingredient } from "../redux/services/IngredientAPI" // Import af min Ingredient type
+import { Review } from "../redux/services/ReviewAPI" // Import af min Review type
 
+//Der bliver nedenfor eksporteret de forskellige navigations typer samt hvilke props de hver især bruger
+
+// Eksportere min auth navigations parametre
 export type AuthNavigationParameters = {
     Login: undefined,
     Welcome: undefined,
     Register: undefined
 }
 
+// Eksportere my page navigations parametre
 export type MyPageNavigationParameters = {
     CreateRecipe: {
         userId: number
@@ -43,6 +47,7 @@ export type MyPageNavigationParameters = {
     }
 }
 
+// Eksportere recipe navigations parametre
 export type RecipeNavigationParameters = {
     ChooseRecipe: undefined,
     RecipesScreen: {
@@ -74,6 +79,7 @@ export type RecipeNavigationParameters = {
     }
 }
 
+// Eksportere home page navigations parametre
 export type HomeNavigationParameters = {
     HomeScreen: undefined,
     SelectedRecipeScreen: {
@@ -103,7 +109,7 @@ export type HomeNavigationParameters = {
     }
 }
 
-
+// Eksportere ingredient search navigations parametre
 export type IngredientSearchNavigationParameters = {
     IngredientSearchScreen: undefined
     IngredientSearchResultScreen: {

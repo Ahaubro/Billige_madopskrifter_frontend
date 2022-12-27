@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import Header from '../../components/Header'
-import ViewContainer from "../../components/ViewContainer"
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
-import { MyPageNavigationParameters } from '../../Types/Navigation_types'
-import { useEditDescriptionMutation } from "../../redux/services/RecipeAPI"
-import AuthPressable from '../../components/AuthPressable'
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
+import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
+import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
+import React, { useState } from 'react' // Import af funktionelle komponenter fra react
+import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native' // Import af react-native komponenter
+import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
+import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min mypage navigations parametre type 
+import { useEditDescriptionMutation } from "../../redux/services/RecipeAPI" // Import af min funktionelle komponent fra RecipeAPI
+import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af min header without back container komponent
 
 type AddRecipeDescriptionScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddRecipeDescription'>
 type AddRecipeDescriptionScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddRecipeDescription'>
@@ -21,7 +18,6 @@ type AddRecipeDescriptionScreenProps = {
 
 const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({ navigation, route }) => {
 
-    const session = useSelector((state: RootState) => state.session)
     const { recipeId } = route.params;
 
     const [edit] = useEditDescriptionMutation();
