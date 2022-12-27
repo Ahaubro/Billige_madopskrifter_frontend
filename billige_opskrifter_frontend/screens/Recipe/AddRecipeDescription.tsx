@@ -50,6 +50,9 @@ const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({
                 text='Gem opskrift'
                 color='#86DB9D'
                 onPress={() => {
+                    if(editAtr.description.length < 2){
+                        editAtr.description = "Ingen beskrivelse"
+                    }
                     edit(editAtr).unwrap().then(res => {
                         console.log(res)
                     })

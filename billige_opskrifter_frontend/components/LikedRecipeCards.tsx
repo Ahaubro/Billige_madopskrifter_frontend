@@ -22,11 +22,13 @@ const LikedRecipeCards: React.FC<LikedRecipeCardsProps> = ({ recipes, navigation
     const [idForExpand, setIdForExpand] = useState(0);
 
     function sliceDescription(description: string) {
-        if (description.length > 75) {
-            return description.substring(0, 55) + " ..."
-        }
-        else {
-            return description
+        if(description != null){
+            if (description.length > 75) {
+                return description.substring(0, 55) + " ..."
+            }
+            else {
+                return description
+            }
         }
     }
 
