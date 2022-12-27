@@ -1,10 +1,11 @@
-import {createStackNavigator} from '@react-navigation/stack'
-import HomeScreen from '../../screens/Home/HomeScreen';
+import {createStackNavigator} from '@react-navigation/stack' // Importere createStackNavigator (Del af template projektet)
+// Nedenfor importeres de skærm komponenter der skal kunne tilgås af HomeNavigator samt HomeNavigationParameters 
+//der definere hvilke parametre de forskellige skærm komponenter bruger
+import HomeScreen from '../../screens/Home/HomeScreen'; 
 import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
 import ChooseRecipeScreen from '../../screens/Recipe/ChooseRecipeScreen';
 import CreateReviewScreen from '../../screens/Reviews/CreateReviewScreen';
 import RecipesScreen from '../../screens/Recipe/RecipesScreen';
-
 import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import { HomeNavigationParameters } from '../../Types/Navigation_types';
 import AllReviewsScreen from '../../screens/Reviews/AllReviewsScreen';

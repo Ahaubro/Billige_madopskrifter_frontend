@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Dimensions, KeyboardAvoidingView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Dimensions, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
-import Header from '../../components/Header'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import { MyPageNavigationParameters } from '../../Types/Navigation_types'
@@ -11,7 +10,6 @@ import { Ingredient, useCreateMutation, useGetByRecipeIdQuery, useDeleteIngredie
 import AuthPressable from '../../components/AuthPressable'
 import { Ionicons } from '@expo/vector-icons';
 import ScrollViewContainer from '../../components/ScrollViewContainer'
-import { getType } from '@reduxjs/toolkit'
 import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer'
 
 
@@ -24,22 +22,20 @@ type CreateRecipeScreenProps = {
 }
 
 
-
 const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, route }) => {
 
     const session = useSelector((state: RootState) => state.session)
     const { name } = route.params;
 
 
-    //Getting recipe to add ingredients
-    const [thisRecipeAtr] = useState<{ userId: number, name: string }>({ userId: session.id, name: name })
+    //Getting this recipe to add ingredients
+    const [thisRecipeAtr] = useState<{ userId: number, name: string }>({ userId: session.id, name: name });
     const thisRecipe = useGetRecipesByNameAndUserIdQuery(thisRecipeAtr, { refetchOnMountOrArgChange: true });
     let recipeId: number = 0
 
     if (thisRecipe.data != undefined) {
         recipeId = thisRecipe.data.id
     }
-
 
     //Add ingredient props
     const [addIngredient] = useCreateMutation();
@@ -203,14 +199,12 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                     color='#86DB9D'
                     onPress={() => {
                         if (recipeId != 0) {
-                            console.log(addIngredientAtr)
                             addIngredientAtr.recipeId = recipeId
                             addIngredient(addIngredientAtr).unwrap().then(res => {
-                                //Refresh
+                                //console.log(res)
                             })
                             handleSubmit();
                         }
-
                     }}
                 />
 

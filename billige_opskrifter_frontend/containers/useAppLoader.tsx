@@ -1,4 +1,4 @@
-import { Inter_900Black } from '@expo-google-fonts/inter'
+// Denne fil var en del af template projektet - Jeg har kun udkommenteret linje 26 herinde.
 import { useState, useEffect, useCallback } from 'react'
 import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
@@ -23,7 +23,7 @@ export function useAppLoader(): {
         // Pre-load fonts, make any API calls you need to do here
         await Font.loadAsync(preloadFonts)
         await tryLoginFromStorageAsync()
-        dispatch(startSession({ id: '1234', token: 'abcdefg' }))
+        //dispatch(startSession({ id: '1234', token: 'abcdefg' }))
       } catch (e) {
         console.warn(e)
       } finally {

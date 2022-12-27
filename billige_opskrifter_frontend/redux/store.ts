@@ -1,3 +1,4 @@
+// Denne fil var en del af template projektet - Jeg har kun tilføjet reducer samt middleware til hver af mine frontend API'er
 import { configureStore } from '@reduxjs/toolkit'
 import { UserAPI } from './services/UserAPI'
 import sessionReducer from './slices/sessionSlice'

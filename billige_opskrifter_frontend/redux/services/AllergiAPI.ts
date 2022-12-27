@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RootState } from '../store'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' // Importere createApi & fetchBaseQuery fra rtk (Der var vist et eksempel af dette i template projektet)
+import { RootState } from '../store' // Importere RootState (Del af template projektet)
 
+// Definere en baseQuery hvor der b.la. sættes baseUrl fra min .env fil
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.API_URL,
     prepareHeaders: (headers, api) => {
@@ -13,12 +14,14 @@ const baseQuery = fetchBaseQuery({
     }
 })
 
+// Definere dette API's type (Allergi)
 export type Allergi = {
     id: number,
     userId: number,
     allergi: string
 }
 
+// Her bruges createApi der b.la. bruger baseQuery, tagTypes samt de endpoints der skal tilknyttes AllergiAPI
 export const AllergiAPI = createApi({
     reducerPath: 'AllergiAPI',
     baseQuery,
@@ -56,5 +59,6 @@ export const AllergiAPI = createApi({
     })
 })
 
+// Her eksporteres de endpoints som funktionelle komponenter
 export const { useCreateAllergiMutation, useDeleteAllergiMutation, useGetAllergiesByUserIdQuery } = AllergiAPI
 

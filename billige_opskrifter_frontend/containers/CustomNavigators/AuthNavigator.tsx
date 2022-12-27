@@ -1,8 +1,8 @@
-import {createStackNavigator} from '@react-navigation/stack'
-import LoginScreen from '../../screens/Auth/Loginscreen';
-import WelcomeScreen from '../../screens/Auth/WelcomeScreen';
-import RegisterScreen from '../../screens/Auth/RegisterScreen';
-import { AuthNavigationParameters } from '../../Types/Navigation_types'
+import {createStackNavigator} from '@react-navigation/stack' // Importere createStackNavigator (Del af template projektet)
+import LoginScreen from '../../screens/Auth/Loginscreen'; // Import af min loginScreen
+import WelcomeScreen from '../../screens/Auth/WelcomeScreen'; // Import af min WelcomeScreen
+import RegisterScreen from '../../screens/Auth/RegisterScreen'; // Import af RegisterScreen
+import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af navigations parametre (undefined i auth)
 
 const stack = createStackNavigator<AuthNavigationParameters>();
 

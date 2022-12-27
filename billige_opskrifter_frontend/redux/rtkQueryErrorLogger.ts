@@ -1,3 +1,4 @@
+// Denne fil var en del af template projektet
 import {
   MiddlewareAPI,
   isRejectedWithValue,

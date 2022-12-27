@@ -1,5 +1,7 @@
-import { createStackNavigator } from '@react-navigation/stack'
-import IngredientSearchResultScreen from '../../screens/IngredientSearchMenu/IngredientSearchResultScreen';
+import { createStackNavigator } from '@react-navigation/stack' // Import af createStackNavigator (Del af template projektet)
+// Nedenfor importeres de skærm komponenter der skal kunne tilgås af IngredientSearchNavigator samt IngredientSearchNavigationParameters 
+//der definere hvilke parametre de forskellige skærm komponenter bruger
+import IngredientSearchResultScreen from '../../screens/IngredientSearchMenu/IngredientSearchResultScreen'; 
 import IngredientSearchScreen from '../../screens/IngredientSearchMenu/IngredientSearchScreen';
 import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
 import CreateReviewScreen from '../../screens/Reviews/CreateReviewScreen';

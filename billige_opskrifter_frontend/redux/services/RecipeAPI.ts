@@ -1,6 +1,7 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { RootState } from '../store'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' // Importere createApi & fetchBaseQuery fra rtk (Der var vist et eksempel af dette i template projektet)
+import { RootState } from '../store' // Import af RootState (Del af template projektet)
 
+// Definere en baseQuery hvor der b.la. sættes baseUrl fra min .env fil
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.API_URL,
     prepareHeaders: (headers, api) => {
@@ -13,6 +14,7 @@ const baseQuery = fetchBaseQuery({
     },
 })
 
+// Definere dette API's type (Recipe)
 export type Recipe = {
     id: number,
     name: string,
@@ -24,6 +26,7 @@ export type Recipe = {
     userId: number
 }
 
+// Her bruges createApi der b.la. bruger baseQuery, tagTypes samt de endpoints der skal tilknyttes RecipeAPI
 export const RecipeAPI = createApi({
     reducerPath: 'RecipeAPI',
     baseQuery,
@@ -118,8 +121,7 @@ export const RecipeAPI = createApi({
             providesTags: ["Recipe"]
         }),
     }),
-
 })
 
-
+// Her eksporteres de endpoints som funktionelle komponenter
 export const { useCreateMutation, useGetRecipesByUserIdQuery, useGetRecipesByNameAndUserIdQuery, useGetRecipesByTypeQuery, useDeleteRecipeMutation, useSearchRecipesQuery, useGetRecipeByIdQuery, useEditRecipeMutation, useEditDescriptionMutation } = RecipeAPI

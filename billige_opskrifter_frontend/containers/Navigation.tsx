@@ -1,12 +1,14 @@
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import HomeNavigator from "./CustomNavigators/HomeNavigator"
+// Der var allerede opsat navigareing som del af template projektet der er vedhæftet som bilag
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native' // Import af navigation comtainer (Del af template projektet) - samt import af Default theme
+import React from 'react' // Import af React 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs' // Import af createBottomTabNavigator (Del af template projektet)
+import Ionicons from '@expo/vector-icons/Ionicons' // Import af ikoner fra expo icons
+import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
+import { RootState } from '../redux/store' // Import af RootState (Del af template projektet)
+// Nedenfor importeres mine customNavigators der bruges i selve navigationsbaren
+import HomeNavigator from "./CustomNavigators/HomeNavigator" 
 import MyPageNavigator from "./CustomNavigators/MyPageNavigtor"
-import Ionicons from '@expo/vector-icons/Ionicons'
 import AuthNavigator from "./CustomNavigators/AuthNavigator"
-import { useSelector } from 'react-redux'
-import { RootState } from '../redux/store'
 import RecipeNavigator from './CustomNavigators/RecipeNavigator'
 import IngredientSearchNavigator from './CustomNavigators/IngredientSearchNavigator'
 
@@ -36,6 +38,7 @@ const Navigation: React.FC<NavigationProps> = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName
 
+            // Her fordeles ikoner ud fra route name (Del af template projektet - men redigeret efter behov)
             if (route.name === 'HomeNavigator') {
               iconName = focused ? 'home' : 'home-outline'
             } else if (route.name === 'Settings') {
@@ -55,7 +58,7 @@ const Navigation: React.FC<NavigationProps> = () => {
         })}
       >
 
-
+        {/* Nedenfor sættes navigationsbaren hvis man er logget ind som bruger */}
         {session.token && session.token != 'abcdefg' && session.token != "guest" &&
           <>
             <Tab.Screen name="HomeNavigator" component={HomeNavigator} options={{ title: "Hjem" }} />
@@ -65,14 +68,12 @@ const Navigation: React.FC<NavigationProps> = () => {
           </>
         }
 
-        {session.token == 'abcdefg' &&
-          <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }} />
-        }
-
+        {/* Nedenfor sættes navigationsbaren hvis man ikke er logget ind */}
         {!session.token &&
           <Tab.Screen name="AuthNavigator" component={AuthNavigator} options={{ tabBarStyle: { display: 'none' } }} />
         }
 
+        {/* Nedenfor sættes navigationsbaren hvis man er logget ind som gæst */}
         {session.token == "guest" &&
           <>
             <Tab.Screen name='RecipeNavigator' component={RecipeNavigator} options={{ title: "Opskrifter" }} />

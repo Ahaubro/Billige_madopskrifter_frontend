@@ -1,8 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { API_URL } from '../../constants'
-import { RootState } from '../store'
-import { Recipe } from './RecipeAPI'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' // Importere createApi & fetchBaseQuery fra rtk (Der var vist et eksempel af dette i template projektet)
+import { RootState } from '../store' // Import af RootState (Del af template projektet)
+import { Recipe } from './RecipeAPI' // Import af Recipe typen fra RecipeAPI
 
+// Definere en baseQuery hvor der b.la. sættes baseUrl fra min .env fil
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.API_URL,
     prepareHeaders: (headers, api) => {
@@ -15,7 +15,7 @@ const baseQuery = fetchBaseQuery({
     },
 })
 
-
+// Definere dette API's type (LikedRecipe)
 export type LikedRecipe = {
     id: number, 
     userId: number,
@@ -23,20 +23,20 @@ export type LikedRecipe = {
     statusText: string
 }
 
-
+// Her bruges createApi der b.la. bruger baseQuery, tagTypes samt de endpoints der skal tilknyttes LikedRecAPI
 export const LikedRecAPI = createApi({
     reducerPath: 'LikedRecAPI',
     baseQuery,
     tagTypes: ["LikedRecipe"],
     endpoints: builder => ({
 
-        // LIKED RECIPES
+        // get liked recipes
         getLikedRecipesByUserId: builder.query<{recipes: Recipe[] }, number>({
             query: userId => `api/likedRecipes/${userId}`,
             providesTags:["LikedRecipe"]
         }),
 
-        //Add liked recipe
+        // Like / unlike recipe
         addLikedRecipe: builder.mutation<
             { statusText: string },
             { userId: number, recipeId: number }
@@ -58,5 +58,5 @@ export const LikedRecAPI = createApi({
 
 })
 
-
+// Her eksporteres de endpoints som funktionelle komponenter
 export const { useGetLikedRecipesByUserIdQuery, useAddLikedRecipeMutation, useLikeCheckQuery } = LikedRecAPI

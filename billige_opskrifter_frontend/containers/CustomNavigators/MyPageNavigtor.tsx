@@ -1,4 +1,6 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createStackNavigator} from '@react-navigation/stack' // Importere createStackNavigator (Del af template projektet)
+// Nedenfor importeres de skærm komponenter der skal kunne tilgås af MyPageNavigator samt MyPageNavigationParameters 
+//der definere hvilke parametre de forskellige skærm komponenter bruger
 import AddAllergiScreen from '../../screens/Allergi/AddAllergiScreen';
 import MyPageScreen from '../../screens/MyPage/MyPageScreen';
 import AddIngredientScreen from '../../screens/Recipe/AddIngredientScreen';

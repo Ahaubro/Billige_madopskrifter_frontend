@@ -1,4 +1,6 @@
-import {createStackNavigator} from '@react-navigation/stack'
+import {createStackNavigator} from '@react-navigation/stack' // Importere createStackNavigator (Del af template prjektet)
+// Nedenfor importeres de skærm komponenter der skal kunne tilgås af RecipeNavigator samt RecipeNavigationParameters 
+//der definere hvilke parametre de forskellige skærm komponenter bruger
 import AddExtraIngredientAfterCreationScreen from '../../screens/Recipe/AddExtraIngredientAfterCreationScreen';
 import AddIngredientScreen from '../../screens/Recipe/AddIngredientScreen';
 import ChooseRecipeScreen from '../../screens/Recipe/ChooseRecipeScreen';

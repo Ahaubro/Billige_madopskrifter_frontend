@@ -1,3 +1,4 @@
+// Denne fil var en del af template projektet, jeg har kun tilføjet fullName og email til den allerede eksisterende session
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface SessionState {
