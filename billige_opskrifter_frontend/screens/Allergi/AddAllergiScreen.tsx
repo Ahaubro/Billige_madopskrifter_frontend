@@ -61,7 +61,7 @@ const AddAllergiScreen: React.FC<AddAllergiScreenProps> = ({ navigation, route }
 
                 <AuthPressable
                     text='Tilføj en allergi'
-                    color='#86DB9D'
+                    color='#86C3F7'
                     onPress={() => {
                         if(createAllergiAtr.allergi != ""){
                             createAllergi(createAllergiAtr).unwrap().then( res => {

@@ -9,6 +9,7 @@ import RecipesScreen from '../../screens/Recipe/RecipesScreen';
 import SelectedRecipeScreen from '../../screens/Recipe/SelectedRecipeScreen';
 import { HomeNavigationParameters } from '../../Types/Navigation_types';
 import AllReviewsScreen from '../../screens/Reviews/AllReviewsScreen';
+import RecipeNavigator from './RecipeNavigator';
 
 
 
@@ -26,9 +27,9 @@ export default function HomeNavigator(){
             <stack.Screen name="SelectedRecipeScreen" component={SelectedRecipeScreen} />
             <stack.Screen name="AddExtraIngredientAfterCreationScreen" component={AddExtraIngredientAfterCreationScreen}/>
             <stack.Screen name="CreateReviewScreen" component={CreateReviewScreen} />
-            <stack.Screen name='ChooseRecipe' component={ChooseRecipeScreen} />
             <stack.Screen name='RecipesScreen' component={RecipesScreen}/>
             <stack.Screen name='AllReviewsScreen' component={AllReviewsScreen}/>
+            <stack.Screen name='RecipeNavigator' component={RecipeNavigator}/>
 
 
         </stack.Navigator>

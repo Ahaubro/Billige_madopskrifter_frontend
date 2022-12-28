@@ -106,7 +106,8 @@ export type HomeNavigationParameters = {
     },
     AllReviewsScreen: {
         reviews: Review[]
-    }
+    },
+    RecipeNavigator: undefined
 }
 
 // Eksportere ingredient search navigations parametre

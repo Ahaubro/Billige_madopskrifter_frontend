@@ -8,7 +8,7 @@ import { AntDesign } from '@expo/vector-icons'; // Import af ikoner fra expo ico
 import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
 import { Ingredient, useSearchIngredientsQuery } from "../../redux/services/IngredientAPI" // Import af funktionel komponent og Ingredient typen fra mit IngredientAPI
 import AuthPressable from '../../components/AuthPressable' // IMport af min knap komponent
-import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // IMport af min header without back arrow komponent
+import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af min header without back arrow komponent
 
 // Sætter navigations & route props
 type IngredientSearchScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
@@ -109,7 +109,6 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
             {ingrList.length > 0 && searchIngrAtr.search.length != 0 &&
                 <View>
                     {ingrList.map((item, index) => {
-
                         return (
                             <View key={index} style={{ flexDirection: 'row' }}>
                                 <Text style={{ paddingStart: 15, paddingTop: 8 }}> {index + 1} {item.name}</Text>
@@ -128,7 +127,6 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                                         setChosenIngredients(removeDuplicatesByName([...chosenIngredients, ingr]))
                                         setIngrList([]);
                                         clearSearch();
-
                                     }}
                                 >
                                     <AntDesign style={{ paddingTop: 8 }} name="plus" size={24} color="green" />
@@ -138,6 +136,15 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
                     })}
                 </View>
             }
+
+            {/* Heuristics input - Besked displayes hvis ingrediensen ikke findes endnu */}
+            <>
+            {searchIngrAtr.search.length > 1 && ingrList.length === 0 &&
+                <View>
+                    <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: '600', paddingTop: 15}}>Der findes desværre ingen opskrifter med ingrediensen {searchIngrAtr.search}</Text>
+                </View>
+            }
+            </>
 
 
             {/* Find opskrifter med de valgte ingredienser */}

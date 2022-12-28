@@ -66,13 +66,22 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
     const amountRef = useRef<TextInput>(null);
     const alerRef = useRef<TextInput>(null);
 
-
+    // Clearing textInputs
     const handleSubmit = () => {
         nameRef.current?.clear();
         typeRef.current?.clear();
         measureUnitRef.current?.clear();
         amountRef.current?.clear();
         alerRef.current?.clear();
+    }
+
+    // Clearing atr
+    const clearAtr = () => {
+        addIngredientAtr.alergene = ""
+        addIngredientAtr.amount = 0
+        addIngredientAtr.measurementUnit = ""
+        addIngredientAtr.name = ""
+        addIngredientAtr.type = ""
     }
 
 
@@ -195,15 +204,17 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                 <View style={{ paddingTop: 10 }}></View>
 
                 <AuthPressable
-                    text='Tilføj ingrediens'
-                    color='#86DB9D'
+                    text='Tilføj ingrediensen'
+                    color='#86C3F7'
                     onPress={() => {
+                        addIngredientAtr.recipeId = recipeId
                         if (recipeId != 0) {
-                            addIngredientAtr.recipeId = recipeId
-                            addIngredient(addIngredientAtr).unwrap().then(res => {
-                                //console.log(res)
-                            })
-                            handleSubmit();
+                            if(addIngredientAtr.name != "" && addIngredientAtr.type != "" && addIngredientAtr.amount != 0 && addIngredientAtr.measurementUnit != ""){
+                                addIngredient(addIngredientAtr).unwrap().then(res => {
+                                    clearAtr();
+                                })
+                                handleSubmit();
+                            }
                         }
                     }}
                 />
@@ -212,7 +223,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
 
                 <AuthPressable
                     text='Gem og lav beskrivelse'
-                    color='#86DB9D'
+                    color='#86C3F7'
                     onPress={() => {
                         if (recipeId != 0) {
                             addIngredientAtr.recipeId = recipeId
@@ -221,9 +232,11 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                                 if (item.name === addIngredientAtr.name) {
                                     navigation.navigate("AddRecipeDescription", { recipeId })
                                 } else {
-                                    addIngredient(addIngredientAtr).unwrap().then(res => {
-                                        console.log(res)
-                                    })
+                                    if(addIngredientAtr.name != "" && addIngredientAtr.type != "" && addIngredientAtr.amount != 0 && addIngredientAtr.measurementUnit != ""){
+                                        addIngredient(addIngredientAtr).unwrap().then(res => {
+                                            //console.log(res)
+                                        })
+                                    }
                                     navigation.navigate("AddRecipeDescription", { recipeId })
                                 }
                             })

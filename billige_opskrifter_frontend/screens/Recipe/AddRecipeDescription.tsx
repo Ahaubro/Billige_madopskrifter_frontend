@@ -18,10 +18,11 @@ type AddRecipeDescriptionScreenProps = {
 
 const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({ navigation, route }) => {
 
+    // Desctructuring route atr
     const { recipeId } = route.params;
 
+    //Editing recipe description
     const [edit] = useEditDescriptionMutation();
-
     const [editAtr] = useState<{ description: string, id: number }>({ description: "", id: recipeId })
 
 
@@ -48,21 +49,18 @@ const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({
 
             <AuthPressable
                 text='Gem opskrift'
-                color='#86DB9D'
+                color='#86C3F7'
                 onPress={() => {
                     if(editAtr.description.length < 2){
                         editAtr.description = "Ingen beskrivelse"
                     }
                     edit(editAtr).unwrap().then(res => {
-                        console.log(res)
+                        //console.log(res)
                     })
                     navigation.navigate("MyPage")
 
                 }}
             />
-
-
-
         </ViewContainer>
     )
 }

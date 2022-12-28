@@ -154,7 +154,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
                 <AuthPressable
                     text='Tilføj ingredienser'
-                    color='#86DB9D'
+                    color='#86C3F7'
                     onPress={() => {
                         let name: string = createAtr.name
                         if (createAtr.type == "") {
@@ -167,7 +167,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                             navigation.navigate("AddIngredient", { name });
                         } else {
                             // Prøv evt. at opsæt så styling omkring input bliver rødt hvis feltet ikek er udfyldt
-                            console.log("Udfyld felterne")
+                            //console.log("Udfyld felterne")
                         }
                     }}
                 />

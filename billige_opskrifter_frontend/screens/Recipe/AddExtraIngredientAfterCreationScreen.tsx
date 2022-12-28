@@ -135,7 +135,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <AuthPressable
                 text='Gem'
-                color='#86DB9D'
+                color='#86C3F7'
                 onPress={() => {
                     newIngrAtr.recipeId = recipeId
                     console.log(newIngrAtr)

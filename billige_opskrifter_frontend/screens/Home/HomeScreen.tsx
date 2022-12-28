@@ -76,7 +76,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         text='Find flere opskrifter nu!'
         color='#86C3F7'
         onPress={ () => {
-          navigation.navigate("ChooseRecipe")
+          navigation.navigate("RecipeNavigator")
         }}
       />
 

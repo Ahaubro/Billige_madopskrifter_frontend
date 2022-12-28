@@ -55,24 +55,24 @@ const style = StyleSheet.create({
         alignItems: 'center',
     },
     lightGreen: {
-        backgroundColor: '#5AFF80',
-        borderBottomColor: '#5AFF80'
+        backgroundColor: '#28DC52',
+        borderBottomColor: '#28DC52'
     },
     green: {
-        backgroundColor: 'green',
-        borderBottomColor: 'green'
+        backgroundColor: '#29AB09',
+        borderBottomColor: '#29AB09'
     },
     lightYellow: {
-        backgroundColor: 'yellow',
-        borderBottomColor: 'yellow'
+        backgroundColor: '#EEE600',
+        borderBottomColor: '#EEE600'
     },
     yellow: {
-        backgroundColor: '#FFBD3A',
-        borderBottomColor: '#FFBD3A'
+        backgroundColor: '#EEA600',
+        borderBottomColor: '#EEA600'
     },
     lightRed: {
-        backgroundColor: '#FC6373',
-        borderBottomColor: '#FC6373'
+        backgroundColor: '#EF5060',
+        borderBottomColor: '#EF5060'
     },
     red: {
         backgroundColor: 'red',
