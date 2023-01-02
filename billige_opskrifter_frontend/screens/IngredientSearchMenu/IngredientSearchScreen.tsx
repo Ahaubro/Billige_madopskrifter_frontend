@@ -44,6 +44,7 @@ const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigat
 
     function clearSearch() {
         setSearchRef("")
+        setSearchIngrAtr({ search: "" })
     }
 
 

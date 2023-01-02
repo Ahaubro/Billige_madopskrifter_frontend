@@ -137,7 +137,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 </Pressable>
             </BackArrowContainer>
 
-            {/* Opsætter en rediger knap ved siden af opskriftens header, som skal aktivere redigering på resten af opskriften(Name, preptime, price, persons) */}
+            {/* Opsætter en rediger knap ved siden af opskriftens header, som skal aktivere redigering på resten af opskriften(Name, type, preptime, price, persons) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 {!isEditingRestOfRecipe ?
                     <>
