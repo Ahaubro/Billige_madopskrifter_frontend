@@ -18,6 +18,7 @@ import ScrollViewContainer from '../../components/ScrollViewContainer' // Import
 import { useEditRecipeMutation, useGetRecipeByIdQuery } from "../../redux/services/RecipeAPI" // Import af mine funktionelle komponenter fra RecipeAPI
 import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 import DisplayIngrediens from '../../components/DisplayIngrediens' // Import af min displayIngrediens komponent
+import { Picker } from '@react-native-picker/picker' // Import af Picker komponent hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker med yarn package manager
 
 
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
@@ -118,6 +119,14 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
         }
     }
 
+    //SelectedType til Picker (edit recipe type heuristic)
+    const [selectedType, setSelectedType] = useState("");
+    useEffect( () => {
+        if(selectedType === ""){
+            setSelectedType(type)
+        }
+    })
+
     return (
         <ScrollViewContainer>
             <BackArrowContainer>
@@ -212,6 +221,30 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                     </TouchableOpacity>
                 </View>
             </View>
+            
+            {/* Mulighed for at redigere en opskrifts type */}
+            {isEditingRestOfRecipe &&
+                <View>
+                    {/* Ekstern React native component Picker 
+                    hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
+                    <Picker
+                        style={{ height: Dimensions.get("window").height / 100 * 12 }}
+                        itemStyle={{ height: Dimensions.get("window").height / 100 * 15, marginTop: -20, fontSize: 16 }}
+                        selectedValue={selectedType}
+                        onValueChange={(type: string) => {
+                            if (type.length > 1) {
+                                setSelectedType(type)
+                                editRecipeAtr.type = type
+                            }
+                        }}
+                    >
+                        <Picker.Item label='Morgenmad' value="Morgenmad" />
+                        <Picker.Item label='Aftensmad' value="Aftensmad" />
+                        <Picker.Item label='Dessert' value="Dessert" />
+                        <Picker.Item label='Snacks' value="Snacks" />
+                    </Picker>
+                </View>
+            }
 
             {/* Displayer først prepTime, personer og pris - og hvis isEditingRestOfRecipe er true vises redigerbare textinputs med værdien som placeholder */}
             {!isEditingRestOfRecipe ?
@@ -277,7 +310,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
 
             {/* Læser opskriftens fremgangsmetode samt giver author mulighed for at redigere */}
             {!isEditingDescription ?
-                <View style={[style.card, {maxHeight: '100%'}]}>
+                <View style={[style.card, { maxHeight: '100%' }]}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
                     {/* Expand option */}
                     {!isDescriptionExpanded &&
