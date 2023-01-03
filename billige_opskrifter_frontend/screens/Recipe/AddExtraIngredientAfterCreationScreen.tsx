@@ -21,12 +21,15 @@ type AddIngredientComponentProps = {
 
 const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigation, route }) => {
 
+    //Destructuring recipeId from SelectedRecipeScreen
     const { recipeId } = route.params;
 
+    //New ingredient 
     const [newIngrAtr] = useState<{ recipeId: number, name: string, type: string, measurementUnit: string, amount: number, alergene: string }>
         ({ recipeId: recipeId, name: '', type: '', measurementUnit: '', amount: 0, alergene: '' });
     const [addIngredient] = useCreateMutation();
 
+    //Refs til input felterne, for at opsætte genveje til næste felt
     const nameRef = useRef<TextInput>(null);
     const typeRef = useRef<TextInput>(null);
     const muRef = useRef<TextInput>(null);
@@ -54,6 +57,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
             
             <View style={{paddingVertical: 15}}></View>
 
+            {/* Nedenfor ses de forskellige input felter til når man tilføjer en ingrediens */}
             <Text style={style.label}>Navn på ingrediensen:</Text>
             <TextInput
                 ref={nameRef}
@@ -133,6 +137,7 @@ const AddIngredientComponent: React.FC<AddIngredientComponentProps> = ({ navigat
 
             <View style={{ paddingTop: 10 }}></View>
 
+            {/* Gem den nye ingrediens */}
             <AuthPressable
                 text='Gem'
                 color='#86C3F7'

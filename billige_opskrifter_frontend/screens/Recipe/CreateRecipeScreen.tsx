@@ -1,5 +1,4 @@
 import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
 import React, { useRef, useState } from 'react' // Import af funktionelle komponenter fra react
 import { Text, View, Pressable, TextInput, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native' // Import af react-native komponenter
 import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
@@ -15,23 +14,27 @@ import ScrollViewContainer from '../../components/ScrollViewContainer' // import
 
 
 type CreateRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'CreateRecipe'>
-type CreateRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'CreateRecipe'>
 
 type CreateRecipeScreenProps = {
     navigation: CreateRecipeScreenNavigationProps
-    route: CreateRecipeScreenRouteProps
 }
 
-const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, route }) => {
+const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation }) => {
 
+    //Instantiere et session objekt
     const session = useSelector((state: RootState) => state.session)
 
+    //Create recipe atr
     const [create] = useCreateMutation();
     const [createAtr] = useState<{ name: string, type: string, prepTime: number, numberOfPersons: number, estimatedPrice: number, userId: number }>
-        ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
+    ({ name: "", type: "", prepTime: 0, numberOfPersons: 0, estimatedPrice: 0, userId: session.id });
 
+
+    //SelectedType bruges til at opdatere værdien i Picker komponenten
     const [selectedType, setSelectedType] = useState("");
 
+
+    //Refs der bruges til at lave genveje til næste input felt
     const nameRef = useRef<TextInput>(null);
     const timeRef = useRef<TextInput>(null);
     const personsRef = useRef<TextInput>(null);
@@ -59,6 +62,8 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
                 <View style={{ paddingTop: 20, paddingBottom: 10 }}></View>
 
+
+                {/* Nedenfor tiløjes de nødvendige properties for at oprette en opskrift */}
                 <Text style={style.label}>Typen af opskrift:</Text>
                 {/* Ekstern React native component Picker 
                 hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker */}
@@ -79,7 +84,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                     <Picker.Item label='Snacks' value="Snacks" />
                 </Picker>
 
-
+                
                 <Text style={style.label}>Navnet på opskrfiten:</Text>
 
                 <TextInput
@@ -151,7 +156,7 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
 
                 <View style={{ paddingTop: 10 }}></View>
 
-
+                {/* Hvis alt er udfyldt og der ikke er lavet en opskrift med det samme navn, oprettes opskriften og vi sendes videre til AddIngredientScreen */}
                 <AuthPressable
                     text='Tilføj ingredienser'
                     color='#86C3F7'
@@ -163,13 +168,10 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                         if (createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "") {
                             create(createAtr).unwrap().then(res => {
                                 console.log(res)
-                                if(res.statusText != "You already created a recipe by that name"){
+                                if (res.statusText != "You already created a recipe by that name") {
                                     navigation.navigate("AddIngredient", { name });
                                 }
                             })
-                        } else {
-                            // Prøv evt. at opsæt så styling omkring input bliver rødt hvis feltet ikek er udfyldt
-                            //console.log("Udfyld felterne")
                         }
                     }}
                 />

@@ -14,15 +14,14 @@ import { startSession } from '../../redux/slices/sessionSlice' // Import af star
 
 // Sætter navigations & route props
 type LoginScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Login'>
-type LoginScreenRouteProps = RouteProp<AuthNavigationParameters, 'Login'>
 
 type LoginScreenProps = {
     navigation: LoginScreenNavigationProps
-    route: LoginScreenRouteProps
 }
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation, route }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
+    //Bruges til at starte en session fopr brugeren
     const dispatch = useDispatch();
 
     //Login muatation and atr

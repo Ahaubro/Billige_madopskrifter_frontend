@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React
 import { StyleSheet, View, Text, Dimensions } from 'react-native' // Import af react-native komponenter
 import { StackNavigationProp } from '@react-navigation/stack' // Import af stackNavigationProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
 import { useSelector } from 'react-redux' // Import af useSelector (Del af template projektet)
 import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
 import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
 import { useGetLikedRecipesByUserIdQuery } from "../../redux/services/LikedRecAPI" // Import af min funktionelle komponent useGetLikedRecipesByUserIdQuery
-import { Recipe } from '../../redux/services/RecipeAPI' // Import af Recipe typen
+import { Recipe } from '../../redux/services/RecipeAPI' // Import af min Recipe type
 import { HomeNavigationParameters } from '../../Types/Navigation_types' // Import af min homeNavigationParameters type
 import LikedRecipeCards from '../../components/LikedRecipeCards' // Import af min liked recipes komponent
 import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
 import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af header without back arrow komponent
-import { RecipeNavigationParameters } from '../../Types/Navigation_types'; //
 
 // Sætter navigations & route props
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
-type HomeScreenRouteProps = RouteProp<HomeNavigationParameters, 'HomeScreen'>
 
 type HomeScreenProps = {
   navigation: HomeScreenNavigationProps
-  route: HomeScreenRouteProps
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {

@@ -8,6 +8,8 @@ import { useEditDescriptionMutation } from "../../redux/services/RecipeAPI" // I
 import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
 import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af min header without back container komponent
 
+
+//Navigations og route props
 type AddRecipeDescriptionScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'AddRecipeDescription'>
 type AddRecipeDescriptionScreenRouteProps = RouteProp<MyPageNavigationParameters, 'AddRecipeDescription'>
 
@@ -18,13 +20,12 @@ type AddRecipeDescriptionScreenProps = {
 
 const AddRecipeDescriptionScreen: React.FC<AddRecipeDescriptionScreenProps> = ({ navigation, route }) => {
 
-    // Desctructuring route atr
+    // Desctructuring route atr fra AddIngredientScreen
     const { recipeId } = route.params;
 
     //Editing recipe description
     const [edit] = useEditDescriptionMutation();
     const [editAtr] = useState<{ description: string, id: number }>({ description: "", id: recipeId })
-
 
     return (
         <ViewContainer>

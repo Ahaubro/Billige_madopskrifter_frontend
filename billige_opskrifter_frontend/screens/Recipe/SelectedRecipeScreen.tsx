@@ -21,6 +21,7 @@ import DisplayIngrediens from '../../components/DisplayIngrediens' // Import af 
 import { Picker } from '@react-native-picker/picker' // Import af Picker komponent hentet fra -> https://www.npmjs.com/package/@react-native-picker/picker med yarn package manager
 
 
+//Navigation og route props
 type SelectedRecipeScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, "SelectedRecipeScreen">
 type SelectedRecipeScreenRouteProps = RouteProp<MyPageNavigationParameters, 'SelectedRecipeScreen'>
 
@@ -31,9 +32,11 @@ type SelectedRecipeScreenProps = {
 
 const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation, route }) => {
 
+    //Instantiere et session objekt & gemmer brugerens Id i en variable
     const session = useSelector((state: RootState) => state.session)
     const thisUser = session.id
 
+    //Desctructuring recipe props fra RecipesScreen(RecipeCard)
     const { id, name, type, prepTime, numberOfPersons, estimatedPrice, description, userId } = route.params
 
 
@@ -137,7 +140,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 </Pressable>
             </BackArrowContainer>
 
-            {/* Opsætter en rediger knap ved siden af opskriftens header, som skal aktivere redigering på resten af opskriften(Name, type, preptime, price, persons) */}
+            {/* Rediger knap ved siden af opskriftens header, som skal aktivere redigering på resten af opskriften(Name, type, preptime, price, persons) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 {!isEditingRestOfRecipe ?
                     <>
@@ -183,7 +186,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             </View>
 
 
-            {/* Her kan man liker / unlike et opslag (Hvis man har liket det vises hjerte med streg over) */}
+            {/* Her kan man like / unlike et opslag (Hvis man har liket det vises et udfyldt hjerte) */}
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
                 {session.token != 'guest' &&
@@ -296,7 +299,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             }
 
             <View style={{ paddingVertical: 5 }}>
-                {/* Display ingredisner komponent der samtidig giver CRUD operationer */}
+                {/* DisplayIngrediens komponent der samtidig giver CRUD operationer over opskriftens ingredienser*/}
                 <DisplayIngrediens
                     items={thisRecipesIngrediens.data?.ingredients}
                     userId={userId}
@@ -305,17 +308,16 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                 />
             </View>
 
-
             <View style={{ paddingVertical: 5 }}></View>
 
             {/* Læser opskriftens fremgangsmetode samt giver author mulighed for at redigere */}
             {!isEditingDescription ?
                 <View style={[style.card, { maxHeight: '100%' }]}>
                     <Text style={[style.label, { padding: 5, paddingBottom: 10 }]}>Fremgangsmetode:</Text>
-                    {/* Expand option */}
                     {!isDescriptionExpanded &&
                         <>
                             <Text style={style.description}>{sliceDescription(thisRecipe.description)}</Text>
+                            {/* Expand option */}
                             <TouchableOpacity
                                 onPress={() => {
                                     setIsDescriptionExpanded(true)
@@ -325,21 +327,21 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                             </TouchableOpacity>
                         </>
                     }
-                    {/* Unexpand option */}
                     {isDescriptionExpanded &&
                         <>
                             <Text style={style.description}>{thisRecipe.description}</Text>
                             {userId === session.id &&
                                 <TouchableOpacity
-                                    onPress={() => {
-                                        setIsEditingDesription(true)
-                                    }}
+                                onPress={() => {
+                                    setIsEditingDesription(true)
+                                }}
                                 >
                                     <Text style={{ fontWeight: '600', color: 'blue', textAlign: 'center', fontStyle: 'italic', paddingVertical: 10 }}>Rediger fremgangsmåden</Text>
                                 </TouchableOpacity>
                             }
 
                             <View style={{ paddingTop: 5, paddingBottom: 5 }}>
+                            {/* Unexpand option */}
                                 <TouchableOpacity
                                     onPress={() => {
                                         setIsDescriptionExpanded(false)

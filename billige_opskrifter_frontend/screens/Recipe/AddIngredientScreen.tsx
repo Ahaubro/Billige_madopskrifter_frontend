@@ -24,7 +24,10 @@ type CreateRecipeScreenProps = {
 
 const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, route }) => {
 
+    //Instantiere et session objekt
     const session = useSelector((state: RootState) => state.session)
+
+    //Destructuring name fra CreateRecipeScreen
     const { name } = route.params;
 
 

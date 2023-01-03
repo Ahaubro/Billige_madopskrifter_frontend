@@ -23,12 +23,14 @@ type CreateReviewScreenProps = {
 
 const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, route }) => {
 
-    // Descructuring parametre fra route
+    // Descructuring props fra SelectedRecipeScreen (recipe & user id along with recipe name)
     const { id, userId, recipeName } = route.params
 
+    //Create review 
     const [createReview] = useCreateMutation();
     const [createreviewAtr] = useState<{ recipeId: number, userId: number, content: string, rating: number }>({ recipeId: id, userId: userId, content: "", rating: 0 })
 
+    //Ref for the content input
     const inputRef = useRef<TextInput>(null);
 
     return (
@@ -74,7 +76,6 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                     />
                 </View>
 
-
                 <View>
                     <Text style={style.label}>Hvordan var maden?</Text>
                     <TextInput
@@ -94,6 +95,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
 
                 <View style={{ paddingVertical: 5 }}></View>
 
+                {/* Hvis både content og rating er udfyldt oprettes det nye review */}
                 <AuthPressable
                     text='Gem review'
                     color='#86DB9D'

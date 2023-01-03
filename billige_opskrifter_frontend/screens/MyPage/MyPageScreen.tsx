@@ -6,28 +6,24 @@ import Header from "../../components/Header" // Import af min header komponent
 import { useGetRecipesByUserIdQuery, Recipe } from '../../redux/services/RecipeAPI' // Import af funktionel komponent og type fra mit RecipeAPI
 import { MyPageNavigationParameters } from '../../Types/Navigation_types' // Import af min my page navigation parameters type
 import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af templatye projektet)
 import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
 import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 import ScrollViewContainer from '../../components/ScrollViewContainer' // Import af min Scroll view container komponent
 import AuthoredRecipeCards from '../../components/AuthoredRecipeCards' // Import af min Authored recipe cards komponent
-//import { AntDesign } from '@expo/vector-icons';
 
 // Sætter navigations & route props
 type MyPageScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'MyPage'>
-type MyPageScreenRouteProps = RouteProp<MyPageNavigationParameters, 'MyPage'>
 
 type MyPageScreenProps = {
   navigation: MyPageScreenNavigationProps
-  route: MyPageScreenRouteProps
 }
 
-const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
+const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation }) => {
 
   const session = useSelector((state: RootState) => state.session)
 
   //Fetcher brugerens opskrifter og gemmer dem på en liste
-  const { data: fetchedRecipesByUserId, isLoading } = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
+  const { data: fetchedRecipesByUserId } = useGetRecipesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
   const [userRecipeList, setUserRecipeList] = useState<Recipe[]>([]);
 
   useEffect(() => {
@@ -50,12 +46,6 @@ const MyPageScreen: React.FC<MyPageScreenProps> = ({ navigation, route }) => {
           <Ionicons name="settings-outline" size={30} color="black" />
         </TouchableOpacity>
       </View>
-
-      {/* {isLoading &&
-        <View style={{zIndex: 1, backgroundColor: 'grey', height: Dimensions.get("window").height, width: Dimensions.get("window").width}}>
-          <AntDesign name="loading1" size={24} color="black" />
-        </View>
-      } */}
 
 
       {/* Header for MyPage */}

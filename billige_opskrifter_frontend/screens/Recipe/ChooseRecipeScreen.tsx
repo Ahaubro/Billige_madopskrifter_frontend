@@ -1,7 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
 import React from 'react' // Import af React
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native' // Import af react-native komponenter
+import { Text, View, TouchableOpacity } from 'react-native' // Import af react-native komponenter
 import { useDispatch, useSelector } from 'react-redux' // Import af useDispatch & useSelector (Del af template projektet)
 import { RootState } from '../../redux/store' // Import af RootState (Del af template projektet)
 import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
@@ -12,14 +11,12 @@ import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontai
 
 
 type ChooseRecipeScreenNavigationProps = StackNavigationProp<RecipeNavigationParameters, 'ChooseRecipe'>
-type ChooseRecipeScreenRouteProps = RouteProp<RecipeNavigationParameters, 'ChooseRecipe'>
 
 type ChooseRecipeScreenProps = {
   navigation: ChooseRecipeScreenNavigationProps
-  route: ChooseRecipeScreenRouteProps
 }
 
-const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, route }) => {
+const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation }) => {
 
   //Instantiere et session objekt
   const session = useSelector((state: RootState) => state.session)
@@ -36,6 +33,8 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
 
       <View style={{ paddingTop: 100 }}></View>
 
+
+      {/* Der er nedenfor opsat en knap til hver af opskrifts typerne (Tilføj en knap her samt en type for flere menuer) */}
       <ChooseRecipePressable
         color="#F0C765"
         text='Morgenmad'
@@ -78,6 +77,7 @@ const ChooseRecipeScreen: React.FC<ChooseRecipeScreenProps> = ({ navigation, rou
         }}
       />
 
+      {/* Hvis man er forsat som gæst, kan man her "logge ud" */}
       {session.token == "guest" &&
         <TouchableOpacity
           onPress={() => {

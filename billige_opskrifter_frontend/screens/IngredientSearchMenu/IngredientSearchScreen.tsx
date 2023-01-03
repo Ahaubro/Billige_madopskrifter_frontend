@@ -1,4 +1,3 @@
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
 import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigationProp (Del af template projektet)
 import React, { useEffect, useState } from 'react' // Import af funktionelle komponenter fra React
 import { Text, View, TouchableOpacity, StyleSheet, TextInput } from 'react-native' // Import af react-native komponenter
@@ -12,15 +11,13 @@ import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontai
 
 // Sætter navigations & route props
 type IngredientSearchScreenNavigationProps = StackNavigationProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
-type IngredientSearchScreenRouteProps = RouteProp<IngredientSearchNavigationParameters, 'IngredientSearchScreen'>
 
 type IngredientSearchScreenProps = {
     navigation: IngredientSearchScreenNavigationProps
-    route: IngredientSearchScreenRouteProps
 }
 
 
-const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigation, route }) => {
+const IngredientSearchScreen: React.FC<IngredientSearchScreenProps> = ({ navigation }) => {
 
     //Search for ingredients
     const [searchIngrAtr, setSearchIngrAtr] = useState<{ search: string }>({ search: "" });

@@ -1,8 +1,7 @@
+import React from 'react' // Import af React
 import { StackNavigationProp } from '@react-navigation/stack' // Import af StackNavigatonProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af RouteProp (Del af template projektet)
 import { startSession } from '../../redux/slices/sessionSlice' // Import af startSession (Del af template projeketet)
 import { useDispatch } from 'react-redux' // Import af useDispatch (Del af template projektet)
-import React from 'react' // Import af React
 import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native' // Import af react-native komponenter
 import { AuthNavigationParameters } from "../../Types/Navigation_types" // Import af min AuthNavigationParameters type
 import ViewContainer from "../../components/ViewContainer" // Import af min view container komponent
@@ -10,15 +9,12 @@ import AuthPressable from "../../components/AuthPressable" // Import af min auth
 
 // Sætter navigations & route props
 type WelcomeScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Welcome'>
-type WelcomeScreenRouteProps = RouteProp<AuthNavigationParameters, 'Welcome'>
 
 type WelcomeScreenProps = {
   navigation: WelcomeScreenNavigationProps
-  route: WelcomeScreenRouteProps
 }
 
-
-const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation, route }) => {
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ navigation }) => {
 
   // Bruges til at at starte en session for en gæst
   const dispatch = useDispatch();

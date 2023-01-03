@@ -4,7 +4,6 @@ import Header from "../../components/Header" // Import af min header komponent
 import ViewContainer from '../../components/ViewContainer' // Import af min view container komponent
 import BackArrowContainer from "../../components/BackArrowContainer" // Import af min back arrow container komponent
 import { StackNavigationProp } from '@react-navigation/stack' // Import af stackNavigationProp (Del af template projektet)
-import { RouteProp } from '@react-navigation/native' // Import af route prop (Del af template projektet)
 import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af min authNavigationParameter type
 import { Ionicons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 import AuthPressable from '../../components/AuthPressable' // Import af min auth knap komponent
@@ -12,14 +11,12 @@ import { useRegisterMutation } from "../../redux/services/UserAPI" // Import af 
 
 // Sætter navigations & route props
 type RegisterScreenNavigationProps = StackNavigationProp<AuthNavigationParameters, 'Register'>
-type RegisterScreenRouteProps = RouteProp<AuthNavigationParameters, 'Register'>
 
 type RegisterScreenProps = {
     navigation: RegisterScreenNavigationProps
-    route: RegisterScreenRouteProps
 }
 
-const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation, route }) => {
+const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
 
     //Strings used for confirming password
     let pw1 = ""

@@ -14,7 +14,7 @@ import ViewContainer from "../../components/ViewContainer" // Import af min view
 import { useGetAllergiesByUserIdQuery, useDeleteAllergiMutation, Allergi } from "../../redux/services/AllergiAPI" // Import af funktionalitet og type fra mit AllergiAPI
 import { MaterialIcons } from '@expo/vector-icons'; // Import af ikoner fra expo icons -> https://icons.expo.fyi/
 
-// Sætter navigations & route props
+// Navigations & route props
 type SettingsScreenNavigationProps = StackNavigationProp<MyPageNavigationParameters, 'Settings'>
 type SettingsScreenRouteProps = RouteProp<MyPageNavigationParameters, 'Settings'>
 
@@ -25,7 +25,7 @@ type SettingsScreenProps = {
 
 const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
 
-  // Instantiere et session objekt
+  // Instantiere et session & dispatch objekt
   const session = useSelector((state: RootState) => state.session)
   const dispatch = useDispatch();
 
@@ -66,6 +66,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
         text='Indstillinger'
       />
 
+      {/* Informationer om brugeren */}
       <Text style={style.menuHeader}>Mine informationer.</Text>
       <View style={{ paddingTop: 15, flexDirection: 'row' }}>
         <Text style={{ fontWeight: '600', fontStyle: 'italic' }}>Fulde navn: </Text>
@@ -185,10 +186,10 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
             </View>
           </>
         }
-
       </View>
 
 
+      {/* Log ud knap */}
       <View style={{ paddingTop: 20 }}>
         <AuthPressable
           text='Log ud'

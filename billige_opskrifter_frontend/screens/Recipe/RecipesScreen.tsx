@@ -23,9 +23,10 @@ type RecipesScreenProps = {
 
 const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
+    //Desctructuring type fra ChooseRecipeScreen, der definere hvilke opskrifter der hentes
     const { type } = route.params
 
-    //Forming first selection of recipes by type
+    //Fetching recipes by type
     const recipes = useGetRecipesByTypeQuery(type)
     const [recipeList, setRecipeList] = useState<Recipe[]>([]);
 
@@ -33,8 +34,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
         if (recipes.data) {
             setRecipeList(recipes.data.recipes)
         }
-
-
     }, [recipes.data]);
 
 
@@ -46,7 +45,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
     useEffect(() => {
         setSearchList(recipeSearch.data?.recipes ?? [])
     }, [recipeSearch.data])
-
 
 
     //Sorteringsmuligheder & sorterings modal
@@ -125,7 +123,7 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             <View style={{ paddingTop: 25 }}></View>
 
 
-            {/* Her skal der være en search bar med sorteringsmuligheder */}
+            {/* Search bar med sorteringsmuligheder */}
             <View style={style.inputContainer}>
                 <View style={{ paddingLeft: 20 }}>
                     <Ionicons name="search-outline" size={28} color="black" />
@@ -151,7 +149,6 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
 
 
             {/* Modal der viser sorteringsmuligheder */}
-
             <View>
                 <Modal
                     visible={isModalVisible}
@@ -221,27 +218,20 @@ const RecipesScreen: React.FC<RecipesScreenProps> = ({ navigation, route }) => {
             </TouchableOpacity>
 
 
-            {/* Her skal opskrifterne præsenteres i kort */}
             <View style={{ paddingTop: 30 }}></View>
 
-
-
-            {/* HVIS SEARCH RESULT ER MINDRE END 0 SKAL ALLE OPSKRIFTER VISES*/}
-            {searchList.length == 0 ?
-
+            {/* HVIS SEARCH RESULT ER === 0 SKAL ALLE OPSKRIFTER VISES med recipeList - Ellers vises opskrifter med searchList*/}
+            {searchList.length === 0 ?
                 <RecipeCard
                     recipes={recipeList}
                     navigation={navigation}
                 />
-
                 :
-
                 <RecipeCard
                     recipes={searchList}
                     navigation={navigation}
                 />
             }
-
 
         </ViewContainer>
     )
