@@ -4,7 +4,6 @@ import * as SplashScreen from 'expo-splash-screen'
 import * as Font from 'expo-font'
 import { tryLoginFromStorageAsync } from '../utils/authUtils'
 import { useDispatch } from 'react-redux'
-import { startSession } from '../redux/slices/sessionSlice'
 import { preloadFonts } from '../utils/fontUtils'
 
 // Keep the splash screen visible while we fetch resources

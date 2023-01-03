@@ -105,7 +105,7 @@ const AddIngredientScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, ro
                                 return (
                                     <View key={index} style={{ flexDirection: 'row', justifyContent: 'center', paddingVertical: 1 }}>
                                         <Text style={{ fontWeight: '700', fontSize: 16 }}>#{index + 1}</Text>
-                                        <Text style={{ fontSize: 16 }}> {item.name} {item.amount}{item.measurementUnit}</Text>
+                                        <Text style={{ fontSize: 16 }}> {item.name} {item.amount}{item.measurementUnit} {item.alergene.length > 0 && <>{'('}{item.alergene}{')'} </>}</Text>
                                         <TouchableOpacity
                                             onPress={() => {
                                                 deleteIngredient({ id: item.id })

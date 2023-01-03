@@ -2,7 +2,7 @@ import React from "react" // Import af React til brug af FC - functionComponent
 import { View, StyleSheet, Text, TouchableOpacity,  } from "react-native" // Import af react native komponenter
 
 
-// Props til denne komponent
+// Props til denne komponent inkludere tekst, farve og onPress funktion
 type AuthPressableProps = {
     text: string,
     color: string,

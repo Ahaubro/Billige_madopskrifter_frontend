@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react" // Import af React
+import React, { ReactNode } from "react" // Import af React & ReactNode
 import { StyleSheet, Dimensions, ScrollView } from "react-native" // Import af react-native komponenter
  
-//Props
+//Passing ReactNode children as props to display elements wihtin the component
 interface ViewContainerProps {
     children: ReactNode
 }

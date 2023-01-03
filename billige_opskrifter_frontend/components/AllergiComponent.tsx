@@ -15,12 +15,14 @@ type AllergiComponentProps = {
 
 const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
 
+    // instantiere et session objekt
     const session = useSelector((state: RootState) => state.session)
 
     // Fetcher brugerens allergier
     const fetchedUserAllergies = useGetAllergiesByUserIdQuery(session.id, { refetchOnMountOrArgChange: true });
     const [userAllergiesList, setUsersAllergiesList] = useState<Allergi[]>([]);
 
+    //Boolean til at registrere når en allergi optræder samt en string til den visuelle præsentation
     let isAllergic: boolean = false
     let allergiString: string = ""
 
@@ -29,7 +31,6 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
             setUsersAllergiesList(fetchedUserAllergies.data.allergies)
         }
     }, [fetchedUserAllergies.data])
-
 
     //Fetching ingredients
     const fetchedRecipeIngredients = useGetByRecipeIdQuery(item.id);

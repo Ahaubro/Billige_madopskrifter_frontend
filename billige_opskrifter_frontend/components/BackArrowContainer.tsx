@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react' // Import af React til brug af FC - fun
 import { View, StyleSheet } from 'react-native' // Import af react native komponenter
 
 
-//props - denne komponent skal kunne indholde diverse React elementer
+//Passing ReactNode children as props to display elements wihtin the component
 interface BackArrowContainerProps {
   children: ReactNode
 }

@@ -22,6 +22,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
     const [isExpanded, SetIsExpanded] = useState(false);
     const [idForExpand, setIdForExpand] = useState(0);
 
+    // Function that slices description
     function sliceDescription(description: string) {
         if(description != null){
             if (description.length > 75) {
@@ -39,7 +40,7 @@ const AuthoredRecipeCards: React.FC<AuthoredRecipeCardsProps> = ({ recipes, navi
             <FlatList
                 horizontal={true}
                 data={recipes}
-                renderItem={({ item, index }) => {
+                renderItem={({ item }) => {
                     return (
                         <>
                             <TouchableOpacity

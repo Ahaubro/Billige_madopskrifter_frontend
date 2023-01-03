@@ -1,5 +1,7 @@
 # React Native // Expo
 
+OBS. Jeg har valgt at beholde den originale README page fra templateprojektet
+
 Todo:
 
 * [Set up sentry](#setting-up-sentry)

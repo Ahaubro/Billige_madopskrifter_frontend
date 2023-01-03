@@ -11,6 +11,7 @@ import { HomeNavigationParameters } from '../../Types/Navigation_types' // Impor
 import LikedRecipeCards from '../../components/LikedRecipeCards' // Import af min liked recipes komponent
 import AuthPressable from '../../components/AuthPressable' // Import af min knap komponent
 import HeaderWithoutBackcontainer from '../../components/HeaderWithoutBackcontainer' // Import af header without back arrow komponent
+import { RecipeNavigationParameters } from '../../Types/Navigation_types'; //
 
 // Sætter navigations & route props
 type HomeScreenNavigationProps = StackNavigationProp<HomeNavigationParameters, 'HomeScreen'>
@@ -76,7 +77,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         text='Find flere opskrifter nu!'
         color='#86C3F7'
         onPress={ () => {
-          navigation.navigate("RecipeNavigator")
+          navigation.navigate("ChooseRecipe")
         }}
       />
 

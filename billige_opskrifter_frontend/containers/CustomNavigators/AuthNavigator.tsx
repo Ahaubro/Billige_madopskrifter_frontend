@@ -2,7 +2,7 @@ import {createStackNavigator} from '@react-navigation/stack' // Importere create
 import LoginScreen from '../../screens/Auth/Loginscreen'; // Import af min loginScreen
 import WelcomeScreen from '../../screens/Auth/WelcomeScreen'; // Import af min WelcomeScreen
 import RegisterScreen from '../../screens/Auth/RegisterScreen'; // Import af RegisterScreen
-import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af navigations parametre (undefined i auth)
+import { AuthNavigationParameters } from '../../Types/Navigation_types' // Import af auth navigations parametre 
 
 const stack = createStackNavigator<AuthNavigationParameters>();
 
