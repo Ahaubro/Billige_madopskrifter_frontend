@@ -98,7 +98,7 @@ const CreateReviewScreen: React.FC<CreateReviewScreenProps> = ({ navigation, rou
                     text='Gem review'
                     color='#86DB9D'
                     onPress={() => {
-                        if (createreviewAtr.content != "" && createreviewAtr.rating != 0) {
+                        if (createreviewAtr.content.length != 0 && createreviewAtr.rating != 0) {
                             console.log(createreviewAtr)
                             createReview(createreviewAtr).unwrap().then(res => {
                                 console.log(res)

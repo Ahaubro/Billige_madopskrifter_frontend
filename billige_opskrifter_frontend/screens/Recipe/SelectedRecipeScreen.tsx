@@ -409,16 +409,16 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
                                                         {/* Ekstern react native conmponent AirbnbRating bruges her til at lave en flot repræsentation af mine reviews. 
                                                         Hentet fra -> https://www.npmjs.com/package/react-native-ratings*/}
                                                         <AirbnbRating
-                                                            reviewSize={16}
                                                             reviews={["Dårlig", "Okay", "God", "Vild med den", "Elsker den!"]}
+                                                            reviewSize={16}
                                                             reviewColor={'black'}
                                                             defaultRating={item.rating}
                                                             size={20}
                                                             isDisabled={true}
-                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }}
+                                                            ratingContainerStyle={{ backgroundColor: 'rgb(247,247,255)', flexDirection: 'row', marginRight: 10, justifyContent: 'space-between' }}
                                                         />
                                                     </View>
-                                                    <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 20 }}>{item.content}</Text>
+                                                    <Text style={{ textAlign: 'justify', padding: 10, paddingLeft: 30 }}>{sliceDescription(item.content)}</Text>
                                                 </View>
                                             </View>
                                         </>
@@ -436,7 +436,7 @@ const SelectedRecipeScreen: React.FC<SelectedRecipeScreenProps> = ({ navigation,
             <View style={{ paddingVertical: 5 }}></View>
 
 
-            {/* Nyt review hvis man ikke er gæst og GØR SÅ MAN IKKE KAN SKRIVE REVIEW SOM FORFATTER*/}
+            {/* Nyt review hvis man ikke er gæst*/}
             {session.token != 'guest' ?
                 <>
                     <AuthPressable

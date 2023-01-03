@@ -163,8 +163,10 @@ const CreateRecipeScreen: React.FC<CreateRecipeScreenProps> = ({ navigation, rou
                         if (createAtr.name != "" && createAtr.estimatedPrice != 0 && createAtr.numberOfPersons != 0 && createAtr.prepTime != 0 && createAtr.type != "") {
                             create(createAtr).unwrap().then(res => {
                                 console.log(res)
+                                if(res.statusText != "You already created a recipe by that name"){
+                                    navigation.navigate("AddIngredient", { name });
+                                }
                             })
-                            navigation.navigate("AddIngredient", { name });
                         } else {
                             // Prøv evt. at opsæt så styling omkring input bliver rødt hvis feltet ikek er udfyldt
                             //console.log("Udfyld felterne")

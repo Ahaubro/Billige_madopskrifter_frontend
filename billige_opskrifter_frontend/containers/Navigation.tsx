@@ -1,4 +1,4 @@
-// Der var allerede opsat navigareing som del af template projektet der er vedhæftet som bilag
+// Der var allerede opsat navigareing som del af template projektet der er vedhæftet som bilag (Navigation.tsx var en del af template projektet - Men ikoner og Tab.Screens er løbende blevet tilføjet)
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native' // Import af navigation comtainer (Del af template projektet) - samt import af Default theme
 import React from 'react' // Import af React 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs' // Import af createBottomTabNavigator (Del af template projektet)
@@ -21,6 +21,7 @@ const Navigation: React.FC<NavigationProps> = () => {
 
   const session = useSelector((state: RootState) => state.session);
 
+  // Sætter et custom theme for at ændre baggrundsfarven på hele applikationen
   const customTheme = {
     ...DefaultTheme,
     colors: {
