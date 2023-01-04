@@ -26,6 +26,7 @@ const AllergiComponent: React.FC<AllergiComponentProps> = ({ item }) => {
     let isAllergic: boolean = false
     let allergiString: string = ""
 
+    // Setting user allergies using React hook useEffect
     useEffect(() => {
         if (fetchedUserAllergies.data) {
             setUsersAllergiesList(fetchedUserAllergies.data.allergies)

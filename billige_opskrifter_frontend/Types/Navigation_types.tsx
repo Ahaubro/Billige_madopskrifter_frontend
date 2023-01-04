@@ -1,7 +1,7 @@
 import { Ingredient } from "../redux/services/IngredientAPI" // Import af min Ingredient type
 import { Review } from "../redux/services/ReviewAPI" // Import af min Review type
 
-//Der bliver nedenfor eksporteret de forskellige navigations typer samt hvilke props de hver især bruger
+//Der bliver nedenfor eksporteret de forskellige navigations typer samt hvilke props de sender mellem sig
 
 // Eksportere min auth navigations parametre
 export type AuthNavigationParameters = {

@@ -40,7 +40,7 @@ const AllReviewsScreen: React.FC<AllReviewsScreenProps> = ({ navigation, route }
 
             <View style={{ paddingTop: 35}}>
                 
-                {/* Jeg har rykket koden der læser reviews ind i sion egen komponent for at gøre denne skærmkomponent mere ren */}
+                {/* Jeg har rykket koden der læser reviews ind i sin egen komponent for at gøre denne skærmkomponent mere ren */}
                 <AllReviewsComponent 
                     reviews={reviews}
                 />

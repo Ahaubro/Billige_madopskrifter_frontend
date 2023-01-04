@@ -1,3 +1,4 @@
+//Denne fil var en del af template projektet
 import { View } from 'react-native'
 import { useAppLoader } from './containers/useAppLoader'
 import * as Sentry from 'sentry-expo'

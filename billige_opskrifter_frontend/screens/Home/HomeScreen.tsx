@@ -55,9 +55,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
       {/* Kort der vises hvis man ikke har liket nogen opskrifter endnu  */}
       {likedRecipeList.length == 0 &&
 
-        <View style={style.likedRecipes}>
-          <Text>Du har ikke liket nogen opskrifter, kom igang!</Text>
-        </View>
+          <Text style={{ textAlign: 'center', paddingVertical: 15 }}>Du har ikke liket nogen opskrifter, kom igang!</Text>
       }
 
       <View style={{paddingBottom: 15}}>
@@ -76,7 +74,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           navigation.navigate("ChooseRecipe")
         }}
       />
-
     </ViewContainer>
   )
 }
