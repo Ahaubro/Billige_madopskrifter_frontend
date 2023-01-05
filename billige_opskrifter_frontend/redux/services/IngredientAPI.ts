@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react' // Importere createApi & fetchBaseQuery fra rtk (Der var vist et eksempel af dette i template projektet)
 import { RootState } from '../store' // Importere RootState (Del af templateprojektet)
+import { API_URL } from '../../constants' // Imortere API_URL fra constants.ts
 
 // Definere en baseQuery hvor der b.la. sættes baseUrl fra min .env fil
 const baseQuery = fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl: API_URL,
     prepareHeaders: (headers, api) => {
         const state = api.getState() as RootState
         const token = state.session.token
