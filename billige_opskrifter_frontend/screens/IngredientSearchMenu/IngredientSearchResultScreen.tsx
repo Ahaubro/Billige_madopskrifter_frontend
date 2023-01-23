@@ -37,7 +37,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
 
 
   // Function der fjerner duplikater på id
-  function removeDuplicatesA(arr: Ingredient[]) {
+  function removeDuplicatesByRecipeId(arr: Ingredient[]) {
     return arr.filter((v, i, a) => a.findIndex(v2 => (v2.recipeId === v.recipeId)) === i)
   }
 
@@ -49,7 +49,7 @@ const IngredientSearchResultScreen: React.FC<IngredientSearchResultScreenProps> 
 
 
   //Gemmer en ny liste uden duplikater, der bruges til at hente opskrifter ud fra recipeId (Så der kun vises en af hver)
-  const clonedForMapNoDuplicates = removeDuplicatesA([...allIngredientsList])
+  const clonedForMapNoDuplicates = removeDuplicatesByRecipeId([...allIngredientsList])
 
 
   return (
